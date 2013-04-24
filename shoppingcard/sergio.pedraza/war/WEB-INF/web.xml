@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	
+	<servlet>
+		<servlet-name>CashierController</servlet-name>
+		<servlet-class>com.globant.training.gae.controllers.CashierController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CashierController</servlet-name>
+		<url-pattern>/cashier.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ClientController</servlet-name>
+		<servlet-class>com.globant.training.gae.controllers.ClientController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ClientController</servlet-name>
+		<url-pattern>/client.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>PaymentController</servlet-name>
+		<servlet-class>com.globant.training.gae.controllers.PaymentController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PaymentController</servlet-name>
+		<url-pattern>/payment.do</url-pattern>
+	</servlet-mapping>
+</web-app>
