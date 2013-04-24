@@ -7,6 +7,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.google.appengine.api.datastore.Transaction;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -23,22 +24,52 @@ import javax.servlet.http.HttpServletResponse;
 public class RegisterPurchaseServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	private static final int CARD_LIMIT = 10000;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
+		Transaction tx = DatastoreServiceFactory.getDatastoreService().beginTransaction();
+		
 		String endUser = getEndUserName();
 
 		Key endUserKey = KeyFactory.createKey("EndUser", endUser);
 		
-		String amount = req.getParameter("amount");
+		long amount = Long.valueOf(req.getParameter("amount"));
 		String cardNumber = req.getParameter("cardNumber");
 
-		String balanceAfterTransaction = updateCardBalance(endUserKey, amount,
-				cardNumber);
+		Query query = new Query("ShoppingCard", endUserKey);
+		query.setFilter(new FilterPredicate("code", FilterOperator.EQUAL, cardNumber));
+	
+		Entity card = DatastoreServiceFactory.getDatastoreService()
+				.prepare(query).asSingleEntity();
 		
+		//Create new card Hack
+		if (card == null) {
+			card = new Entity("ShoppingCard", endUserKey);
+			card.setProperty("code", cardNumber);
+			card.setProperty("balance", 0L);
+			
+			DatastoreServiceFactory.getDatastoreService().put(card);
+		}
+
+		long balanceAfterTransaction = (long)card.getProperty("balance") + amount;
 		
-		saveTransaction(endUserKey, amount, balanceAfterTransaction);
+		if (balanceAfterTransaction > CARD_LIMIT) {
+
+			resp.setContentType("text/html;charset=UTF-8");
+			ServletOutputStream out = resp.getOutputStream();
+			out.println("card limit exceeded!");
+			return;
+		}
+		
+		card.setProperty("balance", balanceAfterTransaction);
+		
+		DatastoreServiceFactory.getDatastoreService().put(card);
+		
+		saveTransaction(card.getKey(), amount, balanceAfterTransaction);
+		
+		tx.commit();
 
 		showSuccess(resp);
 	}
@@ -55,31 +86,6 @@ public class RegisterPurchaseServlet extends HttpServlet {
 		return endUser;
 	}
 
-	private String updateCardBalance(Key endUserKey, String amount,
-			String cardNumber) {
-		
-		Query query = new Query("ShoppingCard", endUserKey);
-		query.setFilter(new FilterPredicate("code", FilterOperator.EQUAL, cardNumber));
-	
-		Entity card = DatastoreServiceFactory.getDatastoreService()
-				.prepare(query).asSingleEntity();
-		
-		//Create new card Hack
-		if (card == null) {
-			card = new Entity("ShoppingCard", endUserKey);
-			card.setProperty("code", cardNumber);
-			card.setProperty("balance", "10000");
-			
-			DatastoreServiceFactory.getDatastoreService().put(card);
-		}
-
-		String balanceAfterTransaction = card.getProperty("balance") + "+"
-				+ amount;
-		card.setProperty("balance", balanceAfterTransaction);
-		
-		DatastoreServiceFactory.getDatastoreService().put(card);
-		return balanceAfterTransaction;
-	}
 
 	private void showSuccess(HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/html;charset=UTF-8");
@@ -87,10 +93,10 @@ public class RegisterPurchaseServlet extends HttpServlet {
 		out.println("Purchase registered");
 	}
 
-	private void saveTransaction(Key endUserKey, String amount,
-			String balanceAfterTransaction) {
+	private void saveTransaction(Key cardKey, long amount,
+			long balanceAfterTransaction) {
 		
-		Entity transaction = new Entity("Transaction", endUserKey);
+		Entity transaction = new Entity("Transaction", cardKey);
 		
 		transaction.setProperty("timeStamp", new Date());
 		transaction.setProperty("amount", amount);
