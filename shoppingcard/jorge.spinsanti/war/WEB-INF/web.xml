@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	
+	<!-- Business servlets -->
+	<servlet>
+		<servlet-name>InitDatastore</servlet-name>
+		<servlet-class>gaetraining.exercise2.InitDatastoreServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InitDatastore</servlet-name>
+		<url-pattern>/initDatastore</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>RegisterPayment</servlet-name>
+		<servlet-class>gaetraining.exercise2.RegisterPaymentServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RegisterPayment</servlet-name>
+		<url-pattern>/payment</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>RegisterPurchase</servlet-name>
+		<servlet-class>gaetraining.exercise2.RegisterPurchaseServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RegisterPurchase</servlet-name>
+		<url-pattern>/purchase</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ShowTransactions</servlet-name>
+		<servlet-class>gaetraining.exercise2.ShowTransactionsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ShowTransactions</servlet-name>
+		<url-pattern>/showTransactions</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>SavePaymentAndNotif</servlet-name>
+		<servlet-class>gaetraining.exercise2.SavePaymentAndNotifServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SavePaymentAndNotif</servlet-name>
+		<url-pattern>/savePaymentAndNotif</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+</web-app>
