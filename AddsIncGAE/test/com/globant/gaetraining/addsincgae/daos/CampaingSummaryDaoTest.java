@@ -13,12 +13,12 @@ public class CampaingSummaryDaoTest {
 
 	private final LocalServiceTestHelper helper = new LocalServiceTestHelper(
 			new LocalDatastoreServiceTestConfig());
-	private GenericDao<CampaignSummary> dao;
+	private CampaingSummaryDao dao;
 
 	@Before
 	public void setUp() {
 		this.helper.setUp();
-		this.dao = new GenericDao<CampaignSummary>();
+		this.dao = new CampaingSummaryDao();
 	}
 
 	@After
