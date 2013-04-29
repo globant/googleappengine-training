@@ -29,9 +29,6 @@ public class CampaignSummary {
 	@Persistent
 	private List<ProductSummary> productSummary;
 
-	@Persistent
-	private List<Event> event;
-
 	public Key getKey() {
 		return key;
 	}
@@ -79,14 +76,6 @@ public class CampaignSummary {
 
 	public void setProductSummary(List<ProductSummary> productSummary) {
 		this.productSummary = productSummary;
-	}
-
-	public List<Event> getEvent() {
-		return event;
-	}
-
-	public void setEvent(List<Event> event) {
-		this.event = event;
 	}
 
 }
