@@ -1,6 +1,7 @@
 package com.globant.gaetraining.addsincgae.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -27,6 +28,12 @@ public class Campaign {
 
 	@Persistent
 	private Product product;
+
+	@Persistent
+	private Key customerKey;
+
+	@Persistent
+	private List<Key> distributionChannelKeys;
 
 	public Key getKey() {
 		return key;
@@ -66,6 +73,22 @@ public class Campaign {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public Key getCustomerKey() {
+		return customerKey;
+	}
+
+	public void setCustomerKey(Key customerKey) {
+		this.customerKey = customerKey;
+	}
+
+	public List<Key> getDistributionChannelKeys() {
+		return distributionChannelKeys;
+	}
+
+	public void setDistributionChannelKeys(List<Key> distributionChannelKeys) {
+		this.distributionChannelKeys = distributionChannelKeys;
 	}
 
 }
