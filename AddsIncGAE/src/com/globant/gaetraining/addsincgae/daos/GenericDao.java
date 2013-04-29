@@ -1,7 +1,11 @@
 package com.globant.gaetraining.addsincgae.daos;
 
-import javax.jdo.PersistenceManager;
+import java.util.List;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+
+import com.globant.gaetraining.addsincgae.model.Customer;
 import com.google.appengine.api.datastore.Key;
 
 public class GenericDao<T> {
@@ -67,6 +71,32 @@ public class GenericDao<T> {
 
 		return result;
 
+	}
+
+	/**
+	 * Find all the entity of the specified class
+	 * 
+	 * @param classType
+	 *            type of the class to find
+	 * @return {@link List} with entities found
+	 */
+	public List<T> findAll(Class classType) {
+
+		PersistenceManager pm = PMF.getPM();
+
+		List<T> result = null;
+
+		Query q = pm.newQuery(classType);
+
+		try {
+
+			result = (List<T>) q.execute();
+
+		} finally {
+			pm.close();
+		}
+
+		return result;
 	}
 
 	public void update(T object) {
