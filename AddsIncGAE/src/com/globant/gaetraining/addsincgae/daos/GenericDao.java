@@ -76,7 +76,8 @@ public class GenericDao<T> {
 	 * Find all the entity of the specified class
 	 * 
 	 * @param classType
-	 *            type of the class to find
+	 *            {@link Class} of the object to retrieve Ex:
+	 *            CampaignSummary.class
 	 * @return {@link List} with entities found
 	 */
 	public List<T> findAll(Class classType) {
