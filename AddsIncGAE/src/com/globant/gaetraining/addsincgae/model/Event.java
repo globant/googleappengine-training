@@ -20,9 +20,6 @@ public class Event {
 	private Key distributionChannelKey;
 
 	@Persistent
-	private String country;
-
-	@Persistent
 	private String host;
 
 	@Persistent
@@ -50,14 +47,6 @@ public class Event {
 
 	public void setDistributionChannelKey(Key distributionChannelKey) {
 		this.distributionChannelKey = distributionChannelKey;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
 	}
 
 	public String getHost() {
