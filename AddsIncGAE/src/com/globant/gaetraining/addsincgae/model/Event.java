@@ -2,10 +2,12 @@ package com.globant.gaetraining.addsincgae.model;
 
 import java.util.Date;
 
+import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.google.appengine.api.datastore.Key;
 
+@PersistenceCapable
 public class Event {
 
 	@Persistent
