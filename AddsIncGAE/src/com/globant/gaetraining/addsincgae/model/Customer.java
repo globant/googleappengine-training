@@ -7,31 +7,38 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-
 @PersistenceCapable
 public class Customer {
 
-    @PrimaryKey
-    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Long id;
-	
+
 	@Persistent
 	private String name;
-	
+
 	@Persistent
 	private String legalName;
-	
+
 	@Persistent
 	private List<User> representative;
-	
+
 	@Persistent
 	private List<User> owners;
-	
+
 	@Persistent
 	private String description;
-	
+
 	@Persistent
 	private int employeesAmount;
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public Long getId(){
+		return this.id;
+	}
 
 	public String getName() {
 		return name;
