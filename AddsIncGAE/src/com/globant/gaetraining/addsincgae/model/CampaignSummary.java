@@ -8,7 +8,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
 
-public class CampaignDashboard {
+public class CampaignSummary {
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -24,10 +24,10 @@ public class CampaignDashboard {
 	private int totalViews;
 
 	@Persistent
-	private List<DistributionChannelDashboard> distributionChannelDashboard;
+	private List<DistributionChannelSummary> distributionChannelSummary;
 
 	@Persistent
-	private List<ProductDashboard> productDashboard;
+	private List<ProductSummary> productSummary;
 
 	@Persistent
 	private List<Event> event;
@@ -64,21 +64,21 @@ public class CampaignDashboard {
 		this.totalViews = totalViews;
 	}
 
-	public List<DistributionChannelDashboard> getDistributionChannelDashboard() {
-		return distributionChannelDashboard;
+	public List<DistributionChannelSummary> getDistributionChannelSummary() {
+		return distributionChannelSummary;
 	}
 
-	public void setDistributionChannelDashboard(
-			List<DistributionChannelDashboard> distributionChannelDashboard) {
-		this.distributionChannelDashboard = distributionChannelDashboard;
+	public void setDistributionChannelSummary(
+			List<DistributionChannelSummary> distributionChannelSummary) {
+		this.distributionChannelSummary = distributionChannelSummary;
 	}
 
-	public List<ProductDashboard> getProductDashboard() {
-		return productDashboard;
+	public List<ProductSummary> getProductSummary() {
+		return productSummary;
 	}
 
-	public void setProductDashboard(List<ProductDashboard> productDashboard) {
-		this.productDashboard = productDashboard;
+	public void setProductSummary(List<ProductSummary> productSummary) {
+		this.productSummary = productSummary;
 	}
 
 	public List<Event> getEvent() {
