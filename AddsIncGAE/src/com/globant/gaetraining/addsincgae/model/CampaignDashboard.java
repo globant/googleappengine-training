@@ -1,5 +1,7 @@
 package com.globant.gaetraining.addsincgae.model;
 
+import java.util.List;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -22,13 +24,13 @@ public class CampaignDashboard {
 	private int totalViews;
 
 	@Persistent
-	private DistributionChannelDashboard distributionChannelDashboard;
+	private List<DistributionChannelDashboard> distributionChannelDashboard;
 
 	@Persistent
-	private ProductDashboard productDashboard;
+	private List<ProductDashboard> productDashboard;
 
 	@Persistent
-	private Event event;
+	private List<Event> event;
 
 	public Key getKey() {
 		return key;
@@ -62,28 +64,28 @@ public class CampaignDashboard {
 		this.totalViews = totalViews;
 	}
 
-	public DistributionChannelDashboard getDistributionChannelDashboard() {
+	public List<DistributionChannelDashboard> getDistributionChannelDashboard() {
 		return distributionChannelDashboard;
 	}
 
 	public void setDistributionChannelDashboard(
-			DistributionChannelDashboard distributionChannelDashboard) {
+			List<DistributionChannelDashboard> distributionChannelDashboard) {
 		this.distributionChannelDashboard = distributionChannelDashboard;
 	}
 
-	public ProductDashboard getProductDashboard() {
+	public List<ProductDashboard> getProductDashboard() {
 		return productDashboard;
 	}
 
-	public void setProductDashboard(ProductDashboard productDashboard) {
+	public void setProductDashboard(List<ProductDashboard> productDashboard) {
 		this.productDashboard = productDashboard;
 	}
 
-	public Event getEvent() {
+	public List<Event> getEvent() {
 		return event;
 	}
 
-	public void setEvent(Event event) {
+	public void setEvent(List<Event> event) {
 		this.event = event;
 	}
 

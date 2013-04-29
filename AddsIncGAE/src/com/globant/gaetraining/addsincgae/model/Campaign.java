@@ -27,7 +27,7 @@ public class Campaign {
 	private Date endDate;
 
 	@Persistent
-	private Product product;
+	private List<Product> product;
 
 	@Persistent
 	private Key customerKey;
@@ -67,11 +67,11 @@ public class Campaign {
 		this.endDate = endDate;
 	}
 
-	public Product getProduct() {
+	public List<Product> getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(List<Product> product) {
 		this.product = product;
 	}
 
