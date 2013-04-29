@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.globant.gaetraining.addsincgae.daos.CustomerDao;
 import com.globant.gaetraining.addsincgae.model.Customer;
+import com.google.appengine.api.datastore.Key;
 
 
 @Service
@@ -18,6 +19,11 @@ public class CustomerService {
 	public List<Customer> getCustomers() {
 		
 		return this.customerDao.findAll(Customer.class);
+	}
+	
+	public Customer getCustomer(long customerId) {
+						
+		return null; //TODO
 	}
 
 }
