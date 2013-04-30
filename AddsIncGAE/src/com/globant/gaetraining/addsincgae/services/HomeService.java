@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.globant.gaetraining.addsincgae.daos.CampaignDao;
 import com.globant.gaetraining.addsincgae.daos.DistributionChannelDao;
+import com.globant.gaetraining.addsincgae.daos.ProductDao;
 import com.globant.gaetraining.addsincgae.model.Campaign;
 import com.globant.gaetraining.addsincgae.model.DistributionChannel;
 import com.globant.gaetraining.addsincgae.model.Product;
@@ -22,6 +23,9 @@ public class HomeService {
 
 	@Autowired
 	DistributionChannelDao distChannelDao;
+	
+	@Autowired
+	ProductDao productDao;
 	
 	public void populate(){
 		//DistChannel
@@ -54,7 +58,10 @@ public class HomeService {
 		product.setShortDescription("Short Desc");
 		product.setLongDescription("The longer description here");
 		product.setUrl("http://mock.globant.com/");
+		productDao.persist(product);
+		
 		campaignDao.persist(campaign);
+		
 		
 		
 		
