@@ -34,6 +34,13 @@ public class Product {
 	@Persistent
 	private String country;
 
+	@Persistent
+	private Campaign campaign;
+
+	public Product(Campaign campaign) {
+		this.campaign = campaign;
+	}
+
 	public Key getKey() {
 		return key;
 	}
@@ -88,6 +95,14 @@ public class Product {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	public Campaign getCampaign() {
+		return campaign;
+	}
+
+	public void setCampaign(Campaign campaign) {
+		this.campaign = campaign;
 	}
 
 }
