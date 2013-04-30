@@ -17,4 +17,8 @@ public class UserService {
 	public List<User> getUsers() {
 		return userDao.findAll(User.class);
 	}
+
+	public void addUser(User user) {
+		userDao.persist(user);
+	}
 }

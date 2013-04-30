@@ -9,7 +9,7 @@
 <title>Users List</title>
 </head>
 <h1>Users List</h1>
-<button type="button">Add</button>
+<a href="/user">Add new user</a>
 <body>
 	<table>
 		<tr>
@@ -20,10 +20,10 @@
 		</tr>
 		<c:forEach items="${users}" var="user">
 			<tr>
-				<td><a href="/users/${user.id}">Edit</a></td>
+				<td><a href="/users/${user.key.id}">Edit</a></td>
 				<td><c:out value="${user.userName}" /></td>
-				<td><c:out value="${user.role}" /></td>
-				<td><a href="/users/${users.id}">Del</a></td>
+				<td><c:out value="${user.roles}" /></td>
+				<td><a href="/users/${user.key.id}">Del</a></td>
 			</tr>
 		</c:forEach>
 	</table>
