@@ -51,7 +51,7 @@ public class CustomerController {
 		customer.setRepresentative(null);
 		customerService.addCustomer(customer);
 		
-		return "AddCustomer";
+		return "redirect:/customers";
 	}
 	
 	@RequestMapping(value="/addCustomer", method = RequestMethod.GET)
