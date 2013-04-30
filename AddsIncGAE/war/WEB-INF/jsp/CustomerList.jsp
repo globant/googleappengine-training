@@ -16,6 +16,7 @@
 			<th></th>
 			<th>Name</th>
 			<th>Legal name</th>
+            <th>Description</th>
 			<th>Employee</th>
 			<th></th>
 		</tr>
@@ -24,6 +25,7 @@
 				<td><a href="/customers/${customer.key.id}">Edit</a></td>
 				<td><c:out value="${customer.name}" /></td>
 				<td><c:out value="${customer.legalName}" /></td>
+                <td><c:out value="${customer.description}" /></td>
 				<td><c:out value="${customer.employeesAmount}" /></td>
 				<td><a href="/customers/${customer.key.id}">Del</a></td>
 			</tr>
