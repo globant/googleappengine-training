@@ -41,17 +41,13 @@ public class AdEventController {
 	
 	@RequestMapping("/view/{product}/{distchannel}")
 	public String receiveView(HttpServletRequest request, @PathVariable String product,@PathVariable String distchannel,ModelMap map){
-		return eventsService.processEvent(EventsService.EventType.VIEW, product, distchannel, request.getRemoteAddr());
+		eventsService.processEvent(EventsService.EventType.VIEW, product, distchannel, request.getRemoteAddr());
+		return "forward:/resources/img/spy.jpg";
 	}
 	
 	@RequestMapping("/click/{product}/{distchannel}")
-	
-	public ModelAndView receiveClick(HttpServletRequest request, @PathVariable String productId,@PathVariable String distchannel,ModelMap map){
-		
-		String returnUrl = eventsService.processEvent(EventsService.EventType.CLICK, productId, distchannel, request.getRemoteAddr());
-		
-		ModelAndView redirect = new ModelAndView(returnUrl);
-		return redirect;
+	public String receiveClick(HttpServletRequest request, @PathVariable String product,@PathVariable String distchannel,ModelMap map){		
+		return "redirect:".concat(eventsService.processEvent(EventsService.EventType.CLICK, product, distchannel, request.getRemoteAddr()));		
 	}
 
 }

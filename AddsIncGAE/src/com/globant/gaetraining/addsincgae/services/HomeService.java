@@ -2,6 +2,7 @@ package com.globant.gaetraining.addsincgae.services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,20 +52,27 @@ public class HomeService {
 		campaign.setDistributionChannelKeys(new ArrayList<Key>());
 		campaign.getDistributionChannelKeys().add(keyDist);
 		campaign.setProduct(new ArrayList<Product>());
-		Key keyProduct = KeyFactory.createKey("Product", "mock_product");
+		Key keyProduct = KeyFactory.createKey(keyCamp,"Product", "mock_product");
 		Product product = new Product();
 		product.setKey(keyProduct);
 		product.setName("Mockiproduct");
 		product.setShortDescription("Short Desc");
 		product.setLongDescription("The longer description here");
-		product.setUrl("http://mock.globant.com/");
+		product.setUrl("http://www.ala.org/advocacy/banned/");
+		campaign.getProduct().add(product);
 		productDao.persist(product);
-		
 		campaignDao.persist(campaign);
 		
+	}
+	
+	public List<Product> getProducts(){
+		return productDao.findAll(Product.class);
 		
-		
-		
+	}
+	
+	
+	public List<DistributionChannel> getChannels(){
+		return distChannelDao.findAll(DistributionChannel.class);		
 	}
 
 

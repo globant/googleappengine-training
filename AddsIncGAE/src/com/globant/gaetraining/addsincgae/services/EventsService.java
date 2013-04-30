@@ -6,14 +6,22 @@ import java.util.Calendar;
 
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.globant.gaetraining.addsincgae.daos.EventsDao;
+import com.globant.gaetraining.addsincgae.daos.ProductDao;
+import com.globant.gaetraining.addsincgae.model.Product;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 
 @Service
 public class EventsService {
+	
+	@Autowired
+	ProductDao productDao;
 	
 	public String processEvent(EventType type, String ProductId,
 			String distChannel, String clientIp) {
@@ -40,7 +48,14 @@ public class EventsService {
 				.withMethod(TaskOptions.Method.PULL).payload(sb.toString())
 				.tag(ProductId).tag(distChannel);
 		q.add(taskOptions);
-		return type.toString();
+		if(type.equals(EventType.VIEW)){
+			return type.toString();
+		}
+		else{
+			Product p = productDao.findByKey(KeyFactory.stringToKey(ProductId),Product.class);
+			return p.getUrl();
+			
+		}
 
 	}
 	public static enum EventType{
