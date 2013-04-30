@@ -1,15 +1,12 @@
 package com.globant.gaetraining.addsincgae.daos;
 
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import sun.io.CharacterEncoding;
 
 import com.globant.gaetraining.addsincgae.model.Campaign;
 import com.globant.gaetraining.addsincgae.model.Product;
@@ -47,7 +44,7 @@ public class CampaignDaoTest {
 		camp.setName("MockParent");
 		camp.setProduct(new ArrayList<Product>());
 		Product prod;
-		for(int i= 0;i<100;i++){
+		for (int i = 0; i < 100; i++) {
 			prod = new Product();
 			prod.setName(Integer.toString(i));
 			prod.setShortDescription("SD");
@@ -57,9 +54,28 @@ public class CampaignDaoTest {
 		}
 		Campaign cmp = dao.persist(camp);
 		Assert.assertNotNull(camp.getKey());
-		Assert.assertEquals(cmp.getProduct().size(),100);
-		for(int i=0;i<100;i++){
+		Assert.assertEquals(cmp.getProduct().size(), 100);
+		for (int i = 0; i < 100; i++) {
 			Assert.assertNotNull(cmp.getProduct().get(i).getKey());
-		}	
+		}
+	}
+
+	@Test
+	public void findByValidKeyTest() {
+		Campaign campaign = new Campaign();
+		campaign = this.dao.persist(campaign);
+		Campaign result = this.dao.findByKey(campaign.getKey(), Campaign.class);
+		Assert.assertNotNull(result);
+
+	}
+
+	@Test
+	public void findAllTest() {
+		Campaign campaign = new Campaign();
+		campaign.setName("Mc Donalds 2013");
+		campaign = this.dao.persist(campaign);
+		List<Campaign> result = this.dao.findAll(Campaign.class);
+		Assert.assertNotNull(result);
+
 	}
 }
