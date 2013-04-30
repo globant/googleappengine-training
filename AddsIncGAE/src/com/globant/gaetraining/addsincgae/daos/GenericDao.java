@@ -1,10 +1,22 @@
 package com.globant.gaetraining.addsincgae.daos;
 
+import java.util.List;
+
+import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
 
 import com.google.appengine.api.datastore.Key;
 
 public class GenericDao<T> {
+
+	private static final PersistenceManagerFactory pmfInstance = JDOHelper
+			.getPersistenceManagerFactory("transactions-optional");
+
+	protected PersistenceManager getPM() {
+		return pmfInstance.getPersistenceManager();
+	}
 
 	/**
 	 * Persist an object of type T to the datastore
@@ -15,7 +27,7 @@ public class GenericDao<T> {
 	 */
 	public T persist(T object) {
 
-		PersistenceManager pm = PMF.getPM();
+		PersistenceManager pm = this.getPM();
 
 		try {
 			object = pm.makePersistent(object);
@@ -34,7 +46,7 @@ public class GenericDao<T> {
 	 */
 	public void delete(T object) {
 
-		PersistenceManager pm = PMF.getPM();
+		PersistenceManager pm = this.getPM();
 
 		try {
 			pm.deletePersistent(object);
@@ -55,7 +67,7 @@ public class GenericDao<T> {
 	 */
 	public T findByKey(Key key, Class classType) {
 
-		PersistenceManager pm = PMF.getPM();
+		PersistenceManager pm = this.getPM();
 
 		T result = null;
 
@@ -67,6 +79,33 @@ public class GenericDao<T> {
 
 		return result;
 
+	}
+
+	/**
+	 * Find all the entity of the specified class
+	 * 
+	 * @param classType
+	 *            {@link Class} of the object to retrieve Ex:
+	 *            CampaignSummary.class
+	 * @return {@link List} with entities found
+	 */
+	public List<T> findAll(Class classType) {
+
+		PersistenceManager pm = this.getPM();
+
+		List<T> result = null;
+
+		Query q = pm.newQuery(classType);
+
+		try {
+
+			result = (List<T>) q.execute();
+
+		} finally {
+			pm.close();
+		}
+
+		return result;
 	}
 
 	public void update(T object) {

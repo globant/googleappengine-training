@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.globant.gaetraining.addsincgae.daos.CustomerDao;
 import com.globant.gaetraining.addsincgae.model.Customer;
-import com.google.appengine.api.datastore.Key;
 
 
 @Service

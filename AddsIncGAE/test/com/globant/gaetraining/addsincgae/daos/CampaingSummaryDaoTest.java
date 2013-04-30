@@ -1,5 +1,7 @@
 package com.globant.gaetraining.addsincgae.daos;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,10 +43,22 @@ public class CampaingSummaryDaoTest {
 
 		CampaignSummary campaingSummary = new CampaignSummary();
 		campaingSummary = this.dao.persist(campaingSummary);
-		
-		
+
 		CampaignSummary result = this.dao.findByKey(campaingSummary.getKey(),
 				CampaignSummary.class);
+		Assert.assertNotNull(result);
+
+	}
+
+	@Test
+	public void findAllTest() {
+
+		CampaignSummary campaingSummary = new CampaignSummary();
+		campaingSummary.setTotalHits(10);
+		campaingSummary = this.dao.persist(campaingSummary);
+
+		List<CampaignSummary> result = this.dao.findAll(CampaignSummary.class);
+
 		Assert.assertNotNull(result);
 
 	}
