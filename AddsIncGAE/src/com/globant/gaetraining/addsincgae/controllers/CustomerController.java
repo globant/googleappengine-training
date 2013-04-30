@@ -3,9 +3,12 @@ package com.globant.gaetraining.addsincgae.controllers;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,5 +40,22 @@ public class CustomerController {
 		model.addAttribute("customer", customer);
 		
 		return "EditCustomer";
+	}
+	
+	@RequestMapping(value="/customers", method = RequestMethod.POST)
+	public String addCustomer(HttpServletRequest request, ModelMap model){
+		String name = request.getParameter("name");
+		Customer customer = new Customer();
+		customer.setName(name);
+		customer.setOwners(null);
+		customer.setRepresentative(null);
+		customerService.addCustomer(customer);
+		
+		return "AddCustomer";
+	}
+	
+	@RequestMapping(value="/addCustomer", method = RequestMethod.GET)
+	public String add(){
+		return "AddCustomer";
 	}
 }

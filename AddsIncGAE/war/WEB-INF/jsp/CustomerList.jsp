@@ -9,7 +9,7 @@
 <title>Customers List</title>
 </head>
 <h1>Customers List</h1>
-<button type="button">Add</button>
+<a href="/addCustomer">Add new customer</a>
 <body>
 	<table>
 		<tr>
