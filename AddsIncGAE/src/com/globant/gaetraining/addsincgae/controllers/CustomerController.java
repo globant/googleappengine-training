@@ -45,8 +45,15 @@ public class CustomerController {
 	@RequestMapping(value="/customers", method = RequestMethod.POST)
 	public String addCustomer(HttpServletRequest request, ModelMap model){
 		String name = request.getParameter("name");
+		String legalName = request.getParameter("legalName");
+		String description = request.getParameter("description");
+		String employeeAmount = request.getParameter("employeesAmount");
+		
 		Customer customer = new Customer();
 		customer.setName(name);
+		customer.setLegalName(legalName);
+		customer.setDescription(description);
+		customer.setEmployeesAmount(employeeAmount == null ? 0 : Integer.parseInt(employeeAmount));
 		customer.setOwners(null);
 		customer.setRepresentative(null);
 		customerService.addCustomer(customer);

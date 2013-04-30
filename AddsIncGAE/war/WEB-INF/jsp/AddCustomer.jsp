@@ -7,10 +7,13 @@
 <title>Add Customer</title>
 </head>
 <body>
-	<h1>Add customer</h1>
-	<form action="/customers" method="POST">
-		Customer name: <input type="text" id="name" name="name" />
-		<input type="submit" value="Create" />
-	</form>
+    <h1>Add customer</h1>
+    <form action="/customers" method="POST" class="form">
+        <label>Customer name:</label><input type="text" id="name" name="name" /><br/>
+        <label>Legal name:</label><input type="text" id="legalName" name="legalName" /><br/>
+        <label>Description:</label><textarea rows="2" cols="10" id="description" name="description"></textarea><br/>
+        <label>Employees amount:</label><input type="text" id="employeesAmount" name="employeesAmount" /><br/>
+        <input type="submit" value="Create" />
+    </form>
 </body>
 </html>
