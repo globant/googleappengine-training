@@ -21,11 +21,11 @@
 		</tr>
 		<c:forEach items="${customers}" var="customer">
 			<tr>
-				<td><a href="/customers/${customer.id}">Edit</a></td>
+				<td><a href="/customers/${customer.key.id}">Edit</a></td>
 				<td><c:out value="${customer.name}" /></td>
 				<td><c:out value="${customer.legalName}" /></td>
 				<td><c:out value="${customer.employeesAmount}" /></td>
-				<td><a href="/customers/${customer.id}">Del</a></td>
+				<td><a href="/customers/${customer.key.id}">Del</a></td>
 			</tr>
 		</c:forEach>
 	</table>

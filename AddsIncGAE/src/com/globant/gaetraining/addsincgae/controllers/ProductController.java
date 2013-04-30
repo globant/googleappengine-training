@@ -8,23 +8,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.globant.gaetraining.addsincgae.model.User;
-import com.globant.gaetraining.addsincgae.services.UserService;
+import com.globant.gaetraining.addsincgae.model.Product;
+import com.globant.gaetraining.addsincgae.services.ProductService;
 
 @Controller
-public class UserController {
+public class ProductController {
 	
 	@Autowired
-	private UserService userService;
+	private ProductService productService;
 	
-	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	public String getCustomers(Map<String, Object> model) {
 
-		List<User> users = userService.getUsers();
+		List<Product> products = productService.getProducts();
 		
-		model.put("users", users);
+		model.put("products", products);
 		
-		return "UserList";
+		return "ProductList";
 	}
+	
 
 }
