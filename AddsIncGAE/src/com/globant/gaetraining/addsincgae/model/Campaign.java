@@ -27,6 +27,9 @@ public class Campaign {
 	private Date endDate;
 
 	@Persistent
+	private boolean active;
+
+	@Persistent
 	private List<Product> product;
 
 	@Persistent
@@ -65,6 +68,14 @@ public class Campaign {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	public List<Product> getProduct() {
