@@ -25,7 +25,12 @@ public class CampaignDao extends GenericDao<Campaign> {
 
 		List<Campaign> results = null;
 
+//		FilterPredicate filter = new FilterPredicate("customerKeyParam",
+//				FilterOperator.EQUAL, customerKey);
+		
 		Query query = this.getPM().newQuery(Campaign.class);
+		
+		// this.getPM().getFetchPlan().addGroup("products");
 
 		query.setFilter("customerKey == customerKeyParam && "
 				+ " active == activeParam");
@@ -33,7 +38,11 @@ public class CampaignDao extends GenericDao<Campaign> {
 		query.declareParameters("com.google.appengine.api.datastore.Key customerKeyParam, "
 				+ "boolean activeParam");
 
-		results = (List<Campaign>) query.execute(customerKey, true);
+		try {
+			results = (List<Campaign>) query.execute(customerKey, true);
+		} finally {
+			this.getPM().close();
+		}
 
 		return results;
 

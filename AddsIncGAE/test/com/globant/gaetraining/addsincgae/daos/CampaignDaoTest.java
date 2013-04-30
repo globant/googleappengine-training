@@ -1,8 +1,6 @@
 package com.globant.gaetraining.addsincgae.daos;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.After;
@@ -47,10 +45,9 @@ public class CampaignDaoTest {
 	public void persistCampaignAndProducts() {
 		Campaign camp = new Campaign();
 		camp.setName("MockParent");
-		camp.setProduct(new ArrayList<Product>());
 		Product prod;
 		for (int i = 0; i < 100; i++) {
-			prod = new Product();
+			prod = new Product(camp);
 			prod.setName(Integer.toString(i));
 			prod.setShortDescription("SD");
 			prod.setLongDescription("Long description");
@@ -74,12 +71,11 @@ public class CampaignDaoTest {
 
 		Campaign camp = new Campaign();
 		camp.setName("MockParent");
-		camp.setProduct(new ArrayList<Product>());
 		camp.setCustomerKey(customer.getKey());
 
 		Product prod;
 		for (int i = 0; i < 100; i++) {
-			prod = new Product();
+			prod = new Product(camp);
 			prod.setName(Integer.toString(i));
 			prod.setShortDescription("SD");
 			prod.setLongDescription("Long description");
@@ -122,22 +118,29 @@ public class CampaignDaoTest {
 
 		// Active campaign
 		Campaign campA = new Campaign();
-		campA.setName("MockParent");
+		campA.setName("MockParent A");
 		campA.setProduct(new ArrayList<Product>());
+		Product prod;
+		for (int i = 0; i < 100; i++) {
+			prod = new Product(campA);
+			prod.setName(Integer.toString(i));
+			prod.setShortDescription("SD");
+			prod.setLongDescription("Long description");
+			prod.setUrl("http://jkjk.com/");
+			campA.getProduct().add(prod);
+		}
 		campA.setCustomerKey(customer.getKey());
 		campA.setActive(true);
 
 		// Inactive campaign
 		Campaign campB = new Campaign();
-		campB.setName("MockParent");
-		campB.setProduct(new ArrayList<Product>());
+		campB.setName("MockParent B");
 		campB.setCustomerKey(customer.getKey());
 		campB.setActive(false);
 
 		// Active campaign without customer
 		Campaign campC = new Campaign();
-		campC.setName("MockParent");
-		campC.setProduct(new ArrayList<Product>());
+		campC.setName("MockParent C");
 		campC.setActive(true);
 
 		campA = dao.persist(campA);

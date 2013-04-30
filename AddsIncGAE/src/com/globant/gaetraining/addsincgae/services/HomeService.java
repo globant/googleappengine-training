@@ -51,9 +51,8 @@ public class HomeService {
 		campaign.setStartDate(cal.getTime());
 		campaign.setDistributionChannelKeys(new ArrayList<Key>());
 		campaign.getDistributionChannelKeys().add(keyDist);
-		campaign.setProduct(new ArrayList<Product>());
 		Key keyProduct = KeyFactory.createKey(keyCamp,"Product", "mock_product");
-		Product product = new Product();
+		Product product = new Product(campaign);
 		product.setKey(keyProduct);
 		product.setName("Mockiproduct");
 		product.setShortDescription("Short Desc");
