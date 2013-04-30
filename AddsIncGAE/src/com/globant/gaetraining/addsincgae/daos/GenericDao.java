@@ -9,7 +9,7 @@ import javax.jdo.Query;
 
 import com.google.appengine.api.datastore.Key;
 
-public class GenericDao<T> {
+public abstract class GenericDao<T> {
 
 	private static final PersistenceManagerFactory pmfInstance = JDOHelper
 			.getPersistenceManagerFactory("transactions-optional");
