@@ -1,6 +1,5 @@
 package com.globant.gaetraining.addsincgae.daos;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.jdo.Query;
@@ -28,14 +27,13 @@ public class CampaignDao extends GenericDao<Campaign> {
 
 		Query query = this.getPM().newQuery(Campaign.class);
 
-		query.setFilter("customerKey == customerKeyParam");
-		query.setFilter("startDate < currentDateParam");
-		query.setFilter("endDate > currentDateParam");
+		query.setFilter("customerKey == customerKeyParam && "
+				+ " active == activeParam");
 
-		query.declareImports("import java.util.Date");
-		query.declareParameters("String customerKeyParam, Date currentDateParam");
+		query.declareParameters("com.google.appengine.api.datastore.Key customerKeyParam, "
+				+ "boolean activeParam");
 
-		results = (List<Campaign>) query.execute(customerKey, new Date());
+		results = (List<Campaign>) query.execute(customerKey, true);
 
 		return results;
 

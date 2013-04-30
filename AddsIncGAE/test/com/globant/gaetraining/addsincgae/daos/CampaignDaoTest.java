@@ -117,7 +117,7 @@ public class CampaignDaoTest {
 	public void findActiveByCustomerKey() {
 
 		Customer customer = new Customer();
-		customer.setName("Test Man!!");
+		customer.setName("Test Man A!!");
 		customer = this.daoCustomer.persist(customer);
 
 		// Active campaign
@@ -125,32 +125,28 @@ public class CampaignDaoTest {
 		campA.setName("MockParent");
 		campA.setProduct(new ArrayList<Product>());
 		campA.setCustomerKey(customer.getKey());
-		campA.setStartDate(new GregorianCalendar(2010, 01, 01).getTime());
-		campA.setEndDate(new GregorianCalendar(2018, 01, 01).getTime());
-		
-		// Active campaign
+		campA.setActive(true);
+
+		// Inactive campaign
 		Campaign campB = new Campaign();
 		campB.setName("MockParent");
 		campB.setProduct(new ArrayList<Product>());
 		campB.setCustomerKey(customer.getKey());
-		campB.setStartDate(new GregorianCalendar(2010, 01, 01).getTime());
-		campB.setEndDate(new GregorianCalendar(2018, 01, 01).getTime());
-		
-		// inactive campaign
+		campB.setActive(false);
+
+		// Active campaign without customer
 		Campaign campC = new Campaign();
 		campC.setName("MockParent");
 		campC.setProduct(new ArrayList<Product>());
-		campC.setCustomerKey(customer.getKey());
-		campC.setStartDate(new GregorianCalendar(2010, 01, 01).getTime());
-		campC.setEndDate(new GregorianCalendar(2013, 01, 01).getTime());
+		campC.setActive(true);
 
-		dao.persist(campA);
-		dao.persist(campB);
-		dao.persist(campC);
-		
+		campA = dao.persist(campA);
+		campB = dao.persist(campB);
+		campC = dao.persist(campC);
+
 		List<Campaign> campaigns = dao.findActiveByCustomerKey(customer
 				.getKey());
-		
-		Assert.assertEquals(2, campaigns.size());
+
+		Assert.assertEquals(1, campaigns.size());
 	}
 }
