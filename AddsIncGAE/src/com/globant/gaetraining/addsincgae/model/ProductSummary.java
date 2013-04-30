@@ -15,6 +15,9 @@ public class ProductSummary {
 	private Key key;
 
 	@Persistent
+	private String name;
+
+	@Persistent
 	private int totalHits;
 
 	@Persistent
@@ -29,6 +32,14 @@ public class ProductSummary {
 
 	public void setKey(Key key) {
 		this.key = key;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getTotalHits() {
