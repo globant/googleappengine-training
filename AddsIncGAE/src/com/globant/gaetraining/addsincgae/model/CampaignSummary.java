@@ -17,6 +17,9 @@ public class CampaignSummary {
 	private Key key;
 
 	@Persistent
+	private String name;
+
+	@Persistent
 	private Key campaingKey;
 
 	@Persistent
@@ -37,6 +40,14 @@ public class CampaignSummary {
 
 	public void setKey(Key key) {
 		this.key = key;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Key getCampaingKey() {
