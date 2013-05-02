@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.globant.gaetraining.addsincgae.daos.UserDao;
 import com.globant.gaetraining.addsincgae.model.User;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @Service
 public class UserService {
@@ -20,5 +22,11 @@ public class UserService {
 
 	public void addUser(User user) {
 		userDao.persist(user);
+	}
+
+	public User getUser(Long userId) {
+		
+		Key key = KeyFactory.createKey(User.class.getSimpleName(), userId);
+		return userDao.findByKey(key, User.class);
 	}
 }
