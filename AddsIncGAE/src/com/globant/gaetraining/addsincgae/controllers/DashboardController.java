@@ -1,6 +1,7 @@
 package com.globant.gaetraining.addsincgae.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -70,9 +71,11 @@ public class DashboardController {
 		campA.setProduct(new ArrayList<Product>());
 		campA.setCustomerKey(customer.getKey());
 		campA.setActive(true);
+		campA.setStartDate(new Date());
+		campA.setEndDate(new Date());
 		
 		Product prod;
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 			prod = new Product(campA);
 			prod.setName(Integer.toString(i));
 			prod.setShortDescription("SD");

@@ -94,7 +94,7 @@ public class CampaignDaoTest {
 	public void findByValidKeyTest() {
 		Campaign campaign = new Campaign();
 		campaign = this.dao.persist(campaign);
-		Campaign result = this.dao.findByKey(campaign.getKey(), Campaign.class);
+		Campaign result = this.dao.findByKey(campaign.getKey(), Campaign.class, null);
 		Assert.assertNotNull(result);
 
 	}

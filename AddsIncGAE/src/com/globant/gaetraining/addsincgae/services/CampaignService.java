@@ -37,7 +37,9 @@ public class CampaignService {
 	 */
 	public List<Object> findCampaignWithStatisticsbyId(Object campaignId) {
 
-		Campaign campaign = this.campaignDao.findById(campaignId);
+		Campaign campaign = this.campaignDao.findByIdWithProducts(campaignId);
+		
+		campaign.getProduct().size();
 
 		List<Object> results = new ArrayList<>();
 

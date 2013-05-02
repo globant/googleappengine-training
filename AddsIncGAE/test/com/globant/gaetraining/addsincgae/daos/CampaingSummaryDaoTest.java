@@ -45,7 +45,7 @@ public class CampaingSummaryDaoTest {
 		campaingSummary = this.dao.persist(campaingSummary);
 
 		CampaignSummary result = this.dao.findByKey(campaingSummary.getKey(),
-				CampaignSummary.class);
+				CampaignSummary.class, null);
 		Assert.assertNotNull(result);
 
 	}

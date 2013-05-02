@@ -24,7 +24,7 @@ public class ProductService {
 	
 	public Product getProduct(String productId){
 		Key id = KeyFactory.stringToKey(productId);
-		Product product = productDao.findByKey(id, Product.class);
+		Product product = productDao.findByKey(id, Product.class, null);
 		return product;
 	}
 	
@@ -37,7 +37,7 @@ public class ProductService {
 									String keyword, int limit){
 		
 		Key keyTmp = KeyFactory.stringToKey(channelKey);
-		DistributionChannel distChannel = distributionChannelDao.findByKey(keyTmp, DistributionChannel.class);
+		DistributionChannel distChannel = distributionChannelDao.findByKey(keyTmp, DistributionChannel.class, null);
 		
 		List<Product> products = productDao.getProductsByKeyWordAndCampaignAndDistChannel(distChannel, keyword, limit);
 		
