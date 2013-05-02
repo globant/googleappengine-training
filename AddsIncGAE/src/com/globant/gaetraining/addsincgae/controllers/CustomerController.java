@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,10 +36,31 @@ public class CustomerController {
 	@RequestMapping(value = "/customers/{customerId}", method = RequestMethod.GET, produces = "text/html")
 	public String editCustomer(@PathVariable Long customerId, Model model) {
 	
-		Customer customer = customerService.getCustomer(customerId);
+		//Customer customer = customerService.getCustomer(customerId);
+		
+		//Simulates a new customer
+		Customer customer = new Customer();
+		//customer.set.setId(Long.parseLong("123456789"));
+		customer.setName("Pepe");
+		customer.setLegalName("Gomez");
+		customer.setDescription("Esto es una descripcion");
+		customer.setEmployeesAmount(100);
+		//Fin
 		
 		model.addAttribute("customer", customer);
 		
+		return "EditCustomer";
+	}
+	
+	@RequestMapping(value = "/customers/{customerId}", method = RequestMethod.POST)
+	public String saveCustomer(@PathVariable Long customerId, @ModelAttribute("customer") Customer customer, Model model) {
+	 
+		//customer.setId(customerId);
+		
+		this.customerService.addCustomer(customer);
+	  
+		model.addAttribute("customer", customer);
+	  
 		return "EditCustomer";
 	}
 	
