@@ -21,7 +21,7 @@
 		</tr>
 		<c:forEach items="${campaigns}" var="campaign">
 			<tr>
-				<td><a href="/dashboard/campaign/${campaign.key.id}">${campaign.name}</a></td>
+				<td>${campaign.name}</td>
 				<td>${campaign.daysLeft}</td>
 				<td>${fn:length(campaign.product)}</td>
 			</tr>
