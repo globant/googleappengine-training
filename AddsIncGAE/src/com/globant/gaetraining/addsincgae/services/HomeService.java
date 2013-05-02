@@ -2,6 +2,7 @@ package com.globant.gaetraining.addsincgae.services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,66 +18,80 @@ import com.google.appengine.api.datastore.KeyFactory;
 
 @Service
 public class HomeService {
-	
+
 	@Autowired
 	CampaignDao campaignDao;
 
 	@Autowired
 	DistributionChannelDao distChannelDao;
-	
+
 	@Autowired
 	ProductDao productDao;
-	
-	public void populate(){
-		//DistChannel
+
+	public void populate() {
+		// DistChannel
 		DistributionChannel distChannel = new DistributionChannel();
-		Key keyDist = KeyFactory.createKey("DistributionChannel", "mock_distributionchannel");
+		Key keyDist = KeyFactory.createKey("DistributionChannel",
+				"mock_distributionchannel");
 		distChannel.setKey(keyDist);
 		distChannel.setName("Mockito");
 		distChannel.setMediaType("TV");
-		distChannel.setTemplate("<div><h4>{{name}}</h4><p>{{longdesc}}</p></div>");
+		distChannel
+				.setTemplate("<div><h4>{{name}}</h4><p>{{longdesc}}</p></div>");
 		distChannelDao.persist(distChannel);
-		
-		
-		//Campaign
-		Campaign campaign = new Campaign();
-		Key keyCamp = KeyFactory.createKey("Campaign", "mock_campaign");
-		campaign.setKey(keyCamp);
-		campaign.setName("Mock");
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, 30);
-		campaign.setEndDate(cal.getTime());
-		cal.add(Calendar.YEAR, -1);
-		campaign.setStartDate(cal.getTime());
-		campaign.setDistributionChannelKeys(new ArrayList<Key>());
-		campaign.getDistributionChannelKeys().add(keyDist);
-		campaign.setProduct(new ArrayList<Product>());
-		
-		//Product
-		Key keyProduct = KeyFactory.createKey(campaign.getKey(), "Product", "mock_product");
-		Product product = new Product();
-		product.setKey(keyProduct);
-		product.setName("Mockiproduct");
-		product.setShortDescription("Short Desc");
-		product.setLongDescription("The longer description here");
-		product.setUrl("http://mock.globant.com/");
-		
-		productDao.persist(product);
-		
-//		Key keyProduct2 = KeyFactory.createKey(campaign.getKey(), "Product", "mock_product");
-//		Product product2 = new Product();
-//		product.setKey(keyProduct2);
-//		product.setName("Mockiproduct 2");
-//		product.setShortDescription("Short Desc 2");
-//		product.setLongDescription("The longer description here 2");
-//		product.setUrl("http://mock.globant.com/");
-//		productDao.persist(product2);
-		
-		campaign.getProduct().add(product);
-		campaignDao.persist(campaign);
-		
+
+		DistributionChannel distChannel2 = new DistributionChannel();
+		Key keyDist2 = KeyFactory.createKey("DistributionChannel",
+				"mock_distributionchannel 2");
+		distChannel.setKey(keyDist2);
+		distChannel.setName("Mockito 2");
+		distChannel.setMediaType("Web");
+		distChannel
+				.setTemplate("<div><h4>{{name}}</h4><p>{{longdesc}}</p></div>");
+		distChannelDao.persist(distChannel);
+
+		for (int i = 1; i <= 8; ++i) {
+			// Campaign
+			Campaign campaign = new Campaign();
+			Key keyCamp = KeyFactory.createKey("Campaign",
+					"mock_campaign " + i);
+			campaign.setKey(keyCamp);
+			campaign.setName("Mock " + i);
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DATE, 30);
+			campaign.setEndDate(cal.getTime());
+			cal.add(Calendar.YEAR, -1);
+			campaign.setStartDate(cal.getTime());
+			campaign.setDistributionChannelKeys(new ArrayList<Key>());
+			campaign.getDistributionChannelKeys().add(
+					i % 2 == 0 ? keyDist : keyDist2);
+			campaign.setProduct(new ArrayList<Product>());
+
+			for (int j = 1; j < 3; ++j) {
+				// Product
+				Key keyProduct = KeyFactory.createKey(campaign.getKey(),
+						"Product", "mock_product " + i + " :: " + j);
+				Product product = new Product(campaign);
+				product.setKey(keyProduct);
+				product.setName("Mockiproduct " + i + " :: " + j);
+				product.setShortDescription("Short Desc " + i + " :: " + j);
+				product.setLongDescription("The longer description here " + i + " :: " + j);
+				product.setUrl("http://mock.globant.com/");
+				campaign.getProduct().add(product);
+
+			}
+			campaignDao.persist(campaign);
+		}
+
 	}
 
+	public List<Product> getProducts() {
+		return productDao.findAll(Product.class);
 
+	}
+
+	public List<DistributionChannel> getChannels() {
+		return distChannelDao.findAll(DistributionChannel.class);
+	}
 
 }

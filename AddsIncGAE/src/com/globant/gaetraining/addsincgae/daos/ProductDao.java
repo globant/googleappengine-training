@@ -1,5 +1,6 @@
 package com.globant.gaetraining.addsincgae.daos;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,14 +28,20 @@ public class ProductDao extends GenericDao<Product> {
 		query.declareParameters("String channelNameParam");
 		String chanName = distChannel.getKey().toString();
 		List<Campaign> campaigns = (List<Campaign>) query.execute(distChannel.getKey());
-		
-		StringBuilder campaingsKeys = new StringBuilder();
+		System.out.println("Num camp -> " + campaigns.size());
+		List<String> campaingsKeys = new ArrayList<String>();
 		for(int i = 0; i < campaigns.size(); ++i ){
-			campaingsKeys.append( campaigns.get(i).getKey() );
+			campaingsKeys.add( campaigns.get(i).getKey().toString() );
 		}
 		
-		query = pm.newQuery(Product.class);
+		query = pm.newQuery(Product.class, ":p.contains(campaign_key)");
+		query.setFilter("");
+		List<Product> products = (List<Product>)query.execute(campaingsKeys);
 		
+		System.out.println("Num prods -> " + products.size());
+		for (Product prod : products) {
+			System.out.println(prod.getName());
+		}
 		
 //		Map<String, Object> parameters = new HashMap<String,Object>();
 //		

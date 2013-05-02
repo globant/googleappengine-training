@@ -9,7 +9,6 @@ import org.codehaus.jackson.JsonGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.globant.gaetraining.addsincgae.daos.EventsDao;
 import com.globant.gaetraining.addsincgae.daos.ProductDao;
 import com.globant.gaetraining.addsincgae.model.Product;
 import com.google.appengine.api.datastore.KeyFactory;
