@@ -25,12 +25,7 @@ public class CampaignDao extends GenericDao<Campaign> {
 
 		List<Campaign> results = null;
 
-//		FilterPredicate filter = new FilterPredicate("customerKeyParam",
-//				FilterOperator.EQUAL, customerKey);
-		
 		Query query = this.getPM().newQuery(Campaign.class);
-		
-		// this.getPM().getFetchPlan().addGroup("products");
 
 		query.setFilter("customerKey == customerKeyParam && "
 				+ " active == activeParam");

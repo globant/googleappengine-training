@@ -6,8 +6,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -21,7 +23,7 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public String getCustomers(Map<String, Object> model) {
+	public String getUsers(Map<String, Object> model) {
 
 		List<User> users = userService.getUsers();
 		
@@ -38,6 +40,16 @@ public class UserController {
 		return "redirect:/users";
 	}
 	
+	
+	@RequestMapping(value = "/users/{userId}", method = RequestMethod.GET, produces = "text/html")
+	public String editUser(@PathVariable Long userId, Model model) {
+	
+		User user = userService.getUser(userId);
+		
+		model.addAttribute("user", user);
+		
+		return "EditUser";
+	}
 	
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String addUser(Map<String, Object> model) {
@@ -56,4 +68,8 @@ public class UserController {
 		
 		return "AdUser";
 	}
+
+
+	
 }
+
