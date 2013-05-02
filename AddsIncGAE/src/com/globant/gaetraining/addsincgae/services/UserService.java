@@ -29,4 +29,12 @@ public class UserService {
 		Key key = KeyFactory.createKey(User.class.getSimpleName(), userId);
 		return userDao.findByKey(key, User.class);
 	}
+
+	public void updateUser(Long userId, User user) {
+		
+		Key key = KeyFactory.createKey(User.class.getSimpleName(), userId);
+		user.setKey(key);
+
+		userDao.persist(user);
+	}
 }
