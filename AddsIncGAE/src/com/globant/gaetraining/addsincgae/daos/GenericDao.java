@@ -82,6 +82,32 @@ public abstract class GenericDao<T> {
 	}
 
 	/**
+	 * Find an object by his id
+	 * 
+	 * @param id
+	 *            object's id/name in the datastore
+	 * @param classType
+	 *            {@link Class} of the object to retrieve Ex:
+	 *            CampaignSummary.class
+	 * @return
+	 */
+	public T findById(Object id, Class classType) {
+
+		PersistenceManager pm = this.getPM();
+
+		T result = null;
+
+		try {
+			result = (T) pm.getObjectById(classType, id);
+		} finally {
+			pm.close();
+		}
+
+		return result;
+
+	}
+
+	/**
 	 * Find all the entity of the specified class
 	 * 
 	 * @param classType
