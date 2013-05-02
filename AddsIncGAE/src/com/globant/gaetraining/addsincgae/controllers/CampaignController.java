@@ -27,7 +27,7 @@ public class CampaignController {
 		return "AddCampaign";
 	}
 	
-	@RequestMapping(value = "/campaign", method = RequestMethod.POST)
+	@RequestMapping(value = "/campaigns", method = RequestMethod.POST)
 	public String addCampaignSubmit(@ModelAttribute("campaign") Campaign campaign,
 			ModelMap model) {
 

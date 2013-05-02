@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Users List</title>
+<title>Campaigns List</title>
 </head>
 <h1>Campaign List</h1>
 <a href="/campaign">Add new Campaign</a>
@@ -14,16 +14,24 @@
 	<table>
 		<tr>
 			<th></th>
-			<th>User Name</th>
-			<th>Role</th>
+			<th>Campaign Name</th>
+			<th>Start</th>
+			<th>End</th>
+			<th>Active</th>
+			<th>Products</th>
+			<th>Distribution Channel</th>
 			<th></th>
 		</tr>
-		<c:forEach items="${users}" var="user">
+		<c:forEach items="${campaigns}" var="campaign">
 			<tr>
-				<td><a href="/users/${user.key.id}">Edit</a></td>
-				<td><c:out value="${user.userName}" /></td>
-				<td><c:out value="${user.roles}" /></td>
-				<td><a href="/users/${user.key.id}">Del</a></td>
+				<td><a href="/campaign/${campaign.key.id}">Edit</a></td>
+				<td><c:out value="${campaign.name}" /></td>
+				<td><c:out value="${campaign.startDate}" /></td>
+				<td><c:out value="${campaign.endDate}" /></td>
+				<td><c:out value="${campaign.active}" /></td>
+				<td><c:out value="${campaign.product}" /></td>
+				<td><c:out value="${campaign.distributionChannelKeys}" /></td>
+				<td><a href="/campaigns/${campaign.key.id}">Del</a></td>
 			</tr>
 		</c:forEach>
 	</table>
