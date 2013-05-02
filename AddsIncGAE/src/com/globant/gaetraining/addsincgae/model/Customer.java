@@ -23,10 +23,10 @@ public class Customer {
 	private String legalName;
 
 	@Persistent
-	private List<User> representative;
+	private List<Key> representative;
 
 	@Persistent
-	private List<User> owners;
+	private List<Key> owners;
 
 	@Persistent
 	private String description;
@@ -58,19 +58,19 @@ public class Customer {
 		this.legalName = legalName;
 	}
 
-	public List<User> getRepresentative() {
+	public List<Key> getRepresentative() {
 		return representative;
 	}
 
-	public void setRepresentative(List<User> representative) {
+	public void setRepresentative(List<Key> representative) {
 		this.representative = representative;
 	}
 
-	public List<User> getOwners() {
+	public List<Key> getOwners() {
 		return owners;
 	}
 
-	public void setOwners(List<User> owners) {
+	public void setOwners(List<Key> owners) {
 		this.owners = owners;
 	}
 
