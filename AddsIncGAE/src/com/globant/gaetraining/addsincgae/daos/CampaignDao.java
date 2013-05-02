@@ -42,4 +42,14 @@ public class CampaignDao extends GenericDao<Campaign> {
 		return results;
 
 	}
+
+	/**
+	 * @see GenericDao#findById(Object, Class)
+	 * @param campaignId
+	 *            Id of the {@link Campaign}
+	 * @return {@link Campaign}
+	 */
+	public Campaign findById(Object campaignId) {
+		return super.findById(campaignId, Campaign.class);
+	}
 }
