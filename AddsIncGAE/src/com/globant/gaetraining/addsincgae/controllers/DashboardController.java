@@ -1,7 +1,6 @@
 package com.globant.gaetraining.addsincgae.controllers;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -56,9 +55,9 @@ public class DashboardController {
 
 	@RequestMapping(value = "/dashboard/data", method = RequestMethod.GET)
 	public String dummyData(Model model) {
-		
+
 		CustomerDao daoCustomer = new CustomerDao();
-		
+
 		Customer customer = new Customer();
 		customer.setName("Test Man A!!");
 		customer = daoCustomer.persist(customer);
@@ -71,11 +70,9 @@ public class DashboardController {
 		campA.setProduct(new ArrayList<Product>());
 		campA.setCustomerKey(customer.getKey());
 		campA.setActive(true);
-		campA.setStartDate(new Date());
-		campA.setEndDate(new Date());
-		
+
 		Product prod;
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 100; i++) {
 			prod = new Product(campA);
 			prod.setName(Integer.toString(i));
 			prod.setShortDescription("SD");
@@ -83,12 +80,12 @@ public class DashboardController {
 			prod.setUrl("http://jkjk.com/");
 			campA.getProduct().add(prod);
 		}
-		
 
 		CampaignDao dao = new CampaignDao();
 		dao.persist(campA);
 
-		List<Campaign> campanas = campaignService.findActiveCampaignsByCustomerKey(customer.getKey());
+		List<Campaign> campanas = this.campaignService
+				.findActiveCampaignsByCustomerKey(customer.getKey());
 
 		for (Campaign campaign : campanas) {
 			System.out.println(campaign.getName());

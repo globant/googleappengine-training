@@ -91,6 +91,7 @@ public abstract class GenericDao<T> {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Find an object by his id
 	 * 
 	 * @param id
@@ -126,6 +127,8 @@ public abstract class GenericDao<T> {
 	}
 
 	/**
+=======
+>>>>>>> branch 'master' of https://github.com/globant/googleappengine-training.git
 	 * Find all the entity of the specified class
 	 * 
 	 * @param classType

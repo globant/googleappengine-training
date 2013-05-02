@@ -3,7 +3,6 @@ package com.globant.gaetraining.addsincgae.controllers;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,21 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.globant.gaetraining.addsincgae.model.Customer;
-import com.globant.gaetraining.addsincgae.model.User;
 import com.globant.gaetraining.addsincgae.services.CustomerService;
-import com.globant.gaetraining.addsincgae.services.UserService;
 import com.google.appengine.api.datastore.Key;
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @Controller
 public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
-	
-	@Autowired
-	private UserService userService;
 
 	@RequestMapping(value = "/customers", method = RequestMethod.GET)
 	public String getCustomers(Map<String, Object> model) {
@@ -49,7 +42,9 @@ public class CustomerController {
 		
 		//Simulates a new customer
 		Customer customer = new Customer();
+		Key key = KeyFactory.createKey(Customer.class.getSimpleName(), customerId);
 		//customer.set.setId(Long.parseLong("123456789"));
+		customer.setKey(key);
 		customer.setName("Pepe");
 		customer.setLegalName("Gomez");
 		customer.setDescription("Esto es una descripcion");
@@ -85,17 +80,8 @@ public class CustomerController {
 		customer.setLegalName(legalName);
 		customer.setDescription(description);
 		customer.setEmployeesAmount(employeeAmount == null ? 0 : Integer.parseInt(employeeAmount));
-		//TODO Find representatives and owners properly 
-		List<Key> users = Lists.transform(userService.getUsers(), new Function<User, Key>() {
-			@Override
-			@Nullable
-			public Key apply(@Nullable User user) {
-				return user.getKey();
-			}
-			
-		});
-		customer.setOwners(users);
-		customer.setRepresentative(users);
+		customer.setOwners(null);
+		customer.setRepresentative(null);
 		customerService.addCustomer(customer);
 		
 		return "redirect:/customers";

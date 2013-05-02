@@ -51,11 +51,10 @@ public class CampaignDao extends GenericDao<Campaign> {
 	 * @return {@link Campaign}
 	 */
 	public Campaign findById(Object campaignId) {
-		
-		return super.findById(campaignId, Campaign.class,
-				null);
+
+		return super.findById(campaignId, Campaign.class, null);
 	}
-	
+
 	/**
 	 * Find a {@link Campaign} by his campaign id. Load his products
 	 * 
