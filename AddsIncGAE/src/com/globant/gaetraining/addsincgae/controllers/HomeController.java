@@ -12,44 +12,52 @@ import com.globant.gaetraining.addsincgae.model.DistributionChannel;
 import com.globant.gaetraining.addsincgae.model.Product;
 import com.globant.gaetraining.addsincgae.services.HomeService;
 
-
 @Controller
 @RequestMapping("/home")
 public class HomeController {
-	
+
 	@Autowired
 	HomeService homeService;
 
-	@RequestMapping(value={"","/"}, method = RequestMethod.GET)
-	public String goGreetings(Map<String,Object>model){
+	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
+	public String goGreetings(Map<String, Object> model) {
 		String greeting = "Hola gente";
 		model.put("greet", greeting);
 		System.out.println("Pasa HomeController");
 		homeService.populate();
 		String[] prods = {
-				"mock_product1__1","mock_product1__2",
-				"mock_product2__1","mock_product2__2",
-				"mock_product3__1","mock_product3__2",
-				"mock_product4__1","mock_product4__2",
-				"mock_product5__1","mock_product5__2",
-				"mock_product6__1","mock_product6__2",
-				"mock_product7__1","mock_product7__2",
-				"mock_product8__1","mock_product8__2"};
-		String[] channels = {"mock_distributionchannel2","mock_distributionchannel"};
-		homeService.dummyEventTasks(channels,prods );
-		
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ24xDAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDFfXzEM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ24xDAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDFfXzIM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ24yDAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDJfXzEM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ24yDAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDJfXzIM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ24zDAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDNfXzEM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ24zDAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDNfXzIM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ240DAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDRfXzEM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ240DAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDRfXzIM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ241DAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDVfXzEM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ241DAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDVfXzIM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ242DAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDZfXzEM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ242DAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDZfXzIM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ243DAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDdfXzEM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ243DAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDdfXzIM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ244DAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDhfXzEM",
+				"ag5hZHNpbmMtZ2xvYmFudHI5CxIIQ2FtcGFpZ24iDm1vY2tfY2FtcGFpZ244DAsSB1Byb2R1Y3QiEG1vY2tfcHJvZHVjdDhfXzIM" };
+		String[] channels = {
+				"ag5hZHNpbmMtZ2xvYmFudHIxCxITRGlzdHJpYnV0aW9uQ2hhbm5lbCIYbW9ja19kaXN0cmlidXRpb25jaGFubmVsDA",
+				"ag5hZHNpbmMtZ2xvYmFudHIyCxITRGlzdHJpYnV0aW9uQ2hhbm5lbCIZbW9ja19kaXN0cmlidXRpb25jaGFubmVsMgw" };
+		homeService.dummyEventTasks(channels, prods);
+
 		return "home";
 	}
-	
+
 	@RequestMapping("/products")
-	public List<Product> getProducts(){
+	public List<Product> getProducts() {
 		return homeService.getProducts();
 	}
-	
+
 	@RequestMapping("/channels")
-	public List<DistributionChannel> getChannels(){
+	public List<DistributionChannel> getChannels() {
 		return homeService.getChannels();
 	}
-	
-	
+
 }
