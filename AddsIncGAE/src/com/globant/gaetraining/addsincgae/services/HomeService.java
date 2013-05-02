@@ -50,7 +50,7 @@ public class HomeService {
 
 		DistributionChannel distChannel2 = new DistributionChannel();
 		Key keyDist2 = KeyFactory.createKey("DistributionChannel",
-				"mock_distributionchannel 2");
+				"mock_distributionchannel2");
 		distChannel.setKey(keyDist2);
 		distChannel.setName("Mockito 2");
 		distChannel.setMediaType("Web");
@@ -62,7 +62,7 @@ public class HomeService {
 			// Campaign
 			Campaign campaign = new Campaign();
 			Key keyCamp = KeyFactory
-					.createKey("Campaign", "mock_campaign " + i);
+					.createKey("Campaign", "mock_campaign" + i);
 			campaign.setKey(keyCamp);
 			campaign.setName("Mock " + i);
 			Calendar cal = Calendar.getInstance();
@@ -78,7 +78,7 @@ public class HomeService {
 			for (int j = 1; j < 3; ++j) {
 				// Product
 				Key keyProduct = KeyFactory.createKey(campaign.getKey(),
-						"Product", "mock_product " + i + " :: " + j);
+						"Product", "mock_product" + i + "__" + j);
 				Product product = new Product(campaign);
 				product.setKey(keyProduct);
 				product.setName("Mockiproduct " + i + " :: " + j);
@@ -94,10 +94,12 @@ public class HomeService {
 
 	}
 
-	public void dummyEventTasks(String distChannel, String[] product) {
+	public void dummyEventTasks(String[] distChannel, String[] product) {
 		String prodToTask;
+		String distChannelTask;
 		for (int i = 0; i < 10000; i++) {
 			prodToTask = product[i % product.length];
+			distChannelTask = distChannel[i%distChannel.length];
 
 			JsonFactory f = new JsonFactory();
 			StringWriter sb = new StringWriter();
@@ -106,7 +108,7 @@ public class HomeService {
 				g.writeStartObject();
 				g.writeStringField("type", EventType.CLICK.toString());
 				g.writeStringField("product", prodToTask);
-				g.writeStringField("distributionChannel", distChannel);
+				g.writeStringField("distributionChannel", distChannelTask);
 				g.writeStringField("client", "222.2.22." + i % 100);
 
 				g.writeStringField("timestamp", Calendar.getInstance()
@@ -120,7 +122,7 @@ public class HomeService {
 			Queue q = QueueFactory.getQueue("events-queue");
 			TaskOptions taskOptions = TaskOptions.Builder
 					.withMethod(TaskOptions.Method.PULL).payload(sb.toString())
-					.tag(prodToTask).tag(distChannel);
+					.tag(prodToTask).tag(distChannelTask);
 			q.add(taskOptions);
 		}
 	}
