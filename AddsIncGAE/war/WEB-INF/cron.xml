@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/process_events</url>
+    <description>Backend process of events</description>
+    <schedule>every 10 minutes</schedule>
+    <target>events-backend</target>
+  </cron>
+</cronentries>

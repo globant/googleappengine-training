@@ -7,12 +7,14 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.Key;
+
 @PersistenceCapable
 public class Customer {
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Long id;
+	private Key key;
 
 	@Persistent
 	private String name;
@@ -32,12 +34,12 @@ public class Customer {
 	@Persistent
 	private int employeesAmount;
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setKey(Key key) {
+		this.key = key;
 	}
 	
-	public Long getId(){
-		return this.id;
+	public Key getKey(){
+		return this.key;
 	}
 
 	public String getName() {
