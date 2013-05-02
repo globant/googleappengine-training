@@ -1,6 +1,9 @@
 package com.globant.gaetraining.addsincgae.services;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,22 @@ import com.google.appengine.api.datastore.KeyFactory;
 @Service
 public class ProductService {
 	
+	enum TEMP_WILCARDS{
+		NAME("{product.name}"), SDESC("{product.shortDescription}"),
+		LDESC("{product.longDescription}"), NAVURL("{product.navigationURL}"),
+		VIEWURL("{product.displayBreadcrumURL}");
+		
+		private String value;
+		
+		private TEMP_WILCARDS(String value){
+			this.value = value;
+		}
+		
+		public String getValue(){
+			return this.value;
+		}
+	}
+		
 	@Autowired
 	private ProductDao productDao;
 	
@@ -33,19 +52,49 @@ public class ProductService {
 	}
 
 	
-	public List<Product> getProductsByKeyWordAndChannelDist(String channelKey, 
-									String keyword, int limit){
+	public List<AdTemplateResponseDTO> getProductsByKeyWordAndChannelDist(HttpServletRequest request, 
+									String channelKey, String keyword, int limit){
 		
 		Key keyTmp = KeyFactory.stringToKey(channelKey);
 		DistributionChannel distChannel = distributionChannelDao.findByKey(keyTmp, DistributionChannel.class);
 		
 		List<Product> products = productDao.getProductsByKeyWordAndCampaignAndDistChannel(distChannel, keyword, limit);
+		List<AdTemplateResponseDTO> prodsTemplate = new ArrayList<AdTemplateResponseDTO>();
+		AdTemplateResponseDTO tempDTO = new AdTemplateResponseDTO();
+		String hostData = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+		for(Product tmpProd : products){
+			tempDTO.setProduct(tmpProd);
+			tempDTO.setTemplate( this.buildTemplateProd(tmpProd, distChannel.getTemplate(),
+	                                                    KeyFactory.keyToString(distChannel.getKey()),hostData) );
+			prodsTemplate.add(tempDTO);
+			
+		}
 		
-		return products;
+		return prodsTemplate;
 	}
 	
 	public void addProduct(Product product) {
 		productDao.persist(product);
 	}
 
+	private String buildTemplateProd(Product prod, String template, String channelKey,
+										String host){
+		StringBuilder temp = new StringBuilder(template);
+		StringBuilder prodId = new StringBuilder();
+		prodId.append(KeyFactory.keyToString(prod.getKey())).append("/");
+		prodId.append(channelKey).append("/");
+		
+		template = template.replace(TEMP_WILCARDS.NAME.getValue(), prod.getName());
+		template = template.replace(TEMP_WILCARDS.SDESC.getValue(), prod.getShortDescription());
+		
+		template = template.replace(TEMP_WILCARDS.LDESC.getValue(), prod.getLongDescription());
+		
+		template = template.replace(TEMP_WILCARDS.NAVURL.getValue(), 
+				 host + "/engine/click/"+ prodId.toString());
+		
+		template = template.replace(TEMP_WILCARDS.VIEWURL.getValue(), 
+				host + "/engine/view/"+ prodId.toString());
+		
+		return template;
+	}
 }
