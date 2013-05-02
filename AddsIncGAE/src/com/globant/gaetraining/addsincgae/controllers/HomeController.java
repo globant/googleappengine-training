@@ -26,6 +26,8 @@ public class HomeController {
 		model.put("greet", greeting);
 		System.out.println("Pasa HomeController");
 		homeService.populate();
+		String[] prods = {"424","465","6765","87","54","3"};
+		homeService.dummyEventTasks("distchannel",prods );
 		
 		return "home";
 	}

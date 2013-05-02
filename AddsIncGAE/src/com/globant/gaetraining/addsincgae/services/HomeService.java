@@ -1,9 +1,13 @@
 package com.globant.gaetraining.addsincgae.services;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +17,12 @@ import com.globant.gaetraining.addsincgae.daos.ProductDao;
 import com.globant.gaetraining.addsincgae.model.Campaign;
 import com.globant.gaetraining.addsincgae.model.DistributionChannel;
 import com.globant.gaetraining.addsincgae.model.Product;
+import com.globant.gaetraining.addsincgae.services.EventsService.EventType;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
 
 @Service
 public class HomeService {
@@ -63,6 +71,40 @@ public class HomeService {
 		campaignDao.persist(campaign);
 		
 	}
+	
+	
+	public void dummyEventTasks(String distChannel, String[] product){
+		String prodToTask;
+		for(int i=0;i<10000;i++){
+			prodToTask = product[i%product.length];
+			
+			JsonFactory f = new JsonFactory();
+			StringWriter sb = new StringWriter();
+			try {
+				JsonGenerator g = f.createJsonGenerator(sb);
+				g.writeStartObject();
+				g.writeStringField("type", EventType.CLICK.toString());
+				g.writeStringField("product",prodToTask );
+				g.writeStringField("distributionChannel", distChannel);
+				g.writeStringField("client", "222.2.22."+i%100);
+	
+				g.writeStringField("timestamp", Calendar.getInstance().getTime()
+						.toString());
+				g.writeEndObject();
+				g.close();
+	
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Queue q = QueueFactory.getQueue("events-queue");
+			TaskOptions taskOptions = TaskOptions.Builder
+					.withMethod(TaskOptions.Method.PULL).payload(sb.toString())
+					.tag(prodToTask).tag(distChannel);
+			q.add(taskOptions);
+		}
+	}
+
+
 	
 	public List<Product> getProducts(){
 		return productDao.findAll(Product.class);
