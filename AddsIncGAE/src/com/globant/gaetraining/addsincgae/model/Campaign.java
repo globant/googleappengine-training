@@ -110,4 +110,19 @@ public class Campaign {
 		this.distributionChannelKeys = distributionChannelKeys;
 	}
 
+	/**
+	 * Calculate the number of days left of the campaign
+	 * 
+	 * @return the number of days left for the campaign. -1 if there was a
+	 *         problem doing the calculation
+	 */
+	public int getDaysLeft() {
+
+		if (this.getEndDate() == null) {
+			return -1;
+		}
+
+		return (int) ((new Date().getTime() - this.getEndDate().getTime()) / (1000 * 60 * 60 * 24));
+	}
+
 }
