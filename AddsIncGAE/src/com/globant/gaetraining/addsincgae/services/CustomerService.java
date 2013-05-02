@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.globant.gaetraining.addsincgae.daos.CustomerDao;
 import com.globant.gaetraining.addsincgae.model.Customer;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 
 @Service
@@ -21,8 +23,9 @@ public class CustomerService {
 	}
 	
 	public Customer getCustomer(long customerId) {
-						
-		return null; //TODO
+	
+		Key key = KeyFactory.createKey(Customer.class.getSimpleName(), customerId);
+		return customerDao.findByKey(key, Customer.class, null);
 	}
 	
 	public void addCustomer(Customer customer) {

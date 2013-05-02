@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.globant.gaetraining.addsincgae.daos.CampaignDao;
 import com.globant.gaetraining.addsincgae.daos.CustomerDao;
 import com.globant.gaetraining.addsincgae.model.Campaign;
+import com.globant.gaetraining.addsincgae.model.CampaignSummary;
 import com.globant.gaetraining.addsincgae.model.Customer;
 import com.globant.gaetraining.addsincgae.model.Product;
 import com.globant.gaetraining.addsincgae.services.CampaignService;
@@ -42,22 +43,22 @@ public class DashboardController {
 	public String showCampaignDetails(@PathVariable Long campaignId, Model model) {
 
 		List<Object> results = this.campaignService
-				.findCampaignWithStatisticsbyId(campaignId);
+				.findCampaignWithStatisticsById(campaignId);
 
 		Campaign campaign = (Campaign) results.get(0);
-		// CampaignSummary campaignSummary = (CampaignSummary) results.get(1);
+		CampaignSummary campaignSummary = (CampaignSummary) results.get(1);
 
 		model.addAttribute("campaign", campaign);
-		// model.addAttribute("campaignSummary", campaignSummary);
+		model.addAttribute("campaignSummary", campaignSummary);
 
 		return "CampaignDetails";
 	}
 
 	@RequestMapping(value = "/dashboard/data", method = RequestMethod.GET)
 	public String dummyData(Model model) {
-		
+
 		CustomerDao daoCustomer = new CustomerDao();
-		
+
 		Customer customer = new Customer();
 		customer.setName("Test Man A!!");
 		customer = daoCustomer.persist(customer);
@@ -70,7 +71,7 @@ public class DashboardController {
 		campA.setProduct(new ArrayList<Product>());
 		campA.setCustomerKey(customer.getKey());
 		campA.setActive(true);
-		
+
 		Product prod;
 		for (int i = 0; i < 100; i++) {
 			prod = new Product(campA);
@@ -80,12 +81,12 @@ public class DashboardController {
 			prod.setUrl("http://jkjk.com/");
 			campA.getProduct().add(prod);
 		}
-		
 
 		CampaignDao dao = new CampaignDao();
 		dao.persist(campA);
 
-		List<Campaign> campanas = campaignService.findActiveCampaignsByCustomerKey(customer.getKey());
+		List<Campaign> campanas = this.campaignService
+				.findActiveCampaignsByCustomerKey(customer.getKey());
 
 		for (Campaign campaign : campanas) {
 			System.out.println(campaign.getName());

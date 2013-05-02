@@ -1,5 +1,6 @@
 package com.globant.gaetraining.addsincgae.daos;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.jdo.Query;
@@ -50,6 +51,20 @@ public class CampaignDao extends GenericDao<Campaign> {
 	 * @return {@link Campaign}
 	 */
 	public Campaign findById(Object campaignId) {
-		return super.findById(campaignId, Campaign.class);
+
+		return super.findById(campaignId, Campaign.class, null);
+	}
+
+	/**
+	 * Find a {@link Campaign} by his campaign id. Load his products
+	 * 
+	 * @param campaignId
+	 *            Id of the {@link Campaign}
+	 * @return {@link Campaign}
+	 */
+	public Campaign findByIdWithProducts(Object campaignId) {
+
+		return super.findById(campaignId, Campaign.class,
+				Arrays.asList("products"));
 	}
 }

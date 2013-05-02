@@ -46,7 +46,6 @@ public class HomeController {
 				"ag5hZHNpbmMtZ2xvYmFudHIxCxITRGlzdHJpYnV0aW9uQ2hhbm5lbCIYbW9ja19kaXN0cmlidXRpb25jaGFubmVsDA",
 				"ag5hZHNpbmMtZ2xvYmFudHIyCxITRGlzdHJpYnV0aW9uQ2hhbm5lbCIZbW9ja19kaXN0cmlidXRpb25jaGFubmVsMgw" };
 		homeService.dummyEventTasks(channels, prods);
-
 		return "home";
 	}
 

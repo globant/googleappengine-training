@@ -63,13 +63,22 @@ public abstract class GenericDao<T> {
 	 * @param classType
 	 *            {@link Class} of the object to retrieve Ex:
 	 *            CampaignSummary.class
+	 * @param fetchGroups
+	 *            {@link List} con los {@link String} de los fetchgroups que se
+	 *            le quieren aplicar a la carga
 	 * @return
 	 */
-	public T findByKey(Key key, Class classType) {
+	public T findByKey(Key key, Class classType, List<String> fetchGroups) {
 
 		PersistenceManager pm = this.getPM();
 
 		T result = null;
+
+		if (fetchGroups != null && !fetchGroups.isEmpty()) {
+			for (String fetchGroup : fetchGroups) {
+				pm.getFetchPlan().addGroup(fetchGroup);
+			}
+		}
 
 		try {
 			result = (T) pm.getObjectById(classType, key);
@@ -82,6 +91,7 @@ public abstract class GenericDao<T> {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Find an object by his id
 	 * 
 	 * @param id
@@ -89,13 +99,22 @@ public abstract class GenericDao<T> {
 	 * @param classType
 	 *            {@link Class} of the object to retrieve Ex:
 	 *            CampaignSummary.class
+	 * @param fetchGroups
+	 *            {@link List} con los {@link String} de los fetchgroups que se
+	 *            le quieren aplicar a la carga
 	 * @return
 	 */
-	public T findById(Object id, Class classType) {
+	public T findById(Object id, Class classType, List<String> fetchGroups) {
 
 		PersistenceManager pm = this.getPM();
 
 		T result = null;
+
+		if (fetchGroups != null && !fetchGroups.isEmpty()) {
+			for (String fetchGroup : fetchGroups) {
+				pm.getFetchPlan().addGroup(fetchGroup);
+			}
+		}
 
 		try {
 			result = (T) pm.getObjectById(classType, id);
@@ -108,6 +127,8 @@ public abstract class GenericDao<T> {
 	}
 
 	/**
+=======
+>>>>>>> branch 'master' of https://github.com/globant/googleappengine-training.git
 	 * Find all the entity of the specified class
 	 * 
 	 * @param classType
