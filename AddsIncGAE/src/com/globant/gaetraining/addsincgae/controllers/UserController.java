@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.globant.gaetraining.addsincgae.model.Customer;
 import com.globant.gaetraining.addsincgae.model.User;
 import com.globant.gaetraining.addsincgae.services.UserService;
 
@@ -24,7 +23,7 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public String getCustomers(Map<String, Object> model) {
+	public String getUsers(Map<String, Object> model) {
 
 		List<User> users = userService.getUsers();
 		
@@ -69,4 +68,8 @@ public class UserController {
 		
 		return "AdUser";
 	}
+
+
+	
 }
+
