@@ -42,4 +42,13 @@ public class CampaignService {
 
 		return results;
 	}
+
+	public List<Campaign> getCampaigns() {
+		return campaignDao.findAll(Campaign.class);
+	}
+
+	public void addCampaign(Campaign campaign) {
+		campaignDao.persist(campaign);
+	}
+
 }
