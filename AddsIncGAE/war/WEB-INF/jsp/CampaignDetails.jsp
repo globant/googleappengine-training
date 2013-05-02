@@ -7,26 +7,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Customer Dashboard</title>
+<title>Campaign Details</title>
 </head>
 <body>
-	<h1>Customer Dashboard</h1>
-	<h2>Active campaigns</h2>
-
-	<table>
-		<tr>
-			<th>Name</th>
-			<th>Days left</th>
-			<th>Products</th>
-		</tr>
-		<c:forEach items="${campaigns}" var="campaign">
-			<tr>
-				<td><a href="/dashboard/campaign/${campaign.key.id}">${campaign.name}</a></td>
-				<td>${campaign.daysLeft}</td>
-				<td>${fn:length(campaign.product)}</td>
-			</tr>
-		</c:forEach>
-	</table>
+	<h1>${campaign.name}</h1>
 
 </body>
 </html>
