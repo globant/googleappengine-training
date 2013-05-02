@@ -29,6 +29,8 @@ public class HomeService {
 	ProductDao productDao;
 
 	public void populate() {
+		
+		String templateChannel = "<div><h4>{product.name}</h4><p>{product.shortDescription}</p><p>{product.longDescription}</p><p><a href="+"{product.navigationURL}"+">Product URL Navigation</a></p><p><a href="+"{product.displayBreadcrumURL}"+">Display Product</a></p></div>"; 
 		// DistChannel
 		DistributionChannel distChannel = new DistributionChannel();
 		Key keyDist = KeyFactory.createKey("DistributionChannel",
@@ -37,7 +39,7 @@ public class HomeService {
 		distChannel.setName("Mockito");
 		distChannel.setMediaType("TV");
 		distChannel
-				.setTemplate("<div><h4>{{name}}</h4><p>{{longdesc}}</p></div>");
+				.setTemplate(templateChannel);
 		distChannelDao.persist(distChannel);
 
 		DistributionChannel distChannel2 = new DistributionChannel();
@@ -47,14 +49,14 @@ public class HomeService {
 		distChannel.setName("Mockito 2");
 		distChannel.setMediaType("Web");
 		distChannel
-				.setTemplate("<div><h4>{{name}}</h4><p>{{longdesc}}</p></div>");
-		distChannelDao.persist(distChannel);
+				.setTemplate(templateChannel);
+		distChannelDao.persist(distChannel2);
 
 		for (int i = 1; i <= 8; ++i) {
 			// Campaign
 			Campaign campaign = new Campaign();
 			Key keyCamp = KeyFactory.createKey("Campaign",
-					"mock_campaign " + i);
+					"mock_campaign" + i);
 			campaign.setKey(keyCamp);
 			campaign.setName("Mock " + i);
 			Calendar cal = Calendar.getInstance();
@@ -70,12 +72,12 @@ public class HomeService {
 			for (int j = 1; j < 3; ++j) {
 				// Product
 				Key keyProduct = KeyFactory.createKey(campaign.getKey(),
-						"Product", "mock_product " + i + " :: " + j);
+						"Product", "mock_product_" + i + "_" + j);
 				Product product = new Product(campaign);
 				product.setKey(keyProduct);
-				product.setName("Mockiproduct " + i + " :: " + j);
-				product.setShortDescription("Short Desc " + i + " :: " + j);
-				product.setLongDescription("The longer description here " + i + " :: " + j);
+				product.setName("Mockiproduct_" + i + "_" + j);
+				product.setShortDescription("Short Desc_" + i + "_" + j);
+				product.setLongDescription("The long description here " + i + "_" + j);
 				product.setUrl("http://mock.globant.com/");
 				campaign.getProduct().add(product);
 

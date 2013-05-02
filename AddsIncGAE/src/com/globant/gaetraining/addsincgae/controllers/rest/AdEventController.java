@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.globant.gaetraining.addsincgae.model.Campaign;
 import com.globant.gaetraining.addsincgae.model.Product;
+import com.globant.gaetraining.addsincgae.services.AdTemplateResponseDTO;
 import com.globant.gaetraining.addsincgae.services.EventsService;
 import com.globant.gaetraining.addsincgae.services.ProductService;
 import com.google.appengine.api.datastore.Key;
@@ -43,6 +44,7 @@ public class AdEventController {
 	private ProductService productService;
 	
 	
+	
 	@RequestMapping("/view/{product}/{distchannel}")
 	public String receiveView(HttpServletRequest request, @PathVariable String product,@PathVariable String distchannel,ModelMap map){
 		eventsService.processEvent(EventsService.EventType.VIEW, product, distchannel, request.getRemoteAddr());
@@ -62,14 +64,15 @@ public class AdEventController {
 	 * @return
 	 */
 	@RequestMapping("/channelkey/{channelKey}/adskeyword/{keyword}/adslimit/{limit}")
-	public ModelAndView getAdvertisementByKeyWord(@PathVariable String channelKey,
+	public ModelAndView getAdvertisementByKeyWord(HttpServletRequest request, @PathVariable String channelKey,
 												@PathVariable String keyword,
 												@PathVariable int limit){
 		
 		ModelAndView mav = new ModelAndView();
 		
-		List<Product> prods = productService.getProductsByKeyWordAndChannelDist(channelKey, keyword, limit);
-		mav.addObject(prods);
+		List<AdTemplateResponseDTO> prodsTemplate = productService.getProductsByKeyWordAndChannelDist(request, channelKey, keyword, limit);
+		
+		mav.addObject(prodsTemplate);
 		return mav;
 	}
 
