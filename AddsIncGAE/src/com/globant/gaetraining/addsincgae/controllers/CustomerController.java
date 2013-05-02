@@ -38,18 +38,7 @@ public class CustomerController {
 	@RequestMapping(value = "/customers/{customerId}", method = RequestMethod.GET, produces = "text/html")
 	public String editCustomer(@PathVariable Long customerId, Model model) {
 	
-		//Customer customer = customerService.getCustomer(customerId);
-		
-		//Simulates a new customer
-		Customer customer = new Customer();
-		Key key = KeyFactory.createKey(Customer.class.getSimpleName(), customerId);
-		//customer.set.setId(Long.parseLong("123456789"));
-		customer.setKey(key);
-		customer.setName("Pepe");
-		customer.setLegalName("Gomez");
-		customer.setDescription("Esto es una descripcion");
-		customer.setEmployeesAmount(100);
-		//Fin
+		Customer customer = customerService.getCustomer(customerId);
 		
 		model.addAttribute("customer", customer);
 		

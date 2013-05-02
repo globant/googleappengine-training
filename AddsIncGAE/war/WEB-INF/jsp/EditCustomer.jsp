@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h3>Customer Edit</h3>
-	<form name="input" action="/customers/${customer.id}" method="POST">
+	<form name="input" action="/customers/${customer.key.id}" method="POST">
 		<div>
 			<div>
 				Name
