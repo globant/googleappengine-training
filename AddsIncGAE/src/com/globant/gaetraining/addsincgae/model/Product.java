@@ -33,12 +33,16 @@ public class Product {
 
 	@Persistent
 	private String country;
-
+	
 	@Persistent
 	private Campaign campaign;
+	
+	@Persistent
+	private String campaign_key;
 
 	public Product(Campaign campaign) {
 		this.campaign = campaign;
+		this.campaign_key = campaign.getKey().toString();
 	}
 
 	public Key getKey() {

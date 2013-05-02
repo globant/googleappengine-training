@@ -26,73 +26,94 @@ import com.google.appengine.api.taskqueue.TaskOptions;
 
 @Service
 public class HomeService {
-	
+
 	@Autowired
 	CampaignDao campaignDao;
 
 	@Autowired
 	DistributionChannelDao distChannelDao;
-	
+
 	@Autowired
 	ProductDao productDao;
-	
-	public void populate(){
-		//DistChannel
+
+	public void populate() {
+		// DistChannel
 		DistributionChannel distChannel = new DistributionChannel();
-		Key keyDist = KeyFactory.createKey("DistributionChannel", "mock_distributionchannel");
+		Key keyDist = KeyFactory.createKey("DistributionChannel",
+				"mock_distributionchannel");
 		distChannel.setKey(keyDist);
 		distChannel.setName("Mockito");
 		distChannel.setMediaType("TV");
-		distChannel.setTemplate("<div><h4>{{name}}</h4><p>{{longdesc}}</p></div>");
+		distChannel
+				.setTemplate("<div><h4>{{name}}</h4><p>{{longdesc}}</p></div>");
 		distChannelDao.persist(distChannel);
-		
-		
-		//Campaign
-		Campaign campaign = new Campaign();
-		Key keyCamp = KeyFactory.createKey("Campaign", "mock_campaign");
-		campaign.setKey(keyCamp);
-		campaign.setName("Mock");
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, 30);
-		campaign.setEndDate(cal.getTime());
-		cal.add(Calendar.YEAR, -1);
-		campaign.setStartDate(cal.getTime());
-		campaign.setDistributionChannelKeys(new ArrayList<Key>());
-		campaign.getDistributionChannelKeys().add(keyDist);
-		Key keyProduct = KeyFactory.createKey(keyCamp,"Product", "mock_product");
-		Product product = new Product(campaign);
-		product.setKey(keyProduct);
-		product.setName("Mockiproduct");
-		product.setShortDescription("Short Desc");
-		product.setLongDescription("The longer description here");
-		product.setUrl("http://www.ala.org/advocacy/banned/");
-		campaign.getProduct().add(product);
-		productDao.persist(product);
-		campaignDao.persist(campaign);
-		
+
+		DistributionChannel distChannel2 = new DistributionChannel();
+		Key keyDist2 = KeyFactory.createKey("DistributionChannel",
+				"mock_distributionchannel 2");
+		distChannel.setKey(keyDist2);
+		distChannel.setName("Mockito 2");
+		distChannel.setMediaType("Web");
+		distChannel
+				.setTemplate("<div><h4>{{name}}</h4><p>{{longdesc}}</p></div>");
+		distChannelDao.persist(distChannel);
+
+		for (int i = 1; i <= 8; ++i) {
+			// Campaign
+			Campaign campaign = new Campaign();
+			Key keyCamp = KeyFactory
+					.createKey("Campaign", "mock_campaign " + i);
+			campaign.setKey(keyCamp);
+			campaign.setName("Mock " + i);
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DATE, 30);
+			campaign.setEndDate(cal.getTime());
+			cal.add(Calendar.YEAR, -1);
+			campaign.setStartDate(cal.getTime());
+			campaign.setDistributionChannelKeys(new ArrayList<Key>());
+			campaign.getDistributionChannelKeys().add(
+					i % 2 == 0 ? keyDist : keyDist2);
+			campaign.setProduct(new ArrayList<Product>());
+
+			for (int j = 1; j < 3; ++j) {
+				// Product
+				Key keyProduct = KeyFactory.createKey(campaign.getKey(),
+						"Product", "mock_product " + i + " :: " + j);
+				Product product = new Product(campaign);
+				product.setKey(keyProduct);
+				product.setName("Mockiproduct " + i + " :: " + j);
+				product.setShortDescription("Short Desc " + i + " :: " + j);
+				product.setLongDescription("The longer description here " + i
+						+ " :: " + j);
+				product.setUrl("http://mock.globant.com/");
+				campaign.getProduct().add(product);
+
+			}
+			campaignDao.persist(campaign);
+		}
+
 	}
-	
-	
-	public void dummyEventTasks(String distChannel, String[] product){
+
+	public void dummyEventTasks(String distChannel, String[] product) {
 		String prodToTask;
-		for(int i=0;i<10000;i++){
-			prodToTask = product[i%product.length];
-			
+		for (int i = 0; i < 10000; i++) {
+			prodToTask = product[i % product.length];
+
 			JsonFactory f = new JsonFactory();
 			StringWriter sb = new StringWriter();
 			try {
 				JsonGenerator g = f.createJsonGenerator(sb);
 				g.writeStartObject();
 				g.writeStringField("type", EventType.CLICK.toString());
-				g.writeStringField("product",prodToTask );
+				g.writeStringField("product", prodToTask);
 				g.writeStringField("distributionChannel", distChannel);
-				g.writeStringField("client", "222.2.22."+i%100);
-	
-				g.writeStringField("timestamp", Calendar.getInstance().getTime()
-						.toString());
+				g.writeStringField("client", "222.2.22." + i % 100);
+
+				g.writeStringField("timestamp", Calendar.getInstance()
+						.getTime().toString());
 				g.writeEndObject();
 				g.close();
-	
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -104,18 +125,14 @@ public class HomeService {
 		}
 	}
 
+	public List<Product> getProducts() {
 
-	
-	public List<Product> getProducts(){
 		return productDao.findAll(Product.class);
-		
-	}
-	
-	
-	public List<DistributionChannel> getChannels(){
-		return distChannelDao.findAll(DistributionChannel.class);		
+
 	}
 
-
+	public List<DistributionChannel> getChannels() {
+		return distChannelDao.findAll(DistributionChannel.class);
+	}
 
 }
