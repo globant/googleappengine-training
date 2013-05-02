@@ -72,6 +72,10 @@ public class ProductService {
 		
 		return prodsTemplate;
 	}
+	
+	public void addProduct(Product product) {
+		productDao.persist(product);
+	}
 
 	private String buildTemplateProd(Product prod, String template, String channelKey,
 										String host){

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.globant.gaetraining.addsincgae.model.Customer;
 import com.globant.gaetraining.addsincgae.services.CustomerService;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @Controller
 public class CustomerController {
@@ -40,7 +42,9 @@ public class CustomerController {
 		
 		//Simulates a new customer
 		Customer customer = new Customer();
+		Key key = KeyFactory.createKey(Customer.class.getSimpleName(), customerId);
 		//customer.set.setId(Long.parseLong("123456789"));
+		customer.setKey(key);
 		customer.setName("Pepe");
 		customer.setLegalName("Gomez");
 		customer.setDescription("Esto es una descripcion");

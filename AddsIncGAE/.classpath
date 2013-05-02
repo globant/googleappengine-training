@@ -22,6 +22,7 @@
 	<classpathentry kind="lib" path="war/WEB-INF/libtesting/appengine-api-stubs.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/libtesting/appengine-testing.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-labs.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/junit-4.10.jar"/>	
+	<classpathentry kind="lib" path="war/WEB-INF/lib/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-14.0.1.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
