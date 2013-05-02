@@ -2,6 +2,8 @@ package com.globant.gaetraining.addsincgae.model;
 
 import java.util.List;
 
+import javax.jdo.annotations.FetchGroup;
+import javax.jdo.annotations.FetchGroups;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -10,6 +12,9 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable
+@FetchGroups({
+		@FetchGroup(name = "distributionChannelSummary", members = { @Persistent(name = "distributionChannelSummary") }),
+		@FetchGroup(name = "productSummary", members = { @Persistent(name = "productSummary") }) })
 public class CampaignSummary {
 
 	@PrimaryKey
@@ -28,10 +33,10 @@ public class CampaignSummary {
 	@Persistent
 	private int totalViews;
 
-	@Persistent
+	@Persistent(mappedBy = "campaignSummary")
 	private List<DistributionChannelSummary> distributionChannelSummary;
 
-	@Persistent
+	@Persistent(mappedBy = "campaignSummary")
 	private List<ProductSummary> productSummary;
 
 	public Key getKey() {

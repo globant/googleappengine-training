@@ -26,6 +26,9 @@ public class ProductSummary {
 	@Persistent
 	private Key productKey;
 
+	@Persistent
+	private CampaignSummary campaignSummary;
+
 	public Key getKey() {
 		return key;
 	}
@@ -64,6 +67,14 @@ public class ProductSummary {
 
 	public void setProductKey(Key productKey) {
 		this.productKey = productKey;
+	}
+
+	public CampaignSummary getCampaignSummary() {
+		return campaignSummary;
+	}
+
+	public void setCampaignSummary(CampaignSummary campaignSummary) {
+		this.campaignSummary = campaignSummary;
 	}
 
 }

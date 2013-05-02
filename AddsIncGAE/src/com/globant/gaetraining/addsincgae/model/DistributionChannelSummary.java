@@ -26,6 +26,9 @@ public class DistributionChannelSummary {
 	@Persistent
 	private Key distributionChannelKey;
 
+	@Persistent
+	private CampaignSummary campaignSummary;
+
 	public Key getKey() {
 		return key;
 	}
@@ -64,6 +67,14 @@ public class DistributionChannelSummary {
 
 	public void setDistributionChannelKey(Key distributionChannelKey) {
 		this.distributionChannelKey = distributionChannelKey;
+	}
+
+	public CampaignSummary getCampaignSummary() {
+		return campaignSummary;
+	}
+
+	public void setCampaignSummary(CampaignSummary campaignSummary) {
+		this.campaignSummary = campaignSummary;
 	}
 
 }
