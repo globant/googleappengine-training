@@ -85,7 +85,7 @@ public class HomeService {
 				product.setShortDescription("Short Desc " + i + " :: " + j);
 				product.setLongDescription("The longer description here " + i
 						+ " :: " + j);
-				product.setUrl("http://mock.globant.com/");
+				product.setUrl("http://www.ala.org/ala/issuesadvocacy/banned/");
 				campaign.getProduct().add(product);
 
 			}
@@ -128,13 +128,20 @@ public class HomeService {
 	}
 
 	public List<Product> getProducts() {
-
-		return productDao.findAll(Product.class);
+		List<Product> prods = productDao.findAll(Product.class);
+		for (Product p :prods){
+			p.setCountry(KeyFactory.keyToString(p.getKey()));
+		}
+		return prods;
 
 	}
 
 	public List<DistributionChannel> getChannels() {
-		return distChannelDao.findAll(DistributionChannel.class);
+		List<DistributionChannel> channels = distChannelDao.findAll(DistributionChannel.class);
+		for(DistributionChannel dchannel:channels){
+			dchannel.setCountry(KeyFactory.keyToString(dchannel.getKey()));
+		}
+		return channels; 
 	}
 
 }
