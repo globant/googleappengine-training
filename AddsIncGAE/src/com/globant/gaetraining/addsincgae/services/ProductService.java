@@ -43,5 +43,9 @@ public class ProductService {
 		
 		return products;
 	}
+	
+	public void addProduct(Product product) {
+		productDao.persist(product);
+	}
 
 }

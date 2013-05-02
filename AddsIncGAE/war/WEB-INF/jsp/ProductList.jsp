@@ -9,7 +9,7 @@
 <title>Products List</title>
 </head>
 <h1>Products List</h1>
-<button type="button">Add</button>
+<a href="/addProduct">Add new product</a>
 <body>
 	<table>
 		<tr>
@@ -25,6 +25,7 @@
 		<c:forEach items="${products}" var="product">
 			<tr>
 				<td><a href="/products/${product.key}">Edit</a></td>
+                <td><c:out value="${product.name}" /></td>
 				<td><c:out value="${product.productFamily}" /></td>
 				<td><c:out value="${product.shortDescription}" /></td>
 				<td><c:out value="${product.longDescription}" /></td>
