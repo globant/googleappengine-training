@@ -21,6 +21,13 @@ public class CampaignService {
 	@Autowired
 	private CampaignSummaryDao campaignSummaryDao;
 
+	/**
+	 * Find the active {@link Campaign}s for a specific customer
+	 * 
+	 * @param customerKey
+	 *            {@link Key} of the customer
+	 * @return {@link Campaign} found or null
+	 */
 	public List<Campaign> findActiveCampaignsByCustomerKey(Key customerKey) {
 		return campaignDao.findActiveByCustomerKey(customerKey);
 	}
@@ -36,7 +43,7 @@ public class CampaignService {
 	public List<Object> findCampaignWithStatisticsById(Object campaignId) {
 
 		Campaign campaign = this.campaignDao.findById(campaignId);
-		
+
 		CampaignSummary campaignSummary = this.campaignSummaryDao
 				.findByIdWithProductsAndDistrChannelsSummaries(campaignId);
 
