@@ -39,6 +39,10 @@ public class AdEventController {
 	private EventsService eventsService;
 	
 	
+	@Autowired
+	private ProductService productService;
+	
+	
 	@RequestMapping("/view/{product}/{distchannel}")
 	public String receiveView(HttpServletRequest request, @PathVariable String product,@PathVariable String distchannel,ModelMap map){
 		return eventsService.processEvent(EventsService.EventType.VIEW, product, distchannel, request.getRemoteAddr());
@@ -52,6 +56,25 @@ public class AdEventController {
 		
 		ModelAndView redirect = new ModelAndView(returnUrl);
 		return redirect;
+	}
+	
+	/**
+	 * 
+	 * @param distchannel String Distribution Channel name
+	 * @param keyword String Searching will be made by this keyword
+	 * @param limit Integer Number that indicates the result list size 
+	 * @return
+	 */
+	@RequestMapping("/channelkey/{channelKey}/adskeyword/{keyword}/adslimit/{limit}")
+	public ModelAndView getAdvertisementByKeyWord(@PathVariable String channelKey,
+												@PathVariable String keyword,
+												@PathVariable int limit){
+		
+		ModelAndView mav = new ModelAndView();
+		
+		List<Product> prods = productService.getProductsByKeyWordAndChannelDist(channelKey, keyword, limit);
+		mav.addObject(prods);
+		return mav;
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.globant.gaetraining.addsincgae.daos.CampaignDao;
 import com.globant.gaetraining.addsincgae.daos.DistributionChannelDao;
+import com.globant.gaetraining.addsincgae.daos.ProductDao;
 import com.globant.gaetraining.addsincgae.model.Campaign;
 import com.globant.gaetraining.addsincgae.model.DistributionChannel;
 import com.globant.gaetraining.addsincgae.model.Product;
@@ -22,6 +23,9 @@ public class HomeService {
 
 	@Autowired
 	DistributionChannelDao distChannelDao;
+	
+	@Autowired
+	ProductDao productDao;
 	
 	public void populate(){
 		//DistChannel
@@ -47,16 +51,29 @@ public class HomeService {
 		campaign.setDistributionChannelKeys(new ArrayList<Key>());
 		campaign.getDistributionChannelKeys().add(keyDist);
 		campaign.setProduct(new ArrayList<Product>());
-		Key keyProduct = KeyFactory.createKey("Product", "mock_product");
+		
+		//Product
+		Key keyProduct = KeyFactory.createKey(campaign.getKey(), "Product", "mock_product");
 		Product product = new Product();
 		product.setKey(keyProduct);
 		product.setName("Mockiproduct");
 		product.setShortDescription("Short Desc");
 		product.setLongDescription("The longer description here");
 		product.setUrl("http://mock.globant.com/");
+		
+		productDao.persist(product);
+		
+//		Key keyProduct2 = KeyFactory.createKey(campaign.getKey(), "Product", "mock_product");
+//		Product product2 = new Product();
+//		product.setKey(keyProduct2);
+//		product.setName("Mockiproduct 2");
+//		product.setShortDescription("Short Desc 2");
+//		product.setLongDescription("The longer description here 2");
+//		product.setUrl("http://mock.globant.com/");
+//		productDao.persist(product2);
+		
+		campaign.getProduct().add(product);
 		campaignDao.persist(campaign);
-		
-		
 		
 	}
 

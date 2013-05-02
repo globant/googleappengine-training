@@ -33,6 +33,9 @@ public class Product {
 
 	@Persistent
 	private String country;
+	
+	@Persistent
+	private Campaign campaign;
 
 	public Key getKey() {
 		return key;
