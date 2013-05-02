@@ -38,18 +38,24 @@ public class CampaignService {
 	 * 
 	 * @param campaignId
 	 *            Id of the campaign
-	 * @return {@link Campaign} found or null
+	 * @return {@link Campaign} with his {@link CampaignSummary} found or null
+	 *         if one of both is null
 	 */
 	public List<Object> findCampaignWithStatisticsById(Object campaignId) {
 
 		Campaign campaign = this.campaignDao.findById(campaignId);
 
 		CampaignSummary campaignSummary = this.campaignSummaryDao
-				.findByIdWithProductsAndDistrChannelsSummaries(campaignId);
+				.findByCampaignKeyWithProductsAndDistrChannelsSummaries(campaign
+						.getKey());
 
 		campaign.getProduct().size();
 
 		List<Object> results = new ArrayList<>();
+
+		if (campaign == null || campaignSummary == null) {
+			return null;
+		}
 
 		results.add(campaign);
 		results.add(campaignSummary);
