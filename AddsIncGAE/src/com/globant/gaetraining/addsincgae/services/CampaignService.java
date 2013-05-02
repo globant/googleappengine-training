@@ -19,4 +19,12 @@ public class CampaignService {
 		return campaignDao.findActiveByCustomerKey(customerKey);
 	}
 
+	public List<Campaign> getCampaigns() {
+		return campaignDao.findAll(Campaign.class);
+	}
+
+	public void addCampaign(Campaign campaign) {
+		campaignDao.persist(campaign);
+	}
+
 }
