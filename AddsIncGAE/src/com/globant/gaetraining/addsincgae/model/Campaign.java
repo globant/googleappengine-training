@@ -44,6 +44,7 @@ public class Campaign {
 
 	public Campaign() {
 		this.product = new ArrayList<Product>();
+		this.distributionChannelKeys = new ArrayList<Key>();
 	}
 
 	public Key getKey() {

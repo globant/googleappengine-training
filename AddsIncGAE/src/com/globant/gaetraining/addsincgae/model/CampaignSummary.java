@@ -1,5 +1,6 @@
 package com.globant.gaetraining.addsincgae.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.FetchGroup;
@@ -25,7 +26,7 @@ public class CampaignSummary {
 	private String name;
 
 	@Persistent
-	private Key campaingKey;
+	private Key campaignKey;
 
 	@Persistent
 	private int totalHits;
@@ -38,6 +39,11 @@ public class CampaignSummary {
 
 	@Persistent(mappedBy = "campaignSummary")
 	private List<ProductSummary> productSummary;
+
+	public CampaignSummary() {
+		this.distributionChannelSummary = new ArrayList<>();
+		this.productSummary = new ArrayList<>();
+	}
 
 	public Key getKey() {
 		return key;
@@ -55,12 +61,12 @@ public class CampaignSummary {
 		this.name = name;
 	}
 
-	public Key getCampaingKey() {
-		return campaingKey;
+	public Key getCampaignKey() {
+		return campaignKey;
 	}
 
-	public void setCampaingKey(Key campaingKey) {
-		this.campaingKey = campaingKey;
+	public void setCampaignKey(Key campaignKey) {
+		this.campaignKey = campaignKey;
 	}
 
 	public int getTotalHits() {
