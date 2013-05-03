@@ -1,5 +1,6 @@
 package com.globant.gaetraining.addsincgae.daos;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.jdo.JDOHelper;
@@ -35,6 +36,46 @@ public abstract class GenericDao<T> {
 			pm.close();
 		}
 		return object;
+
+	}
+	
+	/**
+	 * Persist a collection of objects of type T to the datastore
+	 * 
+	 * @param objects
+	 *            objects to persist
+	 * @return objects persisted
+	 */
+	public Collection<T> persistAll(Collection<T> objects) {
+
+		PersistenceManager pm = this.getPM();
+
+		try {
+			objects = pm.makePersistentAll(objects);
+		} finally {
+			pm.close();
+		}
+		return objects;
+
+	}
+	
+	/**
+	 * Persist an array of objects of type T to the datastore
+	 * 
+	 * @param objects
+	 *            objects to persist
+	 * @return objects persisted
+	 */
+	public T[] persistAll(T[] objects) {
+
+		PersistenceManager pm = this.getPM();
+
+		try {
+			objects = pm.makePersistentAll(objects);
+		} finally {
+			pm.close();
+		}
+		return objects;
 
 	}
 

@@ -2,6 +2,8 @@ package com.globant.gaetraining.addsincgae.services;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -37,7 +39,6 @@ public class HomeService {
 	ProductDao productDao;
 
 	public void populate() {
-		
 		String templateChannel = "<div><h4>{product.name}</h4><p>{product.shortDescription}</p><p>{product.longDescription}</p><p><a href="+"{product.navigationURL}"+">Product URL Navigation</a></p><p><a href="+"{product.displayBreadcrumURL}"+">Display Product</a></p></div>"; 
 		// DistChannel
 		DistributionChannel distChannel = new DistributionChannel();
@@ -96,7 +97,7 @@ public class HomeService {
 	}
 	
 		public void dummyEventTasks(String[] distChannel, String[] product) {
-				String prodToTask;
+			DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");				String prodToTask;
 				String distChannelTask;
 				for (int i = 0; i < 10000; i++) {
 					prodToTask = product[i % product.length];
@@ -112,8 +113,8 @@ public class HomeService {
 						g.writeStringField("distributionChannel", distChannelTask);
 						g.writeStringField("client", "222.2.22." + i % 100);
 		
-						g.writeStringField("timestamp", Calendar.getInstance()
-								.getTime().toString());
+						g.writeStringField("timestamp", dateFormat.format(Calendar.getInstance()
+								.getTime()));
 						g.writeEndObject();
 						g.close();
 		
