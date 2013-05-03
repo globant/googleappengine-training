@@ -37,6 +37,26 @@ public abstract class GenericDao<T> {
 		return object;
 
 	}
+	
+	/**
+	 * Persist a list of object of type T to the datastore
+	 * 
+	 * @param objects
+	 *            object to persist
+	 * @return object persisted
+	 */
+	public List<T> persist(List<T> objects) {
+
+		PersistenceManager pm = this.getPM();
+
+		try {
+			objects = (List<T>) pm.makePersistentAll(objects);
+		} finally {
+			pm.close();
+		}
+		return objects;
+
+	}
 
 	/**
 	 * Delete an object from the datastore
