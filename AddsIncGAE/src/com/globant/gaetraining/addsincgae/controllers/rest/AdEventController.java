@@ -63,7 +63,7 @@ public class AdEventController {
 	 * @param limit Integer Number that indicates the result list size 
 	 * @return
 	 */
-	@RequestMapping("/channelkey/{channelKey}/adskeyword/{keyword}/adslimit/{limit}")
+	@RequestMapping("/adsbykeyword/{channelKey}/{keyword}/{limit}")
 	public ModelAndView getAdvertisementByKeyWord(HttpServletRequest request, @PathVariable String channelKey,
 												@PathVariable String keyword,
 												@PathVariable int limit){
