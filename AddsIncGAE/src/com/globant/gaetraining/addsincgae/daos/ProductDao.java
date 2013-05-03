@@ -32,33 +32,11 @@ public class ProductDao extends GenericDao<Product> {
 		
 		query = pm.newQuery(Product.class, ":p1.contains(campaign_key)");
 		query.setRange(0,limit);
-		List<Product> productsTmp = (List<Product>)query.execute(campaingsKeys);
+		List<Product> products = (List<Product>)query.execute(campaingsKeys);
 		
-		List<Product> productsFinal = new ArrayList<Product>();
-		
-		for (Product prodTmp : productsTmp) {
-			if(this.productContainsKeyword(prodTmp, keyword))
-				productsFinal.add(prodTmp);
-		}
 		
 		pm.close();
-		return productsFinal;
-	}
-	
-	private boolean productContainsKeyword(Product prod, String keyword){
-		String keywordUp = keyword.toUpperCase();
-		boolean like = (prod.getName().toUpperCase().indexOf(keywordUp) != -1 || prod.getShortDescription().toUpperCase().indexOf(keywordUp) != -1 
-				|| prod.getLongDescription().toUpperCase().indexOf(keywordUp) != -1);
-		
-		if( like )
-			return true;
-		
-		for(String tmpFamily : prod.getProductFamily()){
-			if(tmpFamily.toUpperCase().indexOf(keywordUp) != -1)
-				return true;
-		}
-		
-		return false;
+		return products;
 	}
 	
 }

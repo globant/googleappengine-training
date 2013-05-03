@@ -58,7 +58,14 @@ public class ProductService {
 		Key keyTmp = KeyFactory.stringToKey(channelKey);
 		DistributionChannel distChannel = distributionChannelDao.findByKey(keyTmp, DistributionChannel.class);
 		
-		List<Product> products = productDao.getProductsByKeyWordAndCampaignAndDistChannel(distChannel, keyword, limit);
+		List<Product> productsTmp = productDao.getProductsByKeyWordAndCampaignAndDistChannel(distChannel, keyword, limit);
+		List<Product> products = new ArrayList<Product>();
+		
+		for (Product prodTmp : productsTmp) {
+			if(this.productContainsKeyword(prodTmp, keyword))
+				products.add(prodTmp);
+		}
+		
 		List<AdTemplateResponseDTO> prodsTemplate = new ArrayList<AdTemplateResponseDTO>();
 		AdTemplateResponseDTO tempDTO = new AdTemplateResponseDTO();
 		String hostData = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
@@ -96,5 +103,21 @@ public class ProductService {
 				host + "/engine/view/"+ prodId.toString());
 		
 		return template;
+	}
+	
+	private boolean productContainsKeyword(Product prod, String keyword){
+		String keywordUp = keyword.toUpperCase();
+		boolean like = (prod.getName().toUpperCase().indexOf(keywordUp) != -1 || prod.getShortDescription().toUpperCase().indexOf(keywordUp) != -1 
+				|| prod.getLongDescription().toUpperCase().indexOf(keywordUp) != -1);
+		
+		if( like )
+			return true;
+		
+		for(String tmpFamily : prod.getProductFamily()){
+			if(tmpFamily.toUpperCase().indexOf(keywordUp) != -1)
+				return true;
+		}
+		
+		return false;
 	}
 }
