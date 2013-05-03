@@ -12,7 +12,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private UserDao userDao;
 
@@ -25,13 +25,13 @@ public class UserService {
 	}
 
 	public User getUser(Long userId) {
-		
+
 		Key key = KeyFactory.createKey(User.class.getSimpleName(), userId);
-		return userDao.findByKey(key, User.class);
+		return userDao.findByKey(key, User.class, null);
 	}
 
 	public void updateUser(Long userId, User user) {
-		
+
 		Key key = KeyFactory.createKey(User.class.getSimpleName(), userId);
 		user.setKey(key);
 

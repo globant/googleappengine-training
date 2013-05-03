@@ -15,12 +15,12 @@ public class CampaingSummaryDaoTest {
 
 	private final LocalServiceTestHelper helper = new LocalServiceTestHelper(
 			new LocalDatastoreServiceTestConfig());
-	private CampaingSummaryDao dao;
+	private CampaignSummaryDao dao;
 
 	@Before
 	public void setUp() {
 		this.helper.setUp();
-		this.dao = new CampaingSummaryDao();
+		this.dao = new CampaignSummaryDao();
 	}
 
 	@After
@@ -45,7 +45,7 @@ public class CampaingSummaryDaoTest {
 		campaingSummary = this.dao.persist(campaingSummary);
 
 		CampaignSummary result = this.dao.findByKey(campaingSummary.getKey(),
-				CampaignSummary.class);
+				CampaignSummary.class, null);
 		Assert.assertNotNull(result);
 
 	}

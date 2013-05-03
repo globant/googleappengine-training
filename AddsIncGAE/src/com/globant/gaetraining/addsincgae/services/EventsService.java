@@ -51,7 +51,8 @@ public class EventsService {
 			return type.toString();
 		}
 		else{
-			Product p = productDao.findByKey(KeyFactory.stringToKey(ProductId),Product.class);
+			Product p = productDao.findByKey(KeyFactory.stringToKey(ProductId),
+					Product.class, null);
 			return p.getUrl();
 			
 		}
