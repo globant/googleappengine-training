@@ -39,8 +39,8 @@ public class CampaignSummary {
 
 	@Persistent(mappedBy = "campaignSummary")
 	private List<ProductSummary> productSummary;
-	
-	public CampaignSummary(){
+
+	public CampaignSummary() {
 		this.distributionChannelSummary = new ArrayList<>();
 		this.productSummary = new ArrayList<>();
 	}
