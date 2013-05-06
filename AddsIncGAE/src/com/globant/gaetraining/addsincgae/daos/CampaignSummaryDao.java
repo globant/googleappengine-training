@@ -1,5 +1,7 @@
 package com.globant.gaetraining.addsincgae.daos;
 
+import java.util.List;
+
 import javax.jdo.Query;
 
 import org.springframework.stereotype.Repository;
@@ -24,11 +26,12 @@ public class CampaignSummaryDao extends GenericDao<CampaignSummary> {
 	public CampaignSummary findByCampaignKeyWithProductsAndDistrChannelsSummaries(
 			Key campaignKey) {
 
+		List<CampaignSummary> results = null;
 		CampaignSummary result = null;
 
 		Query query = this.getPM().newQuery(CampaignSummary.class);
 
-		query.setFilter("campaingKey == campaingKeyParam");
+		query.setFilter("campaignKey == campaingKeyParam");
 
 		query.declareParameters("com.google.appengine.api.datastore.Key customerKeyParam");
 
@@ -36,7 +39,8 @@ public class CampaignSummaryDao extends GenericDao<CampaignSummary> {
 		this.getPM().getFetchPlan().addGroup("distributionChannelSummary");
 
 		try {
-			result = (CampaignSummary) query.execute(campaignKey);
+			results = ((List<CampaignSummary>) query.execute(campaignKey));
+			result = results.get(0);
 		} finally {
 			this.getPM().close();
 		}

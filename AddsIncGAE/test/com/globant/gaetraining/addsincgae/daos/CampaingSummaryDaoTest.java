@@ -51,6 +51,19 @@ public class CampaingSummaryDaoTest {
 	}
 
 	@Test
+	public void findByValidKeyWithKeysTest() {
+
+		CampaignSummary campaingSummary = new CampaignSummary();
+		campaingSummary = this.dao.persist(campaingSummary);
+
+		CampaignSummary result = this.dao
+				.findByCampaignKeyWithProductsAndDistrChannelsSummaries(campaingSummary
+						.getKey());
+		Assert.assertNotNull(result);
+
+	}
+
+	@Test
 	public void findAllTest() {
 
 		CampaignSummary campaingSummary = new CampaignSummary();
