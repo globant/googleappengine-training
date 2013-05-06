@@ -43,7 +43,7 @@ public class HomeService {
 		// DistChannel
 		DistributionChannel distChannel = new DistributionChannel();
 		Key keyDist = KeyFactory.createKey("DistributionChannel",
-				"mock_distributionchannel");
+				1000000L);
 		distChannel.setKey(keyDist);
 		distChannel.setName("Mockito");
 		distChannel.setMediaType("TV");
@@ -53,11 +53,11 @@ public class HomeService {
 
 		DistributionChannel distChannel2 = new DistributionChannel();
 		Key keyDist2 = KeyFactory.createKey("DistributionChannel",
-				"mock_distributionchannel 2");
-		distChannel.setKey(keyDist2);
-		distChannel.setName("Mockito 2");
-		distChannel.setMediaType("Web");
-		distChannel
+				1000001L);
+		distChannel2.setKey(keyDist2);
+		distChannel2.setName("Mockito 2");
+		distChannel2.setMediaType("Web");
+		distChannel2
 				.setTemplate(templateChannel);
 		distChannelDao.persist(distChannel2);
 
@@ -65,7 +65,7 @@ public class HomeService {
 			// Campaign
 			Campaign campaign = new Campaign();
 			Key keyCamp = KeyFactory.createKey("Campaign",
-					"mock_campaign" + i);
+					2000000L + i);
 			campaign.setKey(keyCamp);
 			campaign.setName("Mock " + i);
 			Calendar cal = Calendar.getInstance();
@@ -81,7 +81,7 @@ public class HomeService {
 			for (int j = 1; j < 3; ++j) {
 				// Product
 				Key keyProduct = KeyFactory.createKey(campaign.getKey(),
-						"Product", "mock_product_" + i + "_" + j);
+						"Product", 3000000L + i*10 +  j);
 				Product product = new Product(campaign);
 				product.setKey(keyProduct);
 				product.setName("Mockiproduct_" + i + "_" + j);
@@ -96,12 +96,12 @@ public class HomeService {
 
 	}
 	
-		public void dummyEventTasks(String[] distChannel, String[] product) {
-			DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");				String prodToTask;
-				String distChannelTask;
+		public void dummyEventTasks(long[] distChannel, long[][] product) {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+			String prodToTask, distChannelTask;
 				for (int i = 0; i < 10000; i++) {
-					prodToTask = product[i % product.length];
-					distChannelTask = distChannel[i%distChannel.length];
+					prodToTask = KeyFactory.keyToString(KeyFactory.createKey(KeyFactory.createKey("Campaign", product[i % product.length][0]),"Product",product[i % product.length][1]));
+					distChannelTask = KeyFactory.keyToString(KeyFactory.createKey("DistributionChannel",distChannel[i%distChannel.length]));
 		
 					JsonFactory f = new JsonFactory();
 					StringWriter sb = new StringWriter();
@@ -123,8 +123,7 @@ public class HomeService {
 					}
 					Queue q = QueueFactory.getQueue("events-queue");
 					TaskOptions taskOptions = TaskOptions.Builder
-							.withMethod(TaskOptions.Method.PULL).payload(sb.toString())
-							.tag(prodToTask).tag(distChannelTask);
+							.withMethod(TaskOptions.Method.PULL).payload(sb.toString());
 					q.add(taskOptions);
 				}
 			}

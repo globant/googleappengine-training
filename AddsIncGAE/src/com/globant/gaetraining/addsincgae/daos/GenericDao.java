@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.jdo.JDOHelper;
+import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
@@ -124,6 +125,8 @@ public abstract class GenericDao<T> {
 
 		try {
 			result = (T) pm.getObjectById(classType, key);
+		}catch(JDOObjectNotFoundException notfounde){
+			result = null;
 		} finally {
 			pm.close();
 		}
@@ -159,6 +162,8 @@ public abstract class GenericDao<T> {
 
 		try {
 			result = (T) pm.getObjectById(classType, id);
+		}catch(JDOObjectNotFoundException notfounde){
+			result = null;
 		} finally {
 			pm.close();
 		}
