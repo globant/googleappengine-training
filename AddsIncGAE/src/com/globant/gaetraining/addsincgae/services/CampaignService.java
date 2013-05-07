@@ -50,8 +50,6 @@ public class CampaignService {
 				.findByCampaignKeyWithProductsAndDistrChannelsSummaries(campaign
 						.getKey());
 
-		campaign.getProduct().size();
-
 		List<Object> results = new ArrayList<>();
 
 		if (campaign == null || campaignSummary == null) {
