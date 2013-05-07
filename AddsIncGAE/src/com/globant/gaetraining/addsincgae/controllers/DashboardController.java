@@ -44,9 +44,11 @@ public class DashboardController {
 
 		Campaign campaign = (Campaign) results.get(0);
 		CampaignSummary campaignSummary = (CampaignSummary) results.get(1);
+		List<String> countries = (List<String>) results.get(2);
 
 		model.addAttribute("campaign", campaign);
 		model.addAttribute("campaignSummary", campaignSummary);
+		model.addAttribute("countries", countries);
 
 		return "CampaignDetails";
 	}

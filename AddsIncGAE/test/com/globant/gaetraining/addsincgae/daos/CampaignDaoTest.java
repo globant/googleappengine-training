@@ -46,7 +46,7 @@ public class CampaignDaoTest {
 		Campaign camp = new Campaign(null);
 		camp.setName("MockParent");
 		camp = dao.persist(camp);
-		
+
 		Product prod;
 		for (int i = 0; i < 100; i++) {
 			prod = new Product(camp);
@@ -96,7 +96,8 @@ public class CampaignDaoTest {
 	public void findByValidKeyTest() {
 		Campaign campaign = new Campaign(null);
 		campaign = this.dao.persist(campaign);
-		Campaign result = this.dao.findByKey(campaign.getKey(), Campaign.class, null);
+		Campaign result = this.dao.findByKey(campaign.getKey(), Campaign.class,
+				null);
 		Assert.assertNotNull(result);
 
 	}
@@ -123,7 +124,7 @@ public class CampaignDaoTest {
 		campA.setName("MockParent A");
 		campA.setProduct(new ArrayList<Product>());
 		campA = this.dao.persist(campA);
-		
+
 		Product prod;
 		for (int i = 0; i < 100; i++) {
 			prod = new Product(campA);
@@ -152,5 +153,36 @@ public class CampaignDaoTest {
 				.getKey());
 
 		Assert.assertEquals(2, campaigns.size());
+	}
+
+	@Test
+	public void findCountriesByCampaignKey() {
+
+		Campaign camp = new Campaign(null);
+		camp.setName("MockParent");
+		camp = this.dao.persist(camp);
+
+		Product prod = new Product(camp);
+		prod.setName("Product A");
+		prod.setCountry("Colombia");
+		camp.getProduct().add(prod);
+
+		prod = new Product(camp);
+		prod.setName("Product B");
+		prod.setCountry("Brazil");
+		camp.getProduct().add(prod);
+
+		prod = new Product(camp);
+		prod.setName("Product C");
+		prod.setCountry("Colombia");
+		camp.getProduct().add(prod);
+
+		Campaign cmp = this.dao.persist(camp);
+
+		List<String> countries = this.dao.findCountriesByCampaignKey(cmp
+				.getKey());
+
+		Assert.assertEquals(2, countries.size());
+
 	}
 }

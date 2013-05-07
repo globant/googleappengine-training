@@ -24,6 +24,11 @@
 
 	<h2>Products</h2>
 
+
+	<c:forEach items="${countries}" var="country">
+		<h3>${country}</h3>
+	</c:forEach>
+
 	<table border="1" cellpadding="5" width="50%">
 		<tr>
 			<th>Name</th>
@@ -47,7 +52,8 @@
 			<th>Hits</th>
 			<th>Views</th>
 		</tr>
-		<c:forEach items="${campaignSummary.distributionChannelSummary}" var="distributionChannel">
+		<c:forEach items="${campaignSummary.distributionChannelSummary}"
+			var="distributionChannel">
 			<tr>
 				<td>${distributionChannel.name}</td>
 				<td>${distributionChannel.totalHits}</td>

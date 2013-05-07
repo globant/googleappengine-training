@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.globant.gaetraining.addsincgae.daos.CampaignDao;
 import com.globant.gaetraining.addsincgae.daos.CampaignSummaryDao;
+import com.globant.gaetraining.addsincgae.daos.ProductDao;
 import com.globant.gaetraining.addsincgae.model.Campaign;
 import com.globant.gaetraining.addsincgae.model.CampaignSummary;
 import com.google.appengine.api.datastore.Key;
@@ -21,6 +22,9 @@ public class CampaignService {
 
 	@Autowired
 	private CampaignSummaryDao campaignSummaryDao;
+	
+	@Autowired
+	private ProductDao productDao;
 
 	/**
 	 * Find the active {@link Campaign}s for a specific customer
@@ -44,11 +48,14 @@ public class CampaignService {
 	 */
 	public List<Object> findCampaignWithStatisticsById(Object campaignId) {
 
-		Campaign campaign = this.campaignDao.findById(campaignId);
+		Campaign campaign = this.campaignDao.findByIdWithProducts(campaignId);
 
 		CampaignSummary campaignSummary = this.campaignSummaryDao
 				.findByCampaignKeyWithProductsAndDistrChannelsSummaries(campaign
 						.getKey());
+		
+		List<String> countries = this.campaignDao
+				.findCountriesByCampaignKey(campaign.getKey());
 
 		List<Object> results = new ArrayList<>();
 
@@ -58,6 +65,7 @@ public class CampaignService {
 
 		results.add(campaign);
 		results.add(campaignSummary);
+		results.add(countries);
 
 		return results;
 	}

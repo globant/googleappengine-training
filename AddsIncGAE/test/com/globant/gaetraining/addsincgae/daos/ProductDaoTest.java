@@ -30,35 +30,4 @@ public class ProductDaoTest {
 		this.helper.tearDown();
 	}
 
-	@Test
-	public void persistCampaignAndProducts() {
-
-		Campaign camp = new Campaign(null);
-		camp.setName("MockParent");
-		camp = this.daoCampaign.persist(camp);
-
-		Product prod = new Product(camp);
-		prod.setName("Product A");
-		prod.setCountry("Colombia");
-		camp.getProduct().add(prod);
-
-		prod = new Product(camp);
-		prod.setName("Product B");
-		prod.setCountry("Brazil");
-		camp.getProduct().add(prod);
-
-		prod = new Product(camp);
-		prod.setName("Product C");
-		prod.setCountry("Colombia");
-		camp.getProduct().add(prod);
-
-		Campaign cmp = this.daoCampaign.persist(camp);
-
-		List<String> countries = this.daoCampaign
-				.findCountriesByCampaignKey(cmp.getKey());
-
-		Assert.assertEquals(2, countries.size());
-
-	}
-
 }
