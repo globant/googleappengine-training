@@ -65,8 +65,8 @@ public class ProductController {
 		Campaign campaign = null;
 		List<Campaign> campaigns = campaignService.getCampaigns();
 		if (campaigns.isEmpty()) {
-			campaign = new Campaign();
-			campaign.setKey(KeyFactory.createKey("campaign", 1L));
+			campaign = new Campaign(KeyFactory.createKey("campaign", 1L));
+//			campaign.setKey(KeyFactory.createKey("campaign", 1L));
 		} else {
 			campaign = campaigns.get(0);
 		}

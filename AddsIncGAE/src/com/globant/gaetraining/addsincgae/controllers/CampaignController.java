@@ -41,7 +41,7 @@ public class CampaignController {
 		List<Campaign> campaigns = campaignService.getCampaigns();
 		
 		model.put("campaigns", campaigns);
-		
+				
 		return "CampaignList";
 	}
 }
