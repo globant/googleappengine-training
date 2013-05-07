@@ -73,7 +73,7 @@ public class DummyDataLoader {
 		Date startDate = formatter.parse("01/01/13");
 		Date endDate = formatter.parse("12/31/13");
 
-		Campaign campaign = new Campaign();
+		Campaign campaign = new Campaign(customer.getKey());
 		campaign.setName("Dummy campaign A");
 		campaign.setCustomerKey(customer.getKey());
 		campaign.setActive(true);
