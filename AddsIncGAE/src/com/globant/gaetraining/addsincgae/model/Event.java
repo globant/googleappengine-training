@@ -17,7 +17,7 @@ public class Event {
 	private Key key;
 	
 	@Persistent
-	private char type;
+	private String type;
 
 	@Persistent
 	private Key productKey;
@@ -39,11 +39,11 @@ public class Event {
 		this.key = key;
 	}
 	
-	public char getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(char type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 

@@ -1,8 +1,10 @@
 package com.globant.gaetraining.addsincgae.daos;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.jdo.JDOHelper;
+import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
@@ -35,6 +37,47 @@ public abstract class GenericDao<T> {
 			pm.close();
 		}
 		return object;
+
+	}
+	
+	/**
+	 * Persist a collection of objects of type T to the datastore
+	 * 
+	 * @param objects
+	 *            objects to persist
+	 * @return objects persisted
+	 */
+	public Collection<T> persistAll(Collection<T> objects) {
+
+
+		PersistenceManager pm = this.getPM();
+
+		try {
+			objects = pm.makePersistentAll(objects);
+		} finally {
+			pm.close();
+		}
+		return objects;
+
+	}
+	
+	/**
+	 * Persist an array of objects of type T to the datastore
+	 * 
+	 * @param objects
+	 *            objects to persist
+	 * @return objects persisted
+	 */
+	public T[] persistAll(T[] objects) {
+
+		PersistenceManager pm = this.getPM();
+
+		try {
+			objects = pm.makePersistentAll(objects);
+		} finally {
+			pm.close();
+		}
+		return objects;
 
 	}
 
@@ -82,6 +125,8 @@ public abstract class GenericDao<T> {
 
 		try {
 			result = (T) pm.getObjectById(classType, key);
+		}catch(JDOObjectNotFoundException notfounde){
+			result = null;
 		} finally {
 			pm.close();
 		}
@@ -91,7 +136,6 @@ public abstract class GenericDao<T> {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Find an object by his id
 	 * 
 	 * @param id
@@ -118,6 +162,8 @@ public abstract class GenericDao<T> {
 
 		try {
 			result = (T) pm.getObjectById(classType, id);
+		}catch(JDOObjectNotFoundException notfounde){
+			result = null;
 		} finally {
 			pm.close();
 		}
@@ -127,8 +173,6 @@ public abstract class GenericDao<T> {
 	}
 
 	/**
-=======
->>>>>>> branch 'master' of https://github.com/globant/googleappengine-training.git
 	 * Find all the entity of the specified class
 	 * 
 	 * @param classType

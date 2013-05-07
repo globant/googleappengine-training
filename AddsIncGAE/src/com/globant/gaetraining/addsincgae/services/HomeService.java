@@ -2,6 +2,8 @@ package com.globant.gaetraining.addsincgae.services;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -12,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.globant.gaetraining.addsincgae.daos.CampaignDao;
+import com.globant.gaetraining.addsincgae.daos.CustomerDao;
 import com.globant.gaetraining.addsincgae.daos.DistributionChannelDao;
 import com.globant.gaetraining.addsincgae.daos.ProductDao;
 import com.globant.gaetraining.addsincgae.model.Campaign;
+import com.globant.gaetraining.addsincgae.model.Customer;
 import com.globant.gaetraining.addsincgae.model.DistributionChannel;
 import com.globant.gaetraining.addsincgae.model.Product;
 import com.globant.gaetraining.addsincgae.services.EventsService.EventType;
@@ -35,14 +39,16 @@ public class HomeService {
 
 	@Autowired
 	ProductDao productDao;
+	
+	@Autowired
+	private CustomerDao daoCustomer = new CustomerDao();
 
 	public void populate() {
-		
 		String templateChannel = "<div><h4>{product.name}</h4><p>{product.shortDescription}</p><p>{product.longDescription}</p><p><a href="+"{product.navigationURL}"+">Product URL Navigation</a></p><p><a href="+"{product.displayBreadcrumURL}"+">Display Product</a></p></div>"; 
 		// DistChannel
 		DistributionChannel distChannel = new DistributionChannel();
 		Key keyDist = KeyFactory.createKey("DistributionChannel",
-				"mock_distributionchannel");
+				1000000L);
 		distChannel.setKey(keyDist);
 		distChannel.setName("Mockito");
 		distChannel.setMediaType("TV");
@@ -52,20 +58,25 @@ public class HomeService {
 
 		DistributionChannel distChannel2 = new DistributionChannel();
 		Key keyDist2 = KeyFactory.createKey("DistributionChannel",
-				"mock_distributionchannel 2");
-		distChannel.setKey(keyDist2);
-		distChannel.setName("Mockito 2");
-		distChannel.setMediaType("Web");
-		distChannel
+				1000001L);
+		distChannel2.setKey(keyDist2);
+		distChannel2.setName("Mockito 2");
+		distChannel2.setMediaType("Web");
+		distChannel2
 				.setTemplate(templateChannel);
 		distChannelDao.persist(distChannel2);
+		
+		Customer customer = new Customer();
+		customer.setName("Dummy Man !!!");
+		customer = this.daoCustomer.persist(customer);
 
 		for (int i = 1; i <= 8; ++i) {
 			// Campaign
-			Campaign campaign = new Campaign();
+			Campaign campaign = new Campaign(customer.getKey());
 			Key keyCamp = KeyFactory.createKey("Campaign",
-					"mock_campaign" + i);
+					2000000L + i);
 			campaign.setKey(keyCamp);
+			campaign.setCustomerKey(customer.getKey());
 			campaign.setName("Mock " + i);
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.DATE, 30);
@@ -95,12 +106,12 @@ public class HomeService {
 
 	}
 	
-		public void dummyEventTasks(String[] distChannel, String[] product) {
-				String prodToTask;
-				String distChannelTask;
+		public void dummyEventTasks(long[] distChannel, long[][] product) {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+			String prodToTask, distChannelTask;
 				for (int i = 0; i < 10000; i++) {
-					prodToTask = product[i % product.length];
-					distChannelTask = distChannel[i%distChannel.length];
+					prodToTask = KeyFactory.keyToString(KeyFactory.createKey(KeyFactory.createKey("Campaign", product[i % product.length][0]),"Product",product[i % product.length][1]));
+					distChannelTask = KeyFactory.keyToString(KeyFactory.createKey("DistributionChannel",distChannel[i%distChannel.length]));
 		
 					JsonFactory f = new JsonFactory();
 					StringWriter sb = new StringWriter();
@@ -112,8 +123,8 @@ public class HomeService {
 						g.writeStringField("distributionChannel", distChannelTask);
 						g.writeStringField("client", "222.2.22." + i % 100);
 		
-						g.writeStringField("timestamp", Calendar.getInstance()
-								.getTime().toString());
+						g.writeStringField("timestamp", dateFormat.format(Calendar.getInstance()
+								.getTime()));
 						g.writeEndObject();
 						g.close();
 		
@@ -122,8 +133,7 @@ public class HomeService {
 					}
 					Queue q = QueueFactory.getQueue("events-queue");
 					TaskOptions taskOptions = TaskOptions.Builder
-							.withMethod(TaskOptions.Method.PULL).payload(sb.toString())
-							.tag(prodToTask).tag(distChannelTask);
+							.withMethod(TaskOptions.Method.PULL).payload(sb.toString());
 					q.add(taskOptions);
 				}
 			}

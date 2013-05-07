@@ -19,7 +19,6 @@ public class CampaignController {
 	@Autowired
 	private CampaignService campaignService;
 	
-	
 	@RequestMapping(value = "/campaign", method = RequestMethod.GET)
 	public String addUser(Map<String, Object> model) {
 

@@ -29,6 +29,11 @@ public class DistributionChannelSummary {
 	@Persistent
 	private CampaignSummary campaignSummary;
 
+	public DistributionChannelSummary(CampaignSummary campaignSummary) {
+		super();
+		this.campaignSummary = campaignSummary;
+	}
+
 	public Key getKey() {
 		return key;
 	}

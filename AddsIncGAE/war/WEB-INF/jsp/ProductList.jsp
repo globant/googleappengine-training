@@ -20,6 +20,7 @@
 			<th>Long description</th>
 			<th>Url</th>
 			<th>Country</th>
+			<th>Campaign</th>
 			<th></th>
 		</tr>
 		<c:forEach items="${products}" var="product">
@@ -31,6 +32,7 @@
 				<td><c:out value="${product.longDescription}" /></td>
 				<td><c:out value="${product.url}" /></td>
 				<td><c:out value="${product.country}" /></td>
+				<td><c:out value="${product.campaign_key}" /></td>
 				<td><a href="/products/${product.key}">Del</a></td>
 			</tr>
 		</c:forEach>

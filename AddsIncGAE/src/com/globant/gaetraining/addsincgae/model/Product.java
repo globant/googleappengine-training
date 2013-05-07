@@ -9,6 +9,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.datanucleus.annotations.Unowned;
 
 @PersistenceCapable
 public class Product {
@@ -34,15 +35,20 @@ public class Product {
 
 	@Persistent
 	private String country;
-	
+
 	@Persistent
+	@Unowned
 	private Campaign campaign;
-	
+
 	@Persistent
 	private String campaign_key;
 	
 	@Persistent
 	private BlobKey photo_path;
+
+	public Product() {
+
+	}
 
 	public Product(Campaign campaign) {
 		this.campaign = campaign;
@@ -122,6 +128,8 @@ public class Product {
 
 	public void setCampaign(Campaign campaign) {
 		this.campaign = campaign;
+		this.campaign_key = campaign.getKey().toString();
+		this.campaign.getProduct().add(this);
 	}
 
 	public String getCampaign_key() {

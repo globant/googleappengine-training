@@ -29,6 +29,10 @@ public class ProductSummary {
 	@Persistent
 	private CampaignSummary campaignSummary;
 
+	public ProductSummary(CampaignSummary campaignSummary) {
+		this.campaignSummary = campaignSummary;
+	}
+
 	public Key getKey() {
 		return key;
 	}

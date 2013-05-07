@@ -24,7 +24,7 @@
 		<div>
 			<div>
 				Amount of Employees
-				<textarea name="amountOfEmployees" rows="1" cols="15">${customer.employeesAmount}</textarea>
+				<textarea name="employeesAmount" rows="1" cols="15">${customer.employeesAmount}</textarea>
 			</div>
 		</div>
 		<div>

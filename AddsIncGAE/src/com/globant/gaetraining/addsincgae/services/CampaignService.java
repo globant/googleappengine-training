@@ -11,6 +11,7 @@ import com.globant.gaetraining.addsincgae.daos.CampaignSummaryDao;
 import com.globant.gaetraining.addsincgae.model.Campaign;
 import com.globant.gaetraining.addsincgae.model.CampaignSummary;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @Service
 public class CampaignService {
@@ -49,8 +50,6 @@ public class CampaignService {
 				.findByCampaignKeyWithProductsAndDistrChannelsSummaries(campaign
 						.getKey());
 
-		campaign.getProduct().size();
-
 		List<Object> results = new ArrayList<>();
 
 		if (campaign == null || campaignSummary == null) {
@@ -69,6 +68,11 @@ public class CampaignService {
 
 	public void addCampaign(Campaign campaign) {
 		campaignDao.persist(campaign);
+	}
+
+	public Campaign getCampaign(Long campaignId) {
+		Key key = KeyFactory.createKey(Campaign.class.getSimpleName(), campaignId);
+		return campaignDao.findByKey(key, Campaign.class, null);
 	}
 
 }
