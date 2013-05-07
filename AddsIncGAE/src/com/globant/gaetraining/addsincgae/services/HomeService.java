@@ -88,19 +88,19 @@ public class HomeService {
 					i % 2 == 0 ? keyDist : keyDist2);
 			campaign.setProduct(new ArrayList<Product>());
 
-//			for (int j = 1; j < 3; ++j) {
-//				// Product
-//				Key keyProduct = KeyFactory.createKey(campaign.getKey(),
-//						"Product", "mock_product_" + i + "_" + j);
-//				Product product = new Product(campaign);
-//				product.setKey(keyProduct);
-//				product.setName("Mockiproduct_" + i + "_" + j);
-//				product.setShortDescription("Short Desc_" + i + "_" + j);
-//				product.setLongDescription("The long description here " + i + "_" + j);
-//				product.setUrl("http://mock.globant.com/");
-//				campaign.getProduct().add(product);
-//
-//			}
+			for (int j = 1; j < 3; ++j) {
+				// Product
+				Key keyProduct = KeyFactory.createKey(campaign.getKey(),
+						"Product", "mock_product_" + i + "_" + j);
+				Product product = new Product(campaign);
+				product.setKey(keyProduct);
+				product.setName("Mockiproduct_" + i + "_" + j);
+				product.setShortDescription("Short Desc_" + i + "_" + j);
+				product.setLongDescription("The long description here " + i + "_" + j);
+				product.setUrl("http://mock.globant.com/");
+				campaign.getProduct().add(product);
+
+			}
 			campaignDao.persist(campaign);
 		}
 

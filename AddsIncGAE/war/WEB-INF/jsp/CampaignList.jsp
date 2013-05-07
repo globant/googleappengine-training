@@ -24,7 +24,7 @@
 		</tr>
 		<c:forEach items="${campaigns}" var="campaign">
 			<tr>
-				<td><a href="/campaign/${campaign.key.id}">Edit</a></td>
+				<td><a href="/campaign/${campaign.keyString}">Edit</a></td>
 				<td><c:out value="${campaign.name}" /></td>
 				<td><c:out value="${campaign.startDate}" /></td>
 				<td><c:out value="${campaign.endDate}" /></td>

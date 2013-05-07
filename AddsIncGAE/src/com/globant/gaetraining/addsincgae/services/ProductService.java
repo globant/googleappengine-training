@@ -90,11 +90,12 @@ public class ProductService {
 					products.add(prodTmp);
 			}
 
-			AdTemplateResponseDTO tempDTO = new AdTemplateResponseDTO();
+			AdTemplateResponseDTO tempDTO = null;
 			String hostData = request.getScheme() + "://"
 					+ request.getServerName() + ((request.getServerPort() == 80) ? "" : ":" + request.getServerPort())
 					+ "/";
 			for (Product tmpProd : products) {
+				tempDTO = new AdTemplateResponseDTO();
 				tempDTO.setProduct(tmpProd);
 				tempDTO.setTemplate(this.buildTemplateProd(tmpProd,
 						distChannel.getTemplate(),
