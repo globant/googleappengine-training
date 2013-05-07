@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.globant.gaetraining.addsincgae.daos.CampaignDao;
+import com.globant.gaetraining.addsincgae.daos.CustomerDao;
 import com.globant.gaetraining.addsincgae.daos.DistributionChannelDao;
 import com.globant.gaetraining.addsincgae.daos.ProductDao;
 import com.globant.gaetraining.addsincgae.model.Campaign;
+import com.globant.gaetraining.addsincgae.model.Customer;
 import com.globant.gaetraining.addsincgae.model.DistributionChannel;
 import com.globant.gaetraining.addsincgae.model.Product;
 import com.globant.gaetraining.addsincgae.services.EventsService.EventType;
@@ -37,6 +39,9 @@ public class HomeService {
 
 	@Autowired
 	ProductDao productDao;
+	
+	@Autowired
+	private CustomerDao daoCustomer = new CustomerDao();
 
 	public void populate() {
 		String templateChannel = "<div><h4>{product.name}</h4><p>{product.shortDescription}</p><p>{product.longDescription}</p><p><a href="+"{product.navigationURL}"+">Product URL Navigation</a></p><p><a href="+"{product.displayBreadcrumURL}"+">Display Product</a></p></div>"; 
@@ -60,13 +65,18 @@ public class HomeService {
 		distChannel2
 				.setTemplate(templateChannel);
 		distChannelDao.persist(distChannel2);
+		
+		Customer customer = new Customer();
+		customer.setName("Dummy Man !!!");
+		customer = this.daoCustomer.persist(customer);
 
 		for (int i = 1; i <= 8; ++i) {
 			// Campaign
-			Campaign campaign = new Campaign();
+			Campaign campaign = new Campaign(customer.getKey());
 			Key keyCamp = KeyFactory.createKey("Campaign",
 					2000000L + i);
 			campaign.setKey(keyCamp);
+			campaign.setCustomerKey(customer.getKey());
 			campaign.setName("Mock " + i);
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.DATE, 30);
