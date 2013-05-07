@@ -141,6 +141,8 @@ public class DummyDataLoader {
 		for (Key distributionChannelKey : distributionChannels) {
 			distributionChannelSummary = new DistributionChannelSummary(summary);
 			distributionChannelSummary
+					.setName(distributionChannelKey.getName());
+			distributionChannelSummary
 					.setDistributionChannelKey(distributionChannelKey);
 			distributionChannelSummary.setTotalHits(10);
 			distributionChannelSummary.setTotalViews(20);
