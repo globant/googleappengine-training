@@ -50,7 +50,8 @@ public class CampaignController {
 	@RequestMapping("/campaign/{campaingKey}")
 	public String editCampaign(@PathVariable("campaingKey") String campaignKey, Model model){
 		
-		model.addAttribute("campaignKey", campaignKey);
+		Campaign campaign = campaignService.getCampaignByKey(campaignKey);
+		model.addAttribute("campaign", campaign);
 		
 		return "AddCampaign";
 	}

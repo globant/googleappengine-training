@@ -75,4 +75,8 @@ public class CampaignService {
 		return campaignDao.findByKey(key, Campaign.class, null);
 	}
 
+	public Campaign getCampaignByKey(String keyString){
+		Key key = KeyFactory.stringToKey(keyString);
+		return campaignDao.findByKey(key, Campaign.class, null);
+	}
 }
