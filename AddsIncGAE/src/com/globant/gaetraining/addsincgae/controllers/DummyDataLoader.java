@@ -73,7 +73,7 @@ public class DummyDataLoader {
 		Date startDate = formatter.parse("01/01/13");
 		Date endDate = formatter.parse("12/31/13");
 
-		Campaign campaign = new Campaign();
+		Campaign campaign = new Campaign(customer.getKey());
 		campaign.setName("Dummy campaign A");
 		campaign.setCustomerKey(customer.getKey());
 		campaign.setActive(true);
@@ -140,6 +140,8 @@ public class DummyDataLoader {
 		DistributionChannelSummary distributionChannelSummary;
 		for (Key distributionChannelKey : distributionChannels) {
 			distributionChannelSummary = new DistributionChannelSummary(summary);
+			distributionChannelSummary
+					.setName(distributionChannelKey.getName());
 			distributionChannelSummary
 					.setDistributionChannelKey(distributionChannelKey);
 			distributionChannelSummary.setTotalHits(10);

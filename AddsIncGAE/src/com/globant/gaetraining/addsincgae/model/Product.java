@@ -8,6 +8,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.datanucleus.annotations.Unowned;
@@ -43,6 +44,9 @@ public class Product {
 
 	@Persistent
 	private String campaign_key;
+	
+	@Persistent
+	private BlobKey photo_path;
 
 	public Product() {
 
@@ -51,6 +55,17 @@ public class Product {
 	public Product(Campaign campaign) {
 		this.campaign = campaign;
 		this.campaign_key = campaign.getKey().toString();
+	}
+	
+	public Product(String name, String shortDescription, 
+			String longDescription, String productUrl, String country,
+			BlobKey productPhoto, Campaign campaign){
+		this(campaign);
+		this.name = name;
+		this.shortDescription = shortDescription;
+		this.longDescription = longDescription;
+		this.url = productUrl;
+		this.country = country;
 	}
 
 	public Key getKey() {
@@ -131,5 +146,21 @@ public class Product {
 		this.campaign_key = campaign.getKey().toString();
 		this.campaign.getProduct().add(this);
 	}
+
+	public String getCampaign_key() {
+		return campaign_key;
+	}
+
+	public void setCampaign_key(String campaign_key) {
+		this.campaign_key = campaign_key;
+	}
+
+	public BlobKey getPhoto_path() {
+		return photo_path;
+	}
+
+	public void setPhoto_path(BlobKey photo_path) {
+		this.photo_path = photo_path;
+	}	
 
 }

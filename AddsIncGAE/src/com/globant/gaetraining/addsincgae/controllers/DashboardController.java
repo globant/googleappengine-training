@@ -66,10 +66,9 @@ public class DashboardController {
 		System.out.println("entrooooo");
 
 		// Active campaign
-		Campaign campA = new Campaign();
+		Campaign campA = new Campaign(customer.getKey());
 		campA.setName("MockParent A");
 		campA.setProduct(new ArrayList<Product>());
-		campA.setCustomerKey(customer.getKey());
 		campA.setActive(true);
 
 		Product prod;
