@@ -65,6 +65,8 @@ public class Campaign {
 		this.customerKey = customerKey;
 		this.active = true;
 	}
+	
+	public Campaign(){}
 
 	public Key getKey() {
 		return key;
