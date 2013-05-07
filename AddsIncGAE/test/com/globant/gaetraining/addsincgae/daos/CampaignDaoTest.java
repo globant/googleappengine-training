@@ -35,7 +35,7 @@ public class CampaignDaoTest {
 
 	@Test
 	public void persistCampaingTest() {
-		Campaign camp = new Campaign();
+		Campaign camp = new Campaign(null);
 		camp.setName("Mock");
 		camp = dao.persist(camp);
 		Assert.assertNotNull(camp.getKey());
@@ -43,8 +43,10 @@ public class CampaignDaoTest {
 
 	@Test
 	public void persistCampaignAndProducts() {
-		Campaign camp = new Campaign();
+		Campaign camp = new Campaign(null);
 		camp.setName("MockParent");
+		camp = dao.persist(camp);
+		
 		Product prod;
 		for (int i = 0; i < 100; i++) {
 			prod = new Product(camp);
@@ -69,9 +71,9 @@ public class CampaignDaoTest {
 		customer.setName("Test Man!!");
 		customer = this.daoCustomer.persist(customer);
 
-		Campaign camp = new Campaign();
+		Campaign camp = new Campaign(customer.getKey());
 		camp.setName("MockParent");
-		camp.setCustomerKey(customer.getKey());
+		camp = this.dao.persist(camp);
 
 		Product prod;
 		for (int i = 0; i < 100; i++) {
@@ -92,7 +94,7 @@ public class CampaignDaoTest {
 
 	@Test
 	public void findByValidKeyTest() {
-		Campaign campaign = new Campaign();
+		Campaign campaign = new Campaign(null);
 		campaign = this.dao.persist(campaign);
 		Campaign result = this.dao.findByKey(campaign.getKey(), Campaign.class, null);
 		Assert.assertNotNull(result);
@@ -101,7 +103,7 @@ public class CampaignDaoTest {
 
 	@Test
 	public void findAllTest() {
-		Campaign campaign = new Campaign();
+		Campaign campaign = new Campaign(null);
 		campaign.setName("Mc Donalds 2013");
 		campaign = this.dao.persist(campaign);
 		List<Campaign> result = this.dao.findAll(Campaign.class);
@@ -117,9 +119,11 @@ public class CampaignDaoTest {
 		customer = this.daoCustomer.persist(customer);
 
 		// Active campaign
-		Campaign campA = new Campaign();
+		Campaign campA = new Campaign(customer.getKey());
 		campA.setName("MockParent A");
 		campA.setProduct(new ArrayList<Product>());
+		campA = this.dao.persist(campA);
+		
 		Product prod;
 		for (int i = 0; i < 100; i++) {
 			prod = new Product(campA);
@@ -129,19 +133,16 @@ public class CampaignDaoTest {
 			prod.setUrl("http://jkjk.com/");
 			campA.getProduct().add(prod);
 		}
-		campA.setCustomerKey(customer.getKey());
 		campA.setActive(true);
 
 		// Inactive campaign
-		Campaign campB = new Campaign();
+		Campaign campB = new Campaign(customer.getKey());
 		campB.setName("MockParent B");
-		campB.setCustomerKey(customer.getKey());
 		campB.setActive(false);
 
 		// Active campaign without customer
-		Campaign campC = new Campaign();
+		Campaign campC = new Campaign(customer.getKey());
 		campC.setName("MockParent C");
-		campC.setActive(true);
 
 		campA = dao.persist(campA);
 		campB = dao.persist(campB);
@@ -150,6 +151,6 @@ public class CampaignDaoTest {
 		List<Campaign> campaigns = dao.findActiveByCustomerKey(customer
 				.getKey());
 
-		Assert.assertEquals(1, campaigns.size());
+		Assert.assertEquals(2, campaigns.size());
 	}
 }
