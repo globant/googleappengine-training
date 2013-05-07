@@ -44,6 +44,8 @@ public class HomeService {
 	private CustomerDao daoCustomer = new CustomerDao();
 
 	public void populate() {
+		
+		String[] countries = {"Colombia", "Brazil", "Suiza"};
 		String templateChannel = "<div><h4>{product.name}</h4><p>{product.shortDescription}</p><p>{product.longDescription}</p><p><a href="+"{product.navigationURL}"+">Product URL Navigation</a></p><p><a href="+"{product.displayBreadcrumURL}"+">Display Product</a></p></div>"; 
 		// DistChannel
 		DistributionChannel distChannel = new DistributionChannel();
@@ -98,6 +100,7 @@ public class HomeService {
 				product.setShortDescription("Short Desc_" + i + "_" + j);
 				product.setLongDescription("The long description here " + i + "_" + j);
 				product.setUrl("http://mock.globant.com/");
+				product.setCountry(countries[j-1]);
 				campaign.getProduct().add(product);
 
 			}
