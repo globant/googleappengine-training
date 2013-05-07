@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.globant.gaetraining.addsincgae.daos.DistributionChannelDao;
 import com.globant.gaetraining.addsincgae.daos.ProductDao;
+import com.globant.gaetraining.addsincgae.model.Campaign;
 import com.globant.gaetraining.addsincgae.model.DistributionChannel;
 import com.globant.gaetraining.addsincgae.model.Product;
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -90,7 +92,7 @@ public class ProductService {
 
 			AdTemplateResponseDTO tempDTO = new AdTemplateResponseDTO();
 			String hostData = request.getScheme() + "://"
-					+ request.getServerName() + ":" + request.getServerPort()
+					+ request.getServerName() + ((request.getServerPort() == 80) ? "" : ":" + request.getServerPort())
 					+ "/";
 			for (Product tmpProd : products) {
 				tempDTO.setProduct(tmpProd);
@@ -110,7 +112,28 @@ public class ProductService {
 	public void addProduct(Product product) {
 		productDao.persist(product);
 	}
-
+	
+	public Product addProduct(String name, String shortDescription, 
+			String longDescription, String productUrl, String country,
+			BlobKey productPhoto, Campaign campaign){
+		
+		Product prod = new Product(name, shortDescription, longDescription, 
+				productUrl, country, productPhoto, campaign);
+		
+		productDao.persist(prod);
+		
+		return prod;
+	}
+	
+	
+	/**
+	 * 
+	 * @param prod
+	 * @param template
+	 * @param channelKey
+	 * @param host
+	 * @return
+	 */
 	private String buildTemplateProd(Product prod, String template,
 			String channelKey, String host) {
 		StringBuilder temp = new StringBuilder(template);
