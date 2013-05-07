@@ -23,10 +23,10 @@
 <body>
 	<h1>Add Campaign</h1>
 	<form action="/campaigns" method="POST">
-		Campaign name: <input type="text" id="name" name="name" />
-		Active: <input type="checkbox" id="active" name="active" />
-		<p>Start Date: <input type="text" id="startDate" name ="startDate"/></p>
-		<p>End Date: <input type="text" id="endDate" name ="endDate"/></p>
+		Campaign name: <input type="text" id="name" name="name" value="${campaign.name}" />
+		Active: <input type="checkbox" id="active" name="active" checked="${campaign.active}" />
+		<p>Start Date: <input type="text" id="startDate" name ="startDate" value="${campaign.startDate}"/></p>
+		<p>End Date: <input type="text" id="endDate" name ="endDate" value="${campaign.endDate}"/></p>
 		<input type="submit" value="Create" />
 	</form>
 </body>
