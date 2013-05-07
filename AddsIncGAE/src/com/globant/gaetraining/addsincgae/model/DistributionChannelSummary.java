@@ -1,11 +1,13 @@
 package com.globant.gaetraining.addsincgae.model;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @PersistenceCapable
 public class DistributionChannelSummary {
@@ -38,10 +40,22 @@ public class DistributionChannelSummary {
 		return key;
 	}
 
+	@NotPersistent
+	private String keyString;
+
 	public void setKey(Key key) {
 		this.key = key;
+		this.keyString= KeyFactory.keyToString(key);
 	}
 
+	public String getKeyString() {
+		if(keyString == null & key !=null){
+			keyString= KeyFactory.keyToString(key);
+		}
+		return keyString;
+	}
+
+	
 	public String getName() {
 		return name;
 	}
