@@ -40,7 +40,7 @@ public class Product {
 	private Campaign campaign;
 
 	@Persistent
-	private String campaign_key;
+	private String campaignKey;
 
 	public Product() {
 
@@ -48,7 +48,7 @@ public class Product {
 
 	public Product(Campaign campaign) {
 		this.campaign = campaign;
-		this.campaign_key = campaign.getKey().toString();
+		this.campaignKey = campaign.getKey().toString();
 	}
 
 	public Key getKey() {
@@ -113,7 +113,7 @@ public class Product {
 
 	public void setCampaign(Campaign campaign) {
 		this.campaign = campaign;
-		this.campaign_key = campaign.getKey().toString();
+		this.campaignKey = campaign.getKey().toString();
 		this.campaign.getProduct().add(this);
 	}
 
