@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#tagtosearch').change(function(){
+		$.ajax({url:'/home/channels', dataType:'json', success: function(channels) {
+			$('#ads').empty();
+			for(var ch in channels.distributionChannelList){
+				$.getJSON('/engine/adsbykeyword/'+channels.distributionChannelList[ch].keyString+'/'+$('#tagtosearch').val()+'/100',function(data){
+					for(var product in data.adTemplateResponseDTOList){
+						$('#ads').append('<li>'+data.adTemplateResponseDTOList[product].template+'</li>');
+					}
+				});
+			}
+		}});
+		
+	});
+});
+
+</script>
+<title>Mock Distribution Channel</title>
+</head>
+<body>
+<p>tag:</p><input type="text" id="tagtosearch" name="tagtosearch"></input>
+<ul id="ads"></ul>
+</body>
+</html>

@@ -150,10 +150,10 @@ public class ProductService {
 				prod.getLongDescription());
 
 		template = template.replace(TEMP_WILCARDS.NAVURL.getValue(), host
-				+ "/engine/click/" + prodId.toString());
+				+ "engine/click/" + prodId.toString());
 
 		template = template.replace(TEMP_WILCARDS.VIEWURL.getValue(), host
-				+ "/engine/view/" + prodId.toString());
+				+ "engine/view/" + prodId.toString());
 
 		return template;
 	}
