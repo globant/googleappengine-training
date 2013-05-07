@@ -42,9 +42,11 @@ public class Campaign {
 	@Persistent
 	private List<Key> distributionChannelKeys;
 
-	public Campaign() {
+	public Campaign(Key customerKey) {
 		this.product = new ArrayList<Product>();
 		this.distributionChannelKeys = new ArrayList<Key>();
+		this.customerKey = customerKey;
+		this.active = true;
 	}
 
 	public Key getKey() {
