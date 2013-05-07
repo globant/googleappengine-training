@@ -7,11 +7,13 @@ import java.util.List;
 import javax.jdo.annotations.FetchGroup;
 import javax.jdo.annotations.FetchGroups;
 import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @PersistenceCapable
 @FetchGroups({ @FetchGroup(name = "products", members = { @Persistent(name = "product") }) })
@@ -41,6 +43,21 @@ public class Campaign {
 
 	@Persistent
 	private List<Key> distributionChannelKeys;
+	
+	@NotPersistent
+	private String keyString;
+
+	public void setKey(Key key) {
+		this.key = key;
+		this.keyString= KeyFactory.keyToString(key);
+	}
+
+	public String getKeyString() {
+		if(keyString == null & key !=null){
+			keyString= KeyFactory.keyToString(key);
+		}
+		return keyString;
+	}
 
 	public Campaign(Key customerKey) {
 		this.product = new ArrayList<Product>();
@@ -48,14 +65,13 @@ public class Campaign {
 		this.customerKey = customerKey;
 		this.active = true;
 	}
+	
+	public Campaign(){}
 
 	public Key getKey() {
 		return key;
 	}
 
-	public void setKey(Key key) {
-		this.key = key;
-	}
 
 	public String getName() {
 		return name;

@@ -9,7 +9,7 @@
 <title>Products List</title>
 </head>
 <h1>Products List</h1>
-<a href="/addProduct">Add new product</a>
+<a href="/product/prodgoto/AddProduct">Add new product</a>
 <body>
 	<table>
 		<tr>
