@@ -43,6 +43,7 @@ public class Product {
 	private Campaign campaign;
 
 	@Persistent
+	private Key campaignKey;
 	private String campaign_key;
 	
 	@Persistent
@@ -54,7 +55,7 @@ public class Product {
 
 	public Product(Campaign campaign) {
 		this.campaign = campaign;
-		this.campaign_key = campaign.getKey().toString();
+		this.campaignKey = campaign.getKey();
 	}
 	
 	public Product(String name, String shortDescription, 
@@ -143,7 +144,7 @@ public class Product {
 
 	public void setCampaign(Campaign campaign) {
 		this.campaign = campaign;
-		this.campaign_key = campaign.getKey().toString();
+		this.campaignKey = campaign.getKey();
 		this.campaign.getProduct().add(this);
 	}
 

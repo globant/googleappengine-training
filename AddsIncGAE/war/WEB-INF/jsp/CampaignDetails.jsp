@@ -24,18 +24,26 @@
 
 	<h2>Products</h2>
 
+
 	<table border="1" cellpadding="5" width="50%">
+
 		<tr>
 			<th>Name</th>
 			<th>Hits</th>
 			<th>Views</th>
 		</tr>
-		<c:forEach items="${campaignSummary.productSummary}" var="product">
+
+		<c:forEach items="${productCountryMap}" var="map">
 			<tr>
-				<td>${product.name}</td>
-				<td>${product.totalHits}</td>
-				<td>${product.totalViews}</td>
+				<th colspan="3" align="center">${map.key}</th>
 			</tr>
+			<c:forEach items="${map.value}" var="product">
+				<tr>
+					<td>${product.name}</td>
+					<td>${product.totalHits}</td>
+					<td>${product.totalViews}</td>
+				</tr>
+			</c:forEach>
 		</c:forEach>
 	</table>
 
@@ -47,7 +55,8 @@
 			<th>Hits</th>
 			<th>Views</th>
 		</tr>
-		<c:forEach items="${campaignSummary.distributionChannelSummary}" var="distributionChannel">
+		<c:forEach items="${campaignSummary.distributionChannelSummary}"
+			var="distributionChannel">
 			<tr>
 				<td>${distributionChannel.name}</td>
 				<td>${distributionChannel.totalHits}</td>

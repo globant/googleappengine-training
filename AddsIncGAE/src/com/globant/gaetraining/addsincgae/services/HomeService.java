@@ -44,7 +44,8 @@ public class HomeService {
 	private CustomerDao daoCustomer = new CustomerDao();
 
 	public void populate() {
-		String templateChannel = "<div><h4>{product.name}</h4><p>{product.shortDescription}</p><p>{product.longDescription}</p><p><a href=\"{product.navigationURL}\">Product URL Navigation</a></p><p><a href=\"{product.displayBreadcrumURL}\">Display Product</a></p></div>"; 
+		
+		String templateChannel = "<div><h4>{product.name}</h4><p>{product.shortDescription}</p><p>{product.longDescription}</p><p><a href=\"{product.navigationURL}\">Product URL Navigation</a></p><p><a href=\"{product.displayBreadcrumURL}\">Display Product</a></p></div>";
 		// DistChannel
 		DistributionChannel distChannel = new DistributionChannel();
 		Key keyDist = KeyFactory.createKey("DistributionChannel",
@@ -88,7 +89,7 @@ public class HomeService {
 					i % 2 == 0 ? keyDist : keyDist2);
 			campaign.setProduct(new ArrayList<Product>());
 
-			for (int j = 1; j < 3; ++j) {
+			for (int j = 1; j < 5; ++j) {
 				// Product
 				Key keyProduct = KeyFactory.createKey(campaign.getKey(),
 						"Product", "mock_product_" + i + "_" + j);
@@ -98,6 +99,12 @@ public class HomeService {
 				product.setShortDescription("Short Desc_" + i + "_" + j);
 				product.setLongDescription("The long description here " + i + "_" + j);
 				product.setUrl("http://mock.globant.com/");
+				
+				if (j % 2 == 0) {
+					product.setCountry("Colombia");
+				} else {
+					product.setCountry("Brazil");
+				}
 				campaign.getProduct().add(product);
 
 			}
