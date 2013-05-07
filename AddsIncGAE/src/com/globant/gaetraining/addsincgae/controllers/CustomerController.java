@@ -20,6 +20,7 @@ import com.globant.gaetraining.addsincgae.model.User;
 import com.globant.gaetraining.addsincgae.services.CustomerService;
 import com.globant.gaetraining.addsincgae.services.UserService;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
@@ -55,7 +56,7 @@ public class CustomerController {
 	@RequestMapping(value = "/customers/{customerId}", method = RequestMethod.POST)
 	public String saveCustomer(@PathVariable Long customerId, @ModelAttribute("customer") Customer customer, Model model) {
 	 
-		//customer.setId(customerId);
+		customer.setKey(KeyFactory.createKey("Customer", customerId));
 		
 		this.customerService.addCustomer(customer);
 	  
