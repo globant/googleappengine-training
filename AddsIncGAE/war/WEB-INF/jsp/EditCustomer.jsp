@@ -1,14 +1,24 @@
+<%@page import="com.globant.gaetraining.addsincgae.model.Customer"%>
+<%@page import="com.google.appengine.api.datastore.Key"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory" %>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%	
+	// Take a BlobstoreService object for this view
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <title>Edit Customers</title>
 </head>
 <body>
 	<h3>Customer Edit</h3>
-	<form name="input" action="/customers/${customer.key.id}" method="POST">
+	<form action="<%=blobstoreService.createUploadUrl("/customers/"+((Customer)request.getAttribute("customer")).getKey().getId())%>" method="POST" enctype="multipart/form-data">
 		<div>
 			<div>
 				Name
@@ -34,19 +44,21 @@
 			</div>
 		</div>
 		<div>
-			Owners
 			<div>
-				<div>Available:</div>
-				<div>Aca iria el available</div>
+				Owners	
+				<form:select multiple="true" path="lists.ownersString"  items="${users}" itemValue="keyString" itemLabel="userName" />
 			</div>
+		</div>
+		<div>
 			<div>
-				<div>Selected:</div>
-				<div>Aca iria el selected</div>
+				Representative	
+				<form:select multiple="true" path="lists.representativesString" items="${users}" itemValue="keyString" itemLabel="userName" />
 			</div>
 		</div>
 		<div>
 			<div>Logo</div>
-			<div>Aca iria la url</div>
+			<img alt="Logo" src="${customer.logo}"/>
+			<input type="file" name="logo"/>
 		</div>
 
 		<input type="submit" value="Submit">

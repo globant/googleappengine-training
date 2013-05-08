@@ -8,6 +8,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
@@ -38,6 +39,9 @@ public class Customer {
 
 	@NotPersistent
 	private String keyString;
+	
+	@Persistent
+	private BlobKey logo;
 
 	public void setKey(Key key) {
 		this.key = key;
@@ -102,5 +106,13 @@ public class Customer {
 
 	public void setEmployeesAmount(int employeesAmount) {
 		this.employeesAmount = employeesAmount;
+	}
+
+	public BlobKey getLogo() {
+		return logo;
+	}
+
+	public void setLogo(BlobKey logo) {
+		this.logo = logo;
 	}
 }
