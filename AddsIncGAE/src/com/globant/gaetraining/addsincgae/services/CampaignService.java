@@ -64,7 +64,7 @@ public class CampaignService {
 				.findByCampaignKeyWithProductsAndDistrChannelsSummaries(campaign
 						.getKey());
 		List<String> countries = this.campaignDao
-				.findCountriesByCampaignKey(campaign.getKey());
+				.findCountriesByCampaignKey(campaign);
 
 		// Creation of countries map
 		Map<String, List<ProductsSummaryCountryDTO>> productCountryMap = new HashMap<String, List<ProductsSummaryCountryDTO>>();

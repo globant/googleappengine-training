@@ -78,17 +78,17 @@ public class CampaignDao extends GenericDao<Campaign> {
 	 * @return {@link List} of {@link String} with the countries associated to
 	 *         the {@link Product} of the {@link Campaign}
 	 */
-	public List<String> findCountriesByCampaignKey(Key campaignKey) {
+	public List<String> findCountriesByCampaignKey(Campaign campaign) {
 
 		List<String> results = null;
 
 		Query query = this.getPM().newQuery(Product.class);
 		query.setResult("DISTINCT country");
-		query.setFilter("campaignKey == campaignKeyParam");
-		query.declareParameters("com.google.appengine.api.datastore.Key campaignKeyParam");
+		query.setFilter("campaign == campaignParam");
+		query.declareParameters(Campaign.class.getName()+" campaignParam");
 
 		try {
-			results = (List<String>) query.execute(campaignKey);
+			results = (List<String>) query.execute(campaign);
 		} finally {
 			this.getPM().close();
 		}
