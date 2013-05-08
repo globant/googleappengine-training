@@ -92,7 +92,7 @@ public class HomeService {
 			for (int j = 1; j < 5; ++j) {
 				// Product
 				Key keyProduct = KeyFactory.createKey(campaign.getKey(),
-						"Product", "mock_product_" + i + "_" + j);
+						 "Product", 3000000L + i*10 +  j);
 				Product product = new Product(campaign);
 				product.setKey(keyProduct);
 		product.setName("Mockiproduct_" + i + "_" + j);

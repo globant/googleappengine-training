@@ -47,7 +47,6 @@ public class DashboardController {
 		CampaignSummary campaignSummary = (CampaignSummary) results.get(1);
 		Map<String, List<ProductsSummaryCountryDTO>> productCountryMap = (Map<String, List<ProductsSummaryCountryDTO>>) results
 				.get(2);
-		List<String> countries = (List<String>) results.get(3);
 
 		model.addAttribute("campaign", campaign);
 		model.addAttribute("campaignSummary", campaignSummary);
