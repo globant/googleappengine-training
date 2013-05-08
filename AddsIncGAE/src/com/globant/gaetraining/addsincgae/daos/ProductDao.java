@@ -14,6 +14,11 @@ import com.globant.gaetraining.addsincgae.controllers.rest.AdEventController;
 import com.globant.gaetraining.addsincgae.model.Campaign;
 import com.globant.gaetraining.addsincgae.model.DistributionChannel;
 import com.globant.gaetraining.addsincgae.model.Product;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
 
 @Repository
 public class ProductDao extends GenericDao<Product> {
@@ -29,15 +34,15 @@ public class ProductDao extends GenericDao<Product> {
 		query.declareParameters("String channelNameParam");
 		String chanName = distChannel.getKey().toString();
 		List<Campaign> campaigns = (List<Campaign>) query.execute(distChannel.getKey());
+		DatastoreService dataStoreService = DatastoreServiceFactory.getDatastoreService(); 
+		List<Product> products = new ArrayList<Product>();
 		
-		List<String> campaingsKeys = new ArrayList<String>();
-		for(int i = 0; i < campaigns.size(); ++i ){
-			campaingsKeys.add( campaigns.get(i).getKey().toString() );
+		for(Campaign tmpCampaign: campaigns){
+			query = pm.newQuery(Product.class);
+			query.setFilter("campaign == campaignParam");
+			query.declareParameters(Campaign.class.getName() + " campaignParam");
+			products.addAll((List<Product>)(query.execute(tmpCampaign)));
 		}
-		
-		query = pm.newQuery(Product.class, ":p1.contains(campaign_key)");
-		query.setRange(0,limit);
-		List<Product> products = (List<Product>)query.execute(campaingsKeys);
 		
 		logger.log(Level.INFO, "The products list has been set");
 		pm.close();

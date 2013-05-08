@@ -41,10 +41,6 @@ public class Product {
 	@Persistent
 	@Unowned
 	private Campaign campaign;
-
-	@Persistent
-	private Key campaignKey;
-	private String campaign_key;
 	
 	@Persistent
 	private BlobKey photo_path;
@@ -55,7 +51,6 @@ public class Product {
 
 	public Product(Campaign campaign) {
 		this.campaign = campaign;
-		this.campaignKey = campaign.getKey();
 	}
 	
 	public Product(String name, String shortDescription, 
@@ -87,8 +82,6 @@ public class Product {
 		}
 		return keyString;
 	}
-
-	
 
 	public String getName() {
 		return name;
@@ -144,16 +137,7 @@ public class Product {
 
 	public void setCampaign(Campaign campaign) {
 		this.campaign = campaign;
-		this.campaignKey = campaign.getKey();
 		this.campaign.getProduct().add(this);
-	}
-
-	public String getCampaign_key() {
-		return campaign_key;
-	}
-
-	public void setCampaign_key(String campaign_key) {
-		this.campaign_key = campaign_key;
 	}
 
 	public BlobKey getPhoto_path() {
