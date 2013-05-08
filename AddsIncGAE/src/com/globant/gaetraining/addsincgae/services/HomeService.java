@@ -98,7 +98,7 @@ public class HomeService {
 		product.setName("Mockiproduct_" + i + "_" + j);
 				product.setShortDescription("Short Desc_" + i + "_" + j);
 				product.setLongDescription("The long description here " + i + "_" + j);
-				product.setUrl("http://mock.globant.com/");
+				product.setUrl("http://www.globant.com/");
 				
 				if (j % 2 == 0) {
 					product.setCountry("Colombia");

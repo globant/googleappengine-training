@@ -25,15 +25,15 @@
 		</tr>
 		<c:forEach items="${products}" var="product">
 			<tr>
-				<td><a href="/products/${product.key}">Edit</a></td>
+				<td><a href="/products/${product.keyString}">Edit</a></td>
                 <td><c:out value="${product.name}" /></td>
 				<td><c:out value="${product.productFamily}" /></td>
 				<td><c:out value="${product.shortDescription}" /></td>
 				<td><c:out value="${product.longDescription}" /></td>
 				<td><c:out value="${product.url}" /></td>
 				<td><c:out value="${product.country}" /></td>
-				<td><c:out value="${product.campaign_key}" /></td>
-				<td><a href="/products/${product.key}">Del</a></td>
+				<td><c:out value="${product.campaign.keyString}" /></td>
+				<td><a href="/products/${product.keyString}">Del</a></td>
 			</tr>
 		</c:forEach>
 	</table>
