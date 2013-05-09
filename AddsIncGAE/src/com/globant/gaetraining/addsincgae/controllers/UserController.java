@@ -56,26 +56,24 @@ public class UserController {
 		User user = userService.getUser(userId);
 
 		model.addAttribute("user", user);
-
+		
 		return "EditUser";
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public String addUser(Map<String, Object> model) {
-
-		User user = new User();
-
+	public String addUser(Model model) {
+		;
+		model.addAttribute("user", new User());
+		return "AdUser";
+	}
+	
+	@ModelAttribute("roles")
+	private List<String> getRoles(){
 		List<String> roles = new ArrayList<>();
-
 		roles.add("admin");
 		roles.add("representative");
 		roles.add("customer");
-
-		user.setRoles(roles);
-
-		model.put("user", user);
-
-		return "AdUser";
+		return roles;
 	}
 
 }

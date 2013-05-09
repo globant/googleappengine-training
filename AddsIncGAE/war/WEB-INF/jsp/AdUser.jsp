@@ -13,7 +13,7 @@
 	<form action="/users" method="POST">
 		User name: <input type="text" id="userName" name="userName" />
 
-		 <form:select multiple="true" path="user.roles" items="${user.roles}" />
+		 <form:select multiple="true" path="user.roles" items="${roles}" />
 
 		<input type="submit" value="Create" />
 	</form>

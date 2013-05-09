@@ -87,9 +87,13 @@ public class CustomerController {
 		
 		model.addAttribute("lists",lists);
 		model.addAttribute("customer", customer);
-		model.addAttribute("users", userService.getUsers().toArray());
-		
+	
 		return "EditCustomer";
+	}
+	
+	@ModelAttribute("users")
+	public List<User> getUsers(){
+		return userService.getUsers();
 	}
 	
 	@RequestMapping(value = "/customers/{customerId}", method = RequestMethod.POST)
