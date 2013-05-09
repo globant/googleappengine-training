@@ -46,6 +46,13 @@ public class ProductController {
 
 		return "ProductList";
 	}
+	
+	@RequestMapping(value = "/addProduct/{campaignId}", method = RequestMethod.GET)
+	public String add(@PathVariable Long campaignId, Model model){
+		model.addAttribute("campaignId", campaignId);
+		return "AddProduct";		
+	}
+	
 
 	/**
 	 * Add new product to a campaign
@@ -53,33 +60,26 @@ public class ProductController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/addProduct", method = {RequestMethod.POST, RequestMethod.GET})
-	public String add(HttpServletRequest request,
+	@RequestMapping(value = "/addProduct/{campaignId}", method = RequestMethod.POST)
+	public String addProduct(HttpServletRequest request, @PathVariable Long campaignId,
 			@RequestParam("name") String name,
 			@RequestParam("shortDescription") String shortDescription,
 			@RequestParam("longDescription") String longDescription,
 			@RequestParam("url") String url,
 			@RequestParam("country") String country, Model model) {
-
-
-		Campaign campaign = null;
-		List<Campaign> campaigns = campaignService.getCampaigns();
-		if (campaigns.isEmpty()) {
-			campaign = new Campaign(KeyFactory.createKey("campaign", 1L));
-//			campaign.setKey(KeyFactory.createKey("campaign", 1L));
-		} else {
-			campaign = campaigns.get(0);
-		}
+		
+		Campaign campaign = campaignService.getCampaign(campaignId);
+		
 		BlobstoreService blobstoreService = BlobstoreServiceFactory
 				.getBlobstoreService();
 		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(request);
 		BlobKey productPhoto = blobs.get("productImage");
+		
 		Product prod = productService.addProduct(name, shortDescription,
 				longDescription, url, country, productPhoto, campaign);
-		productService.addProduct(prod);
 		model.addAttribute("product", prod);
-
-		return "redirect:/product/products";
+		
+		return "redirect:/campaign/"+campaignId;
 	}
 	
 	@RequestMapping(value = "/prodgoto/{jspname}")

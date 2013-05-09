@@ -32,7 +32,7 @@
 				<td><c:out value="${product.longDescription}" /></td>
 				<td><c:out value="${product.url}" /></td>
 				<td><c:out value="${product.country}" /></td>
-				<td><c:out value="${product.campaign_key}" /></td>
+				<td><c:out value="${product.campaign.name}" /></td>
 				<td><a href="/products/${product.key}">Del</a></td>
 			</tr>
 		</c:forEach>

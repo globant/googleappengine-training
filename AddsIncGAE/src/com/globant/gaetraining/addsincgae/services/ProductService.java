@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.globant.gaetraining.addsincgae.daos.CampaignDao;
 import com.globant.gaetraining.addsincgae.daos.DistributionChannelDao;
 import com.globant.gaetraining.addsincgae.daos.ProductDao;
 import com.globant.gaetraining.addsincgae.model.Campaign;
 import com.globant.gaetraining.addsincgae.model.DistributionChannel;
 import com.globant.gaetraining.addsincgae.model.Product;
 import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
@@ -48,6 +48,9 @@ public class ProductService {
 
 	@Autowired
 	private DistributionChannelDao distributionChannelDao;
+	
+	@Autowired
+	CampaignDao campaignDao;
 
 	public Product getProduct(String productId) {
 		Key id = KeyFactory.stringToKey(productId);
@@ -118,11 +121,21 @@ public class ProductService {
 			String longDescription, String productUrl, String country,
 			BlobKey productPhoto, Campaign campaign){
 		
-		Product prod = new Product(name, shortDescription, longDescription, 
-				productUrl, country, productPhoto, campaign);
+		Key keyProduct = KeyFactory.createKey(campaign.getKey(), "Product",(long)(Math.random()*2000232)+1);
+		Product prod = new Product(campaign);
+		prod.setName(name);
+		prod.setKey(keyProduct);
+		prod.setCountry(country);
+		prod.setLongDescription(longDescription);
+		prod.setShortDescription(shortDescription);
+		prod.setProductPhoto(productPhoto);
+		prod.setUrl(productUrl);
 		
-		productDao.persist(prod);
-		
+		if(campaign.getProduct() == null)
+			campaign.setProduct(new ArrayList<Product>());
+//		productDao.persist(prod);
+		campaign.getProduct().add(prod);
+		campaignDao.persist(campaign);		
 		return prod;
 	}
 	

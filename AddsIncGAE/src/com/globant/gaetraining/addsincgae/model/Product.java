@@ -43,7 +43,7 @@ public class Product {
 	private Campaign campaign;
 	
 	@Persistent
-	private BlobKey photo_path;
+	private BlobKey productPhoto;
 
 	public Product() {
 
@@ -53,6 +53,16 @@ public class Product {
 		this.campaign = campaign;
 	}
 	
+	/**
+	 * Contruts a Product object
+	 * @param name
+	 * @param shortDescription
+	 * @param longDescription
+	 * @param productUrl
+	 * @param country
+	 * @param productPhoto
+	 * @param campaign
+	 */
 	public Product(String name, String shortDescription, 
 			String longDescription, String productUrl, String country,
 			BlobKey productPhoto, Campaign campaign){
@@ -62,6 +72,7 @@ public class Product {
 		this.longDescription = longDescription;
 		this.url = productUrl;
 		this.country = country;
+		this.productPhoto = productPhoto;
 	}
 
 	public Key getKey() {
@@ -140,12 +151,12 @@ public class Product {
 		this.campaign.getProduct().add(this);
 	}
 
-	public BlobKey getPhoto_path() {
-		return photo_path;
+	public BlobKey getProductPhoto() {
+		return productPhoto;
 	}
 
-	public void setPhoto_path(BlobKey photo_path) {
-		this.photo_path = photo_path;
+	public void setProductPhoto(BlobKey productPhoto) {
+		this.productPhoto = productPhoto;
 	}	
 
 }

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.globant.gaetraining.addsincgae.model.Campaign;
+import com.globant.gaetraining.addsincgae.model.Product;
 import com.globant.gaetraining.addsincgae.services.CampaignService;
+import com.globant.gaetraining.addsincgae.services.ProductService;
 
 @Controller
 public class CampaignController {
@@ -47,12 +49,16 @@ public class CampaignController {
 		return "CampaignList";
 	}
 	
-	@RequestMapping("/campaign/{campaingKey}")
-	public String editCampaign(@PathVariable("campaingKey") String campaignKey, Model model){
+	@RequestMapping("/campaign/{campaignId}")
+	public String editCampaign(@PathVariable Long campaignId, Model model){
 		
-		Campaign campaign = campaignService.getCampaignByKey(campaignKey);
+		Campaign campaign = campaignService.getCampaignAndProductsByCampaignId(campaignId);
+		if(campaign.getProduct()!=null){
+		for(Product prod : campaign.getProduct()){
+			System.out.println("->"+prod.getName());
+		}
+		}
 		model.addAttribute("campaign", campaign);
-		
 		return "AddCampaign";
 	}
 }

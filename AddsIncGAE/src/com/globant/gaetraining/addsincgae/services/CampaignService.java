@@ -131,4 +131,8 @@ public class CampaignService {
 		Key key = KeyFactory.stringToKey(keyString);
 		return campaignDao.findByKey(key, Campaign.class, null);
 	}
+	
+	public Campaign getCampaignAndProductsByCampaignId(Long idCampaign){
+		return campaignDao.findByIdWithProducts(idCampaign);
+	}
 }

@@ -7,6 +7,11 @@
 <html>
         
 <head>
+<style type="text/css">
+	table {border-collapse:collapse}
+	td {border:1px solid gray}
+</style>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add Campaign</title>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
@@ -27,7 +32,30 @@
 		Active: <input type="checkbox" id="active" name="active" checked="${campaign.active}" />
 		<p>Start Date: <input type="text" id="startDate" name ="startDate" value="${campaign.startDate}"/></p>
 		<p>End Date: <input type="text" id="endDate" name ="endDate" value="${campaign.endDate}"/></p>
-		<input type="submit" value="Create" />
+		<input type="submit" value="Save" />
 	</form>
+	<table>
+		<thead>
+			<tr>
+				<th>Product Name</th>
+				<th>Product Short Description</th>
+				<th>Product Country</th>
+				<th>Product URL</th>
+				<th>Product Actions</th>
+			</tr>
+		</thead>		
+	<c:forEach items="${campaign.product}" var="product">
+		<tr>
+			<td>${product.name}</td>
+			<td>${product.shortDescription}</td>
+			<td>${product.country}</td>
+			<td>${product.url}</td>
+			<td><a href="/product/">Edit</a>&nbsp;
+				<a href="">Del</a>
+			</td>
+		</tr>
+	</c:forEach>
+	</table>
+	<a href="/product/addProduct/${campaign.key.id}">Add Product to this Campaign</a>
 </body>
 </html>
