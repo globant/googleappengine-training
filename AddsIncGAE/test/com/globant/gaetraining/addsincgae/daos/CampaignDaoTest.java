@@ -179,8 +179,7 @@ public class CampaignDaoTest {
 
 		Campaign cmp = this.dao.persist(camp);
 
-		List<String> countries = this.dao.findCountriesByCampaignKey(cmp
-				.getKey());
+		List<String> countries = this.dao.findCountriesByCampaignKey(cmp);
 
 		Assert.assertEquals(2, countries.size());
 

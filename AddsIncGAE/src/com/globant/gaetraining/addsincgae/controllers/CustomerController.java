@@ -1,5 +1,6 @@
 package com.globant.gaetraining.addsincgae.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,10 @@ import com.globant.gaetraining.addsincgae.model.Customer;
 import com.globant.gaetraining.addsincgae.model.User;
 import com.globant.gaetraining.addsincgae.services.CustomerService;
 import com.globant.gaetraining.addsincgae.services.UserService;
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.common.base.Function;
@@ -32,6 +37,8 @@ public class CustomerController {
 	
 	@Autowired
 	private UserService userService;
+	
+	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
 	@RequestMapping(value = "/customers", method = RequestMethod.GET)
 	public String getCustomers(Map<String, Object> model) {
@@ -47,23 +54,69 @@ public class CustomerController {
 	public String editCustomer(@PathVariable Long customerId, Model model) {
 	
 		Customer customer = customerService.getCustomer(customerId);
+		String[] ownersString = null, representativesString = null;
+		if(customer.getOwners()!=null) ownersString = new String[customer.getOwners().size()];
+		if(customer.getRepresentative()!=null) representativesString = new String[customer.getRepresentative().size()];
+		int i=0;
+		if(ownersString!=null){
+			for(Key usr : customer.getOwners()){
+				ownersString[i++]=KeyFactory.keyToString(usr);
+			}
+		}
+		i=0;
+		if(representativesString!=null){
+			for(Key usr : customer.getRepresentative()){
+				representativesString[i++]=KeyFactory.keyToString(usr);
+			}		
+		}
+		ListsHelper lists = new ListsHelper();
+		lists.setOwnersString(ownersString);
+		lists.setRepresentativesString(representativesString);
 		
+		model.addAttribute("lists",lists);
 		model.addAttribute("customer", customer);
+		model.addAttribute("users", userService.getUsers().toArray());
 		
 		return "EditCustomer";
 	}
 	
 	@RequestMapping(value = "/customers/{customerId}", method = RequestMethod.POST)
-	public String saveCustomer(@PathVariable Long customerId, @ModelAttribute("customer") Customer customer, Model model) {
+	public String saveCustomer(HttpServletRequest request, @PathVariable Long customerId, @ModelAttribute("lists") ListsHelper lists,@ModelAttribute("customer") Customer customer, Model model) {
 	 
 		customer.setKey(KeyFactory.createKey("Customer", customerId));
+		Map<String, List<BlobInfo>> blobs = blobstoreService.getBlobInfos(request);
+        List<BlobInfo> blobInfos = blobs.get("logo");
+        if(blobInfos!=null&&blobInfos.size()>0){
+        	customer.setLogo(blobInfos.get(0).getBlobKey());
+		}
+		//TODO: Support for a list of files, optional
+		
+		String[] owners = lists.getOwnersString();
+		if(owners!=null && owners.length>0){
+			customer.setOwners(new ArrayList<Key>());
+			for(String keyUsr : owners){
+				customer.getOwners().add(KeyFactory.stringToKey(keyUsr));
+			}
+		}
+		
+		String[] representatives = lists.getRepresentativesString();
+		if(representatives!=null && representatives.length>0){
+			customer.setRepresentative(new ArrayList<Key>());
+			for(String keyUsr : representatives){
+				customer.getRepresentative().add(KeyFactory.stringToKey(keyUsr));
+			}
+		}
 		
 		this.customerService.addCustomer(customer);
 	  
-		model.addAttribute("customer", customer);
+		List<Customer> customers = customerService.getCustomers();
+		
+		
+		model.addAttribute("customers", customers);
 	  
-		return "EditCustomer";
+		return "CustomerList";
 	}
+
 	
 	@RequestMapping(value="/customers", method = RequestMethod.POST)
 	public String addCustomer(HttpServletRequest request, ModelMap model){
@@ -72,11 +125,13 @@ public class CustomerController {
 		String description = request.getParameter("description");
 		String employeeAmount = request.getParameter("employeesAmount");
 		
+		
 		Customer customer = new Customer();
 		customer.setName(name);
 		customer.setLegalName(legalName);
 		customer.setDescription(description);
 		customer.setEmployeesAmount(employeeAmount == null ? 0 : Integer.parseInt(employeeAmount));
+		
 		//TODO Find representatives and owners properly 
 	    List<Key> users = Lists.transform(userService.getUsers(), new Function<User, Key>() {
 	      @Override
@@ -96,5 +151,23 @@ customerService.addCustomer(customer);
 	@RequestMapping(value="/addCustomer", method = RequestMethod.GET)
 	public String add(){
 		return "AddCustomer";
+	}
+	
+	public static class ListsHelper{
+		private String[] ownersString;
+		private String[] representativesString;
+		public String[] getOwnersString() {
+			return ownersString;
+		}
+		public String[] getRepresentativesString() {
+			return representativesString;
+		}
+		public void setOwnersString(String[] ownersString) {
+			this.ownersString = ownersString;
+		}
+		public void setRepresentativesString(String[] representativesString) {
+			this.representativesString = representativesString;
+		}
+		
 	}
 }
