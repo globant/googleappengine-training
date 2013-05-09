@@ -1,11 +1,13 @@
 package com.globant.gaetraining.addsincgae.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,6 +50,16 @@ public class CustomerController {
 		model.put("customers", customers);
 		
 		return "CustomerList";
+	}
+	
+	@RequestMapping(value="/customers/{customerId}/logo", method = RequestMethod.GET)
+	public void serveLogo(HttpServletResponse response, @PathVariable Long customerId, Model model) {
+		Customer customer = customerService.getCustomer(customerId);
+		try{
+		blobstoreService.serve(customer.getLogo(),response);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	@RequestMapping(value = "/customers/{customerId}", method = RequestMethod.GET, produces = "text/html")
