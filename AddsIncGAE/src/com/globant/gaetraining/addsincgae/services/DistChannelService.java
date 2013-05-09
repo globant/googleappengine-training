@@ -23,5 +23,18 @@ public class DistChannelService {
 		distChannelDao.delete(DistributionChannel.class,keyChannel);
 		return true;
 	}
+	
+	public DistributionChannel add(DistributionChannel channel){
+		
+		return distChannelDao.persist(channel);
+	}
+	
+	public DistributionChannel save(DistributionChannel channel){
+		return distChannelDao.persist(channel);
+	}
+	
+	public DistributionChannel get(Key key){
+		return distChannelDao.findByKey(key, DistributionChannel.class, null);
+	}
 
 }
