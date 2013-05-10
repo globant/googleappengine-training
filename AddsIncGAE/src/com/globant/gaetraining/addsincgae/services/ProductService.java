@@ -119,23 +119,38 @@ public class ProductService {
 	
 	public Product addProduct(String name, String shortDescription, 
 			String longDescription, String productUrl, String country,
-			BlobKey productPhoto, Campaign campaign){
+			BlobKey productPhoto, Long campaignId){
+		
+		Campaign campaign = campaignDao.findByIdWithProducts(campaignId);
+		
+//		Key keyProduct = KeyFactory.createKey(campaign.getKey(),
+//				 "Product", 3000000L + i*10 +  j);
+//		Product product = new Product(campaign);
+//		product.setKey(keyProduct);
+//		product.setName("Mockiproduct_" + i + "_" + j);
+//		product.setShortDescription("Short Desc_" + i + "_" + j);
+//		product.setLongDescription("The long description here " + i + "_" + j);
+//		product.setUrl("http://www.globant.com/");
 		
 		Key keyProduct = KeyFactory.createKey(campaign.getKey(), "Product",(long)(Math.random()*2000232)+1);
 		Product prod = new Product(campaign);
-		prod.setName(name);
 		prod.setKey(keyProduct);
+		prod.setName(name);
 		prod.setCountry(country);
 		prod.setLongDescription(longDescription);
 		prod.setShortDescription(shortDescription);
 		prod.setProductPhoto(productPhoto);
 		prod.setUrl(productUrl);
 		
-		if(campaign.getProduct() == null)
-			campaign.setProduct(new ArrayList<Product>());
-//		productDao.persist(prod);
 		campaign.getProduct().add(prod);
-		campaignDao.persist(campaign);		
+		productDao.persist(prod);
+		campaignDao.persist(campaign);
+//		productDao.updateProductsCampaignRelationship(campaign, campaign.getProduct());
+//		if(campaign.getProduct() == null)
+//			campaign.setProduct(new ArrayList<Product>());
+////		productDao.persist(prod);
+//		campaign.getProduct().add(prod);
+//		campaignDao.persist(campaign);		
 		return prod;
 	}
 	
@@ -188,4 +203,9 @@ public class ProductService {
 
 		return false;
 	}
+	
+	public Product getProductByKey(Key keyProduct){
+		return productDao.findByKey(keyProduct, Product.class, null);
+	}
+	
 }

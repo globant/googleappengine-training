@@ -1,8 +1,10 @@
 package com.globant.gaetraining.addsincgae.daos;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import org.springframework.stereotype.Repository;
@@ -95,4 +97,25 @@ public class CampaignDao extends GenericDao<Campaign> {
 
 		return results;
 	}
+	
+	@SuppressWarnings("finally")
+	public Campaign getCampaingAndProductsById(Object campaignId){
+		PersistenceManager pm = this.getPM();
+		Campaign campaign = null;
+		try{
+			pm.getFetchPlan().addGroup("products");
+			
+			campaign = pm.getObjectById(Campaign.class, campaignId);
+			List<Product> products = new ArrayList<Product>();
+			for(Product prod : campaign.getProduct()){
+				Product tmp = pm.getObjectById(Product.class, prod.getKey().getId());
+				products.add(tmp);
+			}
+			campaign.setProduct(products);
+		}finally{
+			pm.close();
+			return campaign;
+		}
+	}
+	
 }

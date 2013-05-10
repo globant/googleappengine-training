@@ -68,16 +68,13 @@ public class ProductController {
 			@RequestParam("url") String url,
 			@RequestParam("country") String country, Model model) {
 		
-		Campaign campaign = campaignService.getCampaign(campaignId);
-		
 		BlobstoreService blobstoreService = BlobstoreServiceFactory
 				.getBlobstoreService();
 		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(request);
 		BlobKey productPhoto = blobs.get("productImage");
 		
 		Product prod = productService.addProduct(name, shortDescription,
-				longDescription, url, country, productPhoto, campaign);
-		model.addAttribute("product", prod);
+				longDescription, url, country, productPhoto, campaignId);
 		
 		return "redirect:/campaign/"+campaignId;
 	}

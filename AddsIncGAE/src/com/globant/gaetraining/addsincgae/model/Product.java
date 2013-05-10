@@ -39,8 +39,10 @@ public class Product {
 	private String country;
 
 	@Persistent
-	@Unowned
 	private Campaign campaign;
+	
+	@Unowned
+	private Key campaignKey;
 	
 	@Persistent
 	private BlobKey productPhoto;
@@ -51,6 +53,7 @@ public class Product {
 
 	public Product(Campaign campaign) {
 		this.campaign = campaign;
+		this.campaignKey = campaign.getKey();
 	}
 	
 	/**
@@ -157,6 +160,14 @@ public class Product {
 
 	public void setProductPhoto(BlobKey productPhoto) {
 		this.productPhoto = productPhoto;
+	}
+
+	public Key getCampaignKey() {
+		return campaignKey;
+	}
+
+	public void setCampaignKey(Key campaignKey) {
+		this.campaignKey = campaignKey;
 	}	
 
 }

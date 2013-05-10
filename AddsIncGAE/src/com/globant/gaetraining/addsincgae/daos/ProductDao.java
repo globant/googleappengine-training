@@ -49,4 +49,23 @@ public class ProductDao extends GenericDao<Product> {
 		return products;
 	}
 	
+	/**
+	 * Updates the product in a campaign relationship
+	 * @param campaign
+	 * @param products
+	 * @return
+	 */
+	@SuppressWarnings("finally")
+	public Campaign updateProductsCampaignRelationship(Campaign campaign, List<Product> products){
+		PersistenceManager pm = this.getPM();
+		Campaign campaignUpdated = null;
+		try{
+			campaignUpdated = pm.getObjectById(Campaign.class, campaign.getKey().getId());
+			campaignUpdated.setProduct(products);
+		}finally{
+			pm.close();
+			return campaignUpdated;
+		}
+	}
+	
 }

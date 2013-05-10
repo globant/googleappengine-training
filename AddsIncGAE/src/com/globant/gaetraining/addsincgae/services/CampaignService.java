@@ -133,6 +133,7 @@ public class CampaignService {
 	}
 	
 	public Campaign getCampaignAndProductsByCampaignId(Long idCampaign){
-		return campaignDao.findByIdWithProducts(idCampaign);
+		return campaignDao.getCampaingAndProductsById(idCampaign);
 	}
+	
 }
