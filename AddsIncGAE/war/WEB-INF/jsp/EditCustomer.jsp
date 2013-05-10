@@ -57,7 +57,7 @@
 		</div>
 		<div>
 			<div>Logo</div>
-			<img alt="Logo" src="${customer.logo}"/>
+			<img alt="Logo" src="/customers/<%=((Customer)request.getAttribute("customer")).getKey().getId()%>/logo"/>
 			<input type="file" name="logo"/>
 		</div>
 

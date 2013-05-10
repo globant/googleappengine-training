@@ -1,11 +1,13 @@
 package com.globant.gaetraining.addsincgae.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,6 +51,25 @@ public class CustomerController {
 		
 		return "CustomerList";
 	}
+	
+	@RequestMapping(value="/customers/{customerId}/logo", method = RequestMethod.GET)
+	public void serveLogo(HttpServletResponse response, @PathVariable Long customerId, Model model) {
+		Customer customer = customerService.getCustomer(customerId);
+		try{
+		blobstoreService.serve(customer.getLogo(),response);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value = "/customers/{customerKey}", method = RequestMethod.DELETE)
+	public String deleteCustomer(HttpServletRequest request, @PathVariable String customerKey) {
+		Key keyCustomer = KeyFactory.stringToKey(customerKey);
+		Customer toDelete = customerService.getCustomer(keyCustomer);
+		if(toDelete.getLogo()!=null) blobstoreService.delete(toDelete.getLogo());
+		customerService.deleteCustomer(keyCustomer);
+		return "CustomerList";
+	}
 
 	@RequestMapping(value = "/customers/{customerId}", method = RequestMethod.GET, produces = "text/html")
 	public String editCustomer(@PathVariable Long customerId, Model model) {
@@ -75,9 +96,13 @@ public class CustomerController {
 		
 		model.addAttribute("lists",lists);
 		model.addAttribute("customer", customer);
-		model.addAttribute("users", userService.getUsers().toArray());
-		
+	
 		return "EditCustomer";
+	}
+	
+	@ModelAttribute("users")
+	public List<User> getUsers(){
+		return userService.getUsers();
 	}
 	
 	@RequestMapping(value = "/customers/{customerId}", method = RequestMethod.POST)

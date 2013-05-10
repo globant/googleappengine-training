@@ -103,7 +103,7 @@ public class DummyDataLoader {
 			distributionChannel.setMediaType("TV" + i);
 			distributionChannel.setTemplate("<a>{text}</a>");
 			distributionChannel = daoDistributionChannel
-					.add(distributionChannel);
+					.persist(distributionChannel);
 			campaign.getDistributionChannelKeys().add(
 					distributionChannel.getKey());
 		}

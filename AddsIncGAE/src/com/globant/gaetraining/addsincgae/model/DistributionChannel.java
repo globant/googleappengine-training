@@ -6,6 +6,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
@@ -27,6 +28,9 @@ public class DistributionChannel {
 	
 	@Persistent
 	private String country;
+	
+	@Persistent
+	private BlobKey logo;
 
 	public Key getKey() {
 		return key;
@@ -78,6 +82,14 @@ public class DistributionChannel {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	public BlobKey getLogo() {
+		return logo;
+	}
+
+	public void setLogo(BlobKey logo) {
+		this.logo = logo;
 	}
 
 }

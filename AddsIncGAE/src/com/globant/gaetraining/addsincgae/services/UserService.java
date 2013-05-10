@@ -24,17 +24,18 @@ public class UserService {
 		userDao.persist(user);
 	}
 
-	public User getUser(Long userId) {
+	public User getUser(Key userKey) {
 
-		Key key = KeyFactory.createKey(User.class.getSimpleName(), userId);
-		return userDao.findByKey(key, User.class, null);
+				return userDao.findByKey(userKey, User.class, null);
 	}
 
-	public void updateUser(Long userId, User user) {
+	public void updateUser(Key userKey, User user) {
 
-		Key key = KeyFactory.createKey(User.class.getSimpleName(), userId);
-		user.setKey(key);
-
+		user.setKey(userKey);
 		userDao.persist(user);
+	}
+	
+	public void deleteUser(Key userKey){
+		userDao.delete(User.class,userKey);
 	}
 }

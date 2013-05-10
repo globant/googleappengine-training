@@ -15,67 +15,74 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.globant.gaetraining.addsincgae.model.User;
 import com.globant.gaetraining.addsincgae.services.UserService;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @Controller
+@RequestMapping("/people")
 public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@ModelAttribute("users")
+	public List<User> getUsers(){
+		return userService.getUsers();
+	}
 
-	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String getUsers(Map<String, Object> model) {
-
-		List<User> users = userService.getUsers();
-
-		model.put("users", users);
-
 		return "UserList";
 	}
 
-	@RequestMapping(value = "/users/{userId}", method = RequestMethod.POST)
-	public String updateUserSubmit(@ModelAttribute("user") User user,
-			@PathVariable Long userId, ModelMap model) {
-
-		userService.updateUser(userId, user);
-
-		return "redirect:/users";
+	@RequestMapping(value = "/{userkey}", method = RequestMethod.DELETE)
+	public String delUser(@PathVariable String userKey) {
+		userService.deleteUser(KeyFactory.stringToKey(userKey));
+		return "UserList";
 	}
 
-	@RequestMapping(value = "/users", method = RequestMethod.POST)
+	@RequestMapping(value = "/{userKey}", method = RequestMethod.POST)
+	public String updateUserSubmit(@ModelAttribute("user") User user,
+			@PathVariable String userKey, ModelMap model) {
+
+		userService.updateUser(KeyFactory.stringToKey(userKey), user);
+
+		return "UserList";
+	}
+	
+	@RequestMapping(value = "/{userKey}", method = RequestMethod.GET, produces = "text/html")
+	public String editUser(@PathVariable String userKey, Model model) {
+
+		User user = userService.getUser(KeyFactory.stringToKey(userKey));
+
+		model.addAttribute("user", user);
+		
+		return "EditUser";
+	}
+
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String adddUserSubmit(@ModelAttribute("user") User user,
 			ModelMap model) {
 
 		userService.addUser(user);
 
-		return "redirect:/users";
+		return "UserList";
 	}
 
-	@RequestMapping(value = "/users/{userId}", method = RequestMethod.GET, produces = "text/html")
-	public String editUser(@PathVariable Long userId, Model model) {
 
-		User user = userService.getUser(userId);
-
-		model.addAttribute("user", user);
-
-		return "EditUser";
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String addUser(Model model) {
+		;
+		model.addAttribute("user", new User());
+		return "AdUser";
 	}
-
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public String addUser(Map<String, Object> model) {
-
-		User user = new User();
-
+	
+	@ModelAttribute("roles")
+	private List<String> getRoles(){
 		List<String> roles = new ArrayList<>();
-
 		roles.add("admin");
 		roles.add("representative");
 		roles.add("customer");
-
-		user.setRoles(roles);
-
-		model.put("user", user);
-
-		return "AdUser";
+		return roles;
 	}
 
 }

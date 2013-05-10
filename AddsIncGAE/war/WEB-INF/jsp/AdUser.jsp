@@ -10,10 +10,10 @@
 </head>
 <body>
 	<h1>Add User</h1>
-	<form action="/users" method="POST">
+	<form action="/people" method="POST">
 		User name: <input type="text" id="userName" name="userName" />
 
-		 <form:select multiple="true" path="user.roles" items="${user.roles}" />
+		 <form:select multiple="true" path="user.roles" items="${roles}" />
 
 		<input type="submit" value="Create" />
 	</form>

@@ -97,6 +97,25 @@ public abstract class GenericDao<T> {
 			pm.close();
 		}
 	}
+	
+	
+	/**
+	 * Delete an object from the datastore
+	 * 
+	 * @param key
+	 *            key of the object to delete
+	 */
+	public void delete(Class classType, Key key) {
+
+		PersistenceManager pm = this.getPM();
+
+		try {
+			
+			pm.deletePersistent(pm.getObjectById(classType,key));
+		} finally {
+			pm.close();
+		}
+	}
 
 	/**
 	 * Find an object by his {@link Key}

@@ -10,10 +10,10 @@
 </head>
 <body>
 	<h1>Edit User</h1>
-	<form action="/users/${user.key.id}" method="POST">
+	<form action="/people/${user.keyString}" method="POST">
 		User name: <input type="text" id="userName" name="userName" value="${user.userName}"/>
 
-		 <form:select multiple="true" path="user.roles" items="${user.roles}" />
+		 <form:select multiple="true" path="user.roles" items="${roles}" />
 
 		<input type="submit" value="Update" />
 	</form>
