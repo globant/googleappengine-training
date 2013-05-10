@@ -9,14 +9,14 @@
 <title>Users List</title>
 <script type="text/javascript">
 function deleteUser(userKey){
-	$.ajax({url:'/users/'+userKey, dataType:'json', type:'DELETE', success: function() {
-		window.location.href = "/users";
+	$.ajax({url:'/people/'+userKey, dataType:'json', type:'DELETE', success: function() {
+		window.location.href = "/people";
 	}});
 }
 </script>
 </head>
 <h1>Users List</h1>
-<a href="/user">Add new user</a>
+<a href="/people/add">Add new user</a>
 <body>
 	<table>
 		<tr>
@@ -27,7 +27,7 @@ function deleteUser(userKey){
 		</tr>
 		<c:forEach items="${users}" var="user">
 			<tr>
-				<td><a href="/users/${user.keyString}">Edit</a></td>
+				<td><a href="/people/${user.keyString}">Edit</a></td>
 				<td><c:out value="${user.userName}" /></td>
 				<td><c:out value="${user.roles}" /></td>
 				<td><input type="button" onclick="deleteUser('${user.keyString}')" value="X"/></td>
