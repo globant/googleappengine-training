@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.globant.gaetraining.addsincgae.model.User;
 import com.globant.gaetraining.addsincgae.services.UserService;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @Controller
 public class UserController {
@@ -32,13 +33,29 @@ public class UserController {
 		return "UserList";
 	}
 
-	@RequestMapping(value = "/users/{userId}", method = RequestMethod.POST)
-	public String updateUserSubmit(@ModelAttribute("user") User user,
-			@PathVariable Long userId, ModelMap model) {
+	@RequestMapping(value = "/users/{userkey}", method = RequestMethod.DELETE)
+	public String delUser(@PathVariable String userKey) {
+		userService.deleteUser(KeyFactory.stringToKey(userKey));
+		return "UserList";
+	}
 
-		userService.updateUser(userId, user);
+	@RequestMapping(value = "/users/{userKey}", method = RequestMethod.POST)
+	public String updateUserSubmit(@ModelAttribute("user") User user,
+			@PathVariable String userKey, ModelMap model) {
+
+		userService.updateUser(KeyFactory.stringToKey(userKey), user);
 
 		return "redirect:/users";
+	}
+	
+	@RequestMapping(value = "/users/{userKey}", method = RequestMethod.GET, produces = "text/html")
+	public String editUser(@PathVariable String userKey, Model model) {
+
+		User user = userService.getUser(KeyFactory.stringToKey(userKey));
+
+		model.addAttribute("user", user);
+		
+		return "EditUser";
 	}
 
 	@RequestMapping(value = "/users", method = RequestMethod.POST)
@@ -50,15 +67,6 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/users/{userId}", method = RequestMethod.GET, produces = "text/html")
-	public String editUser(@PathVariable Long userId, Model model) {
-
-		User user = userService.getUser(userId);
-
-		model.addAttribute("user", user);
-		
-		return "EditUser";
-	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String addUser(Model model) {

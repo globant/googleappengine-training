@@ -61,6 +61,15 @@ public class CustomerController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping(value = "/customers/{customerKey}", method = RequestMethod.DELETE)
+	public String deleteCustomer(HttpServletRequest request, @PathVariable String customerKey) {
+		Key keyCustomer = KeyFactory.stringToKey(customerKey);
+		Customer toDelete = customerService.getCustomer(keyCustomer);
+		if(toDelete.getLogo()!=null) blobstoreService.delete(toDelete.getLogo());
+		customerService.deleteCustomer(keyCustomer);
+		return "CustomerList";
+	}
 
 	@RequestMapping(value = "/customers/{customerId}", method = RequestMethod.GET, produces = "text/html")
 	public String editCustomer(@PathVariable Long customerId, Model model) {

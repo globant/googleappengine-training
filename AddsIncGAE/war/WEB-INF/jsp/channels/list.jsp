@@ -8,7 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <title>Distribution channels</title>
-</head>
 <script type="text/javascript">
 function deleteChannel(channelKey){
 	$.ajax({url:'/channels/'+channelKey, dataType:'json', type:'DELETE', success: function() {
@@ -16,6 +15,7 @@ function deleteChannel(channelKey){
 	}});
 }
 </script>
+</head>
 <body>
 <h2>Distribution channels</h2>
 <a href="/channels/add">Add Distribution Channel</a>

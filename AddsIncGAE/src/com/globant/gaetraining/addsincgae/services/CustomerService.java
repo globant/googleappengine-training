@@ -27,8 +27,18 @@ public class CustomerService {
 		Key key = KeyFactory.createKey(Customer.class.getSimpleName(), customerId);
 		return customerDao.findByKey(key, Customer.class, null);
 	}
+
+	public Customer getCustomer(Key customerKey) {
+
+		return customerDao.findByKey(customerKey, Customer.class, null);
+	}
+
 	
 	public void addCustomer(Customer customer) {
 		customerDao.persist(customer);
+	}
+	
+	public void deleteCustomer(Key keyCustomer){
+		customerDao.delete(Customer.class, keyCustomer);
 	}
 }
