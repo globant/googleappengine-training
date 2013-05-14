@@ -89,25 +89,25 @@ public class HomeService {
 					i % 2 == 0 ? keyDist : keyDist2);
 			campaign.setProduct(new ArrayList<Product>());
 
-//			for (int j = 1; j < 5; ++j) {
-//				// Product
-//				Key keyProduct = KeyFactory.createKey(campaign.getKey(),
-//						 "Product", 3000000L + i*10 +  j);
-//				Product product = new Product(campaign);
-//				product.setKey(keyProduct);
-//		product.setName("Mockiproduct_" + i + "_" + j);
-//				product.setShortDescription("Short Desc_" + i + "_" + j);
-//				product.setLongDescription("The long description here " + i + "_" + j);
-//				product.setUrl("http://www.globant.com/");
-//				
-//				if (j % 2 == 0) {
-//					product.setCountry("Colombia");
-//				} else {
-//					product.setCountry("Brazil");
-//				}
-//				campaign.getProduct().add(product);
-//
-//			}
+			for (int j = 1; j < 5; ++j) {
+				// Product
+				Key keyProduct = KeyFactory.createKey(campaign.getKey(),
+						 "Product", 3000000L + i*10 +  j);
+				Product product = new Product(campaign);
+				product.setKey(keyProduct);
+		product.setName("Mockiproduct_" + i + "_" + j);
+				product.setShortDescription("Short Desc_" + i + "_" + j);
+				product.setLongDescription("The long description here " + i + "_" + j);
+				product.setUrl("http://www.globant.com/");
+				
+				if (j % 2 == 0) {
+					product.setCountry("Colombia");
+				} else {
+					product.setCountry("Brazil");
+				}
+				campaign.getProduct().add(product);
+
+			}
 			campaignDao.persist(campaign);
 		}
 

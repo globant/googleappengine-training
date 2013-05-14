@@ -107,15 +107,35 @@ public class CampaignDao extends GenericDao<Campaign> {
 			
 			campaign = pm.getObjectById(Campaign.class, campaignId);
 			List<Product> products = new ArrayList<Product>();
-			for(Product prod : campaign.getProduct()){
-				Product tmp = pm.getObjectById(Product.class, prod.getKey().getId());
-				products.add(tmp);
+						
+			Query query = null;
+			for(Product product : campaign.getProduct()){
+				query = pm.newQuery(Product.class);
+				query.setFilter("key == productKeyParam");
+				query.declareParameters("com.google.appengine.api.datastore.Key productKeyParam");
+				products.add( ((List<Product>)query.execute(product.getKey())).get(0) );
 			}
 			campaign.setProduct(products);
+		}catch(Exception e){
+			e.printStackTrace();
 		}finally{
 			pm.close();
 			return campaign;
 		}
+	}
+	
+	public Campaign updateCampaignProductsRelationship(Key campaignKey, List<Product> products){
+		PersistenceManager pm = this.getPM();
+		Campaign campTmp = null;
+		try{
+			campTmp = pm.getObjectById(Campaign.class, campaignKey.getId());
+			campTmp.setProduct(products);
+			this.persist(campTmp);
+		}finally{
+			pm.close();
+			return campTmp;
+		}
+		
 	}
 	
 }
