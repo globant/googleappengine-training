@@ -34,7 +34,7 @@ public class UserController {
 		return "UserList";
 	}
 
-	@RequestMapping(value = "/{userkey}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{userKey}", method = RequestMethod.DELETE)
 	public String delUser(@PathVariable String userKey) {
 		userService.deleteUser(KeyFactory.stringToKey(userKey));
 		return "UserList";
