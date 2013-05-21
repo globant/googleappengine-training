@@ -1,5 +1,6 @@
 package com.globant.gaetraining.addsincgae.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,17 @@ public class UserService {
 	
 	public void deleteUser(Key userKey){
 		userDao.delete(User.class,userKey);
+	}
+	
+	public List<String> getUserRoles(String userName){
+		return userDao.getUserRoles(userName);
+	}
+	
+	public List<String> getRoles(){
+		List<String> roles = new ArrayList<>();
+		roles.add("admin");
+		roles.add("representative");
+		roles.add("customer");
+		return roles;
 	}
 }

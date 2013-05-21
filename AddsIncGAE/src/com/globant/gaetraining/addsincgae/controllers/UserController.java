@@ -78,11 +78,8 @@ public class UserController {
 	
 	@ModelAttribute("roles")
 	private List<String> getRoles(){
-		List<String> roles = new ArrayList<>();
-		roles.add("admin");
-		roles.add("representative");
-		roles.add("customer");
-		return roles;
+		return userService.getRoles();
+
 	}
 
 }
