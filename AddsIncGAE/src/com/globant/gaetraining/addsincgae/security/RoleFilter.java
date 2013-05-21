@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.globant.gaetraining.addsincgae.model.User;
 import com.globant.gaetraining.addsincgae.services.UserService;
 
 public class RoleFilter implements Filter {

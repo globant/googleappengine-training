@@ -1,6 +1,5 @@
 package com.globant.gaetraining.addsincgae.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,9 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.globant.gaetraining.addsincgae.daos.ProductDao;
 import com.globant.gaetraining.addsincgae.model.Campaign;
-import com.globant.gaetraining.addsincgae.model.Product;
 import com.globant.gaetraining.addsincgae.services.CampaignService;
 import com.globant.gaetraining.addsincgae.services.ProductService;
 

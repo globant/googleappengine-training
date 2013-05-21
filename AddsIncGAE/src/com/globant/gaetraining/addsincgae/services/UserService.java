@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.globant.gaetraining.addsincgae.daos.UserDao;
 import com.globant.gaetraining.addsincgae.model.User;
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 
 @Service
 public class UserService {

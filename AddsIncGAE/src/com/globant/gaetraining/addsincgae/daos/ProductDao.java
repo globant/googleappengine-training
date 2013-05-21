@@ -10,15 +10,10 @@ import javax.jdo.Query;
 
 import org.springframework.stereotype.Repository;
 
-import com.globant.gaetraining.addsincgae.controllers.rest.AdEventController;
+
 import com.globant.gaetraining.addsincgae.model.Campaign;
 import com.globant.gaetraining.addsincgae.model.DistributionChannel;
 import com.globant.gaetraining.addsincgae.model.Product;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.Key;
 
 @Repository
 public class ProductDao extends GenericDao<Product> {
@@ -32,9 +27,7 @@ public class ProductDao extends GenericDao<Product> {
 		Query query = pm.newQuery(Campaign.class);
 		query.setFilter("distributionChannelKeys == channelNameParam");
 		query.declareParameters("String channelNameParam");
-		String chanName = distChannel.getKey().toString();
 		List<Campaign> campaigns = (List<Campaign>) query.execute(distChannel.getKey());
-		DatastoreService dataStoreService = DatastoreServiceFactory.getDatastoreService(); 
 		List<Product> products = new ArrayList<Product>();
 		
 		for(Campaign tmpCampaign: campaigns){

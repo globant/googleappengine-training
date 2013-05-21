@@ -23,7 +23,6 @@ import com.globant.gaetraining.addsincgae.model.User;
 import com.globant.gaetraining.addsincgae.services.CustomerService;
 import com.globant.gaetraining.addsincgae.services.UserService;
 import com.google.appengine.api.blobstore.BlobInfo;
-import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.Key;

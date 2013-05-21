@@ -131,9 +131,10 @@ public class CampaignDao extends GenericDao<Campaign> {
 			campTmp = pm.getObjectById(Campaign.class, campaignKey.getId());
 			campTmp.setProduct(products);
 			this.persist(campTmp);
+			return campTmp;
 		}finally{
 			pm.close();
-			return campTmp;
+			
 		}
 		
 	}

@@ -153,7 +153,6 @@ public class ProductService {
 	 */
 	private String buildTemplateProd(Product prod, String template,
 			String channelKey, String host) {
-		StringBuilder temp = new StringBuilder(template);
 		StringBuilder prodId = new StringBuilder();
 		prodId.append(KeyFactory.keyToString(prod.getKey())).append("/");
 		prodId.append(channelKey).append("/");
