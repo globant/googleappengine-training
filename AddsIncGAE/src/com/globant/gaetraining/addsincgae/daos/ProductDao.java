@@ -20,6 +20,7 @@ public class ProductDao extends GenericDao<Product> {
 	
 	private static final Logger logger = Logger.getLogger(ProductDao.class.getCanonicalName());
 
+	@SuppressWarnings("unchecked")
 	public List<Product> getProductsByKeyWordAndCampaignAndDistChannel(DistributionChannel distChannel,
 							String keyword, int limit){
 		PersistenceManager pm = this.getPM();

@@ -105,6 +105,7 @@ public abstract class GenericDao<T> {
 	 * @param key
 	 *            key of the object to delete
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void delete(Class classType, Key key) {
 
 		PersistenceManager pm = this.getPM();
@@ -130,6 +131,7 @@ public abstract class GenericDao<T> {
 	 *            le quieren aplicar a la carga
 	 * @return
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public T findByKey(Key key, Class classType, List<String> fetchGroups) {
 
 		PersistenceManager pm = this.getPM();
@@ -167,6 +169,7 @@ public abstract class GenericDao<T> {
 	 *            le quieren aplicar a la carga
 	 * @return
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public T findById(Object id, Class classType, List<String> fetchGroups) {
 
 		PersistenceManager pm = this.getPM();
@@ -199,6 +202,7 @@ public abstract class GenericDao<T> {
 	 *            CampaignSummary.class
 	 * @return {@link List} with entities found
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<T> findAll(Class classType) {
 
 		PersistenceManager pm = this.getPM();

@@ -80,6 +80,7 @@ public class CampaignDao extends GenericDao<Campaign> {
 	 * @return {@link List} of {@link String} with the countries associated to
 	 *         the {@link Product} of the {@link Campaign}
 	 */
+	@SuppressWarnings("unchecked")
 	public List<String> findCountriesByCampaignKey(Campaign campaign) {
 
 		List<String> results = null;
@@ -98,7 +99,7 @@ public class CampaignDao extends GenericDao<Campaign> {
 		return results;
 	}
 	
-	@SuppressWarnings("finally")
+	@SuppressWarnings({ "finally", "unchecked" })
 	public Campaign getCampaingAndProductsById(Object campaignId){
 		PersistenceManager pm = this.getPM();
 		Campaign campaign = null;

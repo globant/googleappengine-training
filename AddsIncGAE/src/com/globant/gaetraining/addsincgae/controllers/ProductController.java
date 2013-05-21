@@ -63,8 +63,8 @@ public class ProductController {
 		
 		BlobstoreService blobstoreService = BlobstoreServiceFactory
 				.getBlobstoreService();
-		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(request);
-		BlobKey productPhoto = blobs.get("productImage");
+		Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+		BlobKey productPhoto = blobs.get("productImage").get(0);
 		
 		productService.addProduct(name, shortDescription,
 				longDescription, url, country, productPhoto, campaignId);

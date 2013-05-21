@@ -37,6 +37,7 @@ public class DashboardController {
 		return "Dashboard";
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/dashboard/campaign/{campaignId}", method = RequestMethod.GET)
 	public String showCampaignDetails(@PathVariable Long campaignId, Model model) {
 

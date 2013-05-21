@@ -11,6 +11,7 @@ import com.globant.gaetraining.addsincgae.model.User;
 @Repository
 public class UserDao extends GenericDao<User>{
 	
+	@SuppressWarnings("unchecked")
 	public List<String> getUserRoles(String userName){
 		Query q = this.getPM().newQuery(User.class);
 		try{

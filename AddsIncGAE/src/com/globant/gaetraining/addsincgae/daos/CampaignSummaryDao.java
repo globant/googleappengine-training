@@ -23,6 +23,7 @@ public class CampaignSummaryDao extends GenericDao<CampaignSummary> {
 	 *            Id of the {@link Campaign}
 	 * @return {@link CampaignSummary}
 	 */
+	@SuppressWarnings("unchecked")
 	public CampaignSummary findByCampaignKeyWithProductsAndDistrChannelsSummaries(
 			Key campaignKey) {
 
